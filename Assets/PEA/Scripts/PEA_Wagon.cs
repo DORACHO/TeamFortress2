@@ -16,18 +16,17 @@ public class PEA_Wagon : MonoBehaviour
     private enum State
     {
         Wait,
-        MoveForward,
-        Backing
+        Move
     }
 
-    private State state = State.MoveForward;
+    private State state = State.Wait;
 
     private bool isMoving = false;
     private bool isArrived = false;
     private bool isFinished = false;
     private bool isNearRed = false;                             // 근처에 레드팀원이 있는지 확인
-    //private bool isBacking = false;                             // 역행중인지 확인
-    private bool isDepart = false;
+    private bool isBacking = false;                           // 역행중인지 확인
+    private bool isDepart = false;                              // 가장 처음 출발했는지 확인(출발 전에는 stopTime을 재지 않기 위한 변수)
 
     private readonly int maxBlueNum = 4;
     private readonly float maxSpeed = 2f;
@@ -56,7 +55,7 @@ public class PEA_Wagon : MonoBehaviour
     {
         get 
         {
-            return state == State.Backing;
+            return isBacking;
         }
     }
 
@@ -81,12 +80,13 @@ public class PEA_Wagon : MonoBehaviour
         //}
 
         print(target);
+        print(state);
         //print("isBacking : " + isBacking);
         //print("isNearRed" + isNearRed);
-        print("isMoving : " + isMoving);
+        //print("isMoving : " + isMoving);
         if (!isFinished)
         {
-            print("isfinished = false");
+            //print("isfinished = false");
             //    Rotate();
             //if (isMoving)
             //{
@@ -108,20 +108,16 @@ public class PEA_Wagon : MonoBehaviour
                     }
                     break;
 
-                case State.MoveForward:
+                case State.Move:
                     CheckArrived();
-                    break;
-
-                case State.Backing:
-                    CheckArrived();
+                    Rotate();
                     break;
             }
 
-            Rotate();
 
             if (isArrived)
             {
-                print(" isarrived true");
+                //print(" isarrived true");
                 //SetTarget();
             }
         }
@@ -138,7 +134,7 @@ public class PEA_Wagon : MonoBehaviour
 
     private void SetSpeed()
     {
-        if (state == State.Backing)
+        if (isBacking)
         {
             //speed = backingSpeed;
             if (!isArrived)
@@ -162,7 +158,7 @@ public class PEA_Wagon : MonoBehaviour
     private void Rotate()
     {
         dir = target.position - transform.position;
-        if (state == State.Backing)
+        if (isBacking)
         {
             transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(-dir), turnSpeed * Time.deltaTime); 
         }
@@ -193,7 +189,7 @@ public class PEA_Wagon : MonoBehaviour
     // 이동
     private void Move()
     {
-        if (state == State.Backing)
+        if (isBacking)
         {
             transform.Translate(-transform.forward * speed * Time.deltaTime, Space.World);
         }
@@ -209,7 +205,7 @@ public class PEA_Wagon : MonoBehaviour
         distance = Vector3.Distance(transform.position, target.position);
         if (distance <= 1.5f)
         {
-            if (state == State.MoveForward)
+            if (!isBacking)
             {
                 // 마지막 종착점에 도착하면 게임이 종료됨.
                 if (targetIndex == wayPoints.Length - 1)
@@ -240,10 +236,9 @@ public class PEA_Wagon : MonoBehaviour
         {
             //isBacking = true;
             isMoving = true;
-            state = State.Backing;
+            isBacking = true;
             step--;
             stopTime = 0f;
-            nav.updateRotation = false;
             SetTarget();
             SetSpeed();
         }
@@ -252,7 +247,7 @@ public class PEA_Wagon : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         // 블루팀
-        if (other.gameObject.layer.Equals(LayerMask.NameToLayer("Blue")))
+        if (other.gameObject.layer.Equals(LayerMask.NameToLayer("Player")))
         {
             blueNum++;
             SetSpeed();
@@ -260,7 +255,7 @@ public class PEA_Wagon : MonoBehaviour
             if (!isNearRed)
             {
                 // 역행중이었으면 다시 전진
-                if (state == State.Backing)
+                if (isBacking)
                 {
                     //isBacking = false;
                     //nav.updateRotation = true;
@@ -268,7 +263,7 @@ public class PEA_Wagon : MonoBehaviour
                     SetTarget();
                 }
                 isMoving = true;
-                state = State.MoveForward;
+                isBacking = false;
 
                 if (!isDepart)
                 {
@@ -277,7 +272,7 @@ public class PEA_Wagon : MonoBehaviour
             }
         }
         // 레드팀
-        else if (other.gameObject.layer.Equals(LayerMask.NameToLayer("Red")))
+        else if (other.gameObject.layer.Equals(LayerMask.NameToLayer("Enemy")))
         {
             redNum++;
             isNearRed = true;
@@ -290,7 +285,7 @@ public class PEA_Wagon : MonoBehaviour
     private void OnTriggerExit(Collider other)
     {
         // 블루팀
-        if (other.gameObject.layer.Equals(LayerMask.NameToLayer("Blue")))
+        if (other.gameObject.layer.Equals(LayerMask.NameToLayer("Player")))
         {
             stopTime = 0f;
             blueNum--;
@@ -303,7 +298,7 @@ public class PEA_Wagon : MonoBehaviour
             }
         }
         // 레드팀
-        else if (other.gameObject.layer.Equals(LayerMask.NameToLayer("Red")))
+        else if (other.gameObject.layer.Equals(LayerMask.NameToLayer("Enemy")))
         {
             redNum--;
             if (redNum <= 0)
@@ -313,7 +308,7 @@ public class PEA_Wagon : MonoBehaviour
                 if (blueNum > 0)
                 {
                     isMoving = true;
-                    state = State.MoveForward;
+                    isBacking = false;
                 }
             }
         }
