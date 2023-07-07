@@ -25,7 +25,7 @@ public class J_EnemyFire : MonoBehaviour
     public float HPIncrease;
     private BoxCollider boxCollider;
     public int maxHP = 185;
-    public int minMP = 0;
+    //public int minMP = 0;
     public float MPDecrease;
     public float HPIncreaseTimer = 0f;
     public GameObject VFX;
@@ -96,13 +96,13 @@ public class J_EnemyFire : MonoBehaviour
                 {
                     HPManager.instance.HP += 10 * Time.deltaTime;
                 }
-                if(MPManager.instance.MP > minMP)
+                //if(MPManager.instance.MP > minMP)
                 {
-                    MPManager.instance.MP -= 10 * Time.deltaTime;
+                //    MPManager.instance.MP -= 10 * Time.deltaTime;
                 }
-                else
+               // else
                 {
-                    MPManager.instance.MP = 0;
+                //    MPManager.instance.MP = 0;
                 }
                 VFX.transform.position = this.transform.position - new Vector3(5, 1, 0);
    

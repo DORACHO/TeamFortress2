@@ -17,18 +17,18 @@ public class MPManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        MP = 150;
+       // MP = 150;
     }
 
-    public float MP
-    {
-        get { return mp;}
-        set
-        {
-            mp = value;
-            textMP.text = "MP : " + (int)mp;
-        }
-    }
+    //public float MP
+    //{
+    //    get { return mp;}
+    //    set
+    //    {
+    //        mp = value;
+    //        textMP.text = "MP : " + (int)mp;
+    //    }
+    //}
     // Update is called once per frame
     void Update()
     {
