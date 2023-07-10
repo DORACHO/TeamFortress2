@@ -68,15 +68,6 @@ public class PEA_PistolGun : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //print("eulerangle : " + transform.eulerAngles);
-        //print("rotation : " + transform.rotation);
-
-        //if (Input.GetMouseButtonDown(0) && !isLoading && timeAfterFire >= attackInterval && loadBullets > 0)
-        //{
-        //    Fire();
-        //}
-
-        //if (Input.GetKeyDown(KeyCode.R) && loadBullets < maxLoadBulletCount)
         if (loadBullets == 0 && maxLoadBulletCount != 0)
         {
             state = State.Loading;
@@ -183,7 +174,6 @@ public class PEA_PistolGun : MonoBehaviour
 
         // 총구의 앞방향으로 레이를 쏘고, 거리에 따라 데미지 측정
         Debug.DrawRay(firePos.position, firePos.forward * rayDistance, Color.red);
-        //Destroy(Instantiate(bulletPrefab, firePos[i].position, firePos[i].rotation), 0.625f);
         if (Physics.Raycast(firePos.position, firePos.forward, out hit, rayDistance))
         {
             SetDamage(Vector3.Distance(transform.position, hit.point), isCritical);
@@ -203,7 +193,7 @@ public class PEA_PistolGun : MonoBehaviour
 
     private void Rebound()
     {
-        transform.Rotate(reboundAngle, 0, 0);
+        transform.localEulerAngles += new Vector3(reboundAngle, 0, 0);
         sumReboundAngle = transform.eulerAngles.x - 360f;
         x = sumReboundAngle;
         isRebounding = true;
@@ -212,10 +202,10 @@ public class PEA_PistolGun : MonoBehaviour
     private void ReboundRecovery()
     {
         x -= sumReboundAngle * (Time.deltaTime / reboundRecoveryTime);
-        transform.eulerAngles = new Vector3(x, 0, 0);
+        transform.localEulerAngles = new Vector3(x, 0, 0);
         if (x >= 0)
         {
-            transform.rotation = Quaternion.Euler(Vector3.zero);
+            transform.localEulerAngles = Vector3.zero;
             isRebounding = false;
         }
     }
