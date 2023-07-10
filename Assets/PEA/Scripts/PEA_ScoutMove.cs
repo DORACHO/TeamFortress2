@@ -23,6 +23,8 @@ public class PEA_ScoutMove : MonoBehaviour
     private State state = State.Idle;
     private WeaponState weaponState = WeaponState.PistolGun;
 
+    // 변수들
+    #region
     private int curPatrolPoint = -1;                                         // 현재 순찰가는 순찰포인트
     private int prevPatrolPoint = -1;                                        // 이전에 순찰갔던 순찰포인트
     private int jumpCount = 0;
@@ -45,9 +47,12 @@ public class PEA_ScoutMove : MonoBehaviour
     private readonly float attackRange = 10f;                                // 공격 반경
     private readonly float maxDistanceWithPlayer = 5f;                       // 플레이어와 유지할 최대 거리
 
-    // 순찰과 관련된 변수들ㄴ
+    // 순찰과 관련된 변수들
     private readonly float minWaitTime = 1f;                                 // 목적지에 도착 후 멈춰있는 최소시간
     private readonly float maxWaitTime = 5f;                                 // 목적지에 도착 후 멈춰있는 최대시간
+
+    // 시야각과 관련된 변수들
+    List<Collider> hitTargetList = new List<Collider>();                     // 시야각 안에 들어온 오브젝트들의 콜라이더를 담을 리스트
 
     private Vector3 dir = Vector3.zero;
     private Vector3 target = Vector3.zero;
@@ -60,6 +65,7 @@ public class PEA_ScoutMove : MonoBehaviour
 
     // 에디터에서 연결해줄 변수들
     public Transform[] patrolPoints;                                       // 랜덤으로 순찰할 지점들
+    #endregion
 
     // Start is called before the first frame update
     void Start()
@@ -74,15 +80,6 @@ public class PEA_ScoutMove : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //GetInputValues();
-        //Move();
-        //print(speed);
-
-        //SetRandomTarget();
-        //if (Input.GetMouseButtonDown(0))
-        //{
-        //    Fire();
-        //}
         print(state);
         switch (state)
         {
@@ -98,6 +95,7 @@ public class PEA_ScoutMove : MonoBehaviour
 
             case State.Attack:
                 Attack();
+                CheackDistance();
                 break;
 
             case State.Damage:
@@ -108,12 +106,35 @@ public class PEA_ScoutMove : MonoBehaviour
         }
     }
 
+    Vector3 AngleToDir(float angle)
+    {
+        float radian = angle * Mathf.Deg2Rad;
+        return new Vector3(Mathf.Sin(radian), 0f, Mathf.Cos(radian));
+    }
+
     private void OnDrawGizmos()
     {
         Gizmos.DrawWireSphere(transform.position, attackRange);
-        Debug.DrawRay(transform.position, -transform.right * 0.3f, Color.blue, attackRange);
-        Debug.DrawRay(transform.position, transform.right * 0.3f, Color.blue, attackRange);
+        Debug.DrawRay(transform.position, AngleToDir(30f) * attackRange, Color.blue);
+        Debug.DrawRay(transform.position, AngleToDir(-30f) * attackRange, Color.blue);
+        //Debug.DrawRay(transform.position, player.position - transform.position.normalized, Color.yellow);
         Debug.DrawRay(transform.position, transform.forward * attackRange, Color.cyan);
+
+        hitTargetList.Clear();
+        Collider[] Targets = Physics.OverlapSphere(transform.position, attackRange, LayerMask.NameToLayer("Player"));
+
+        if (Targets.Length == 0) return;
+        foreach (Collider EnemyColli in Targets)
+        {
+            Vector3 targetPos = EnemyColli.transform.position;
+            Vector3 targetDir = (targetPos - transform.position).normalized;
+            float targetAngle = Mathf.Acos(Vector3.Dot(transform.forward, targetDir)) * Mathf.Rad2Deg;
+            if (targetAngle <= attackRange * 0.5f && !Physics.Raycast(transform.position, targetDir, attackRange, LayerMask.NameToLayer("Obstacle")))
+            {
+                hitTargetList.Add(EnemyColli);
+                Debug.DrawLine(transform.position, targetPos, Color.red);
+            }
+        }
     }
 
     private void GetInputValues()
@@ -214,11 +235,15 @@ public class PEA_ScoutMove : MonoBehaviour
 
     private void CheackDistance()
     {
-        print("player distance");
         distanceWithPlayer = Vector3.Distance(transform.position, player.position);
         if(distanceWithPlayer <= attackRange)
         {
             IsPlayerInSight();
+        }
+        else if(state == State.Attack)
+        {
+            state = State.Idle;
+            SetRandomWaitTime();
         }
     }
 
@@ -229,6 +254,7 @@ public class PEA_ScoutMove : MonoBehaviour
 
         if(Vector3.Angle(transform.forward, dirToPlayer) <= 30)
         {
+            print(Vector3.Angle(transform.forward, dirToPlayer));
             print("insight");
             isInSight = true;
             nav.isStopped = true;
