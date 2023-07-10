@@ -115,8 +115,8 @@ public class PEA_ScoutMove : MonoBehaviour
     private void OnDrawGizmos()
     {
         Gizmos.DrawWireSphere(transform.position, attackRange);
-        Debug.DrawRay(transform.position, AngleToDir(30f) * attackRange, Color.blue, attackRange);
-        Debug.DrawRay(transform.position, AngleToDir(-30f) * attackRange, Color.blue, attackRange);
+        Debug.DrawRay(transform.position, AngleToDir(30f) * attackRange, Color.blue);
+        Debug.DrawRay(transform.position, AngleToDir(-30f) * attackRange, Color.blue);
         //Debug.DrawRay(transform.position, player.position - transform.position.normalized, Color.yellow);
         Debug.DrawRay(transform.position, transform.forward * attackRange, Color.cyan);
 

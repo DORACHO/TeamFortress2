@@ -262,6 +262,7 @@ public class PEA_Wagon : MonoBehaviour
                     step++;
                     SetTarget();
                 }
+                state = State.Move;
                 isMoving = true;
                 isBacking = false;
 
