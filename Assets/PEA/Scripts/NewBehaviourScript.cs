@@ -8,6 +8,8 @@ public class NewBehaviourScript : MonoBehaviour
     private float y = 0f;
     private float rotateSpeed = 90f;
 
+    public Transform player;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -17,23 +19,12 @@ public class NewBehaviourScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (isRight)
-        {
-            y += rotateSpeed * Time.deltaTime;
-            if (y >= 90f)
-            {
-                isRight = false;
-            }
-        }
-        else
-        {
-            y -= rotateSpeed * Time.deltaTime;
-            if (y <= -90f)
-            {
-                isRight = true;
-            }
-        }
+        Vector3 dirToPlayer = player.position - transform.position.normalized;
 
-        transform.localEulerAngles = new Vector3(0, y, 0);
+        print(Vector3.Angle(transform.forward, dirToPlayer));
+        if (Vector3.Angle(transform.forward, dirToPlayer) <= 30)
+        {
+            print("attack");
+        }
     }
 }

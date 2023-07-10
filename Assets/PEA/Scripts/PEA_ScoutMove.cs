@@ -38,6 +38,7 @@ public class PEA_ScoutMove : MonoBehaviour
     private bool isJumpKeyDown = false;
     private bool isArrived = false;
     private bool isInSight = true;                                           // 플레이어가 시야 안에 있는지 확인
+    private bool isRotate = false;
 
     private readonly int maxJumpCount = 2;
     private readonly float jumpPower = 5f;
@@ -95,6 +96,10 @@ public class PEA_ScoutMove : MonoBehaviour
 
             case State.Attack:
                 Attack();
+                if (isRotate)
+                {
+                    LookAtPlayer();
+                }
                 CheackDistance();
                 break;
 
@@ -106,76 +111,36 @@ public class PEA_ScoutMove : MonoBehaviour
         }
     }
 
-    Vector3 AngleToDir(float angle)
-    {
-        float radian = angle * Mathf.Deg2Rad;
-        return new Vector3(Mathf.Sin(radian), 0f, Mathf.Cos(radian));
-    }
+    //Vector3 AngleToDir(float angle)
+    //{
+    //    float radian = angle * Mathf.Deg2Rad;
+    //    return new Vector3(Mathf.Sin(radian), 0f, Mathf.Cos(radian));
+    //}
 
-    private void OnDrawGizmos()
-    {
-        Gizmos.DrawWireSphere(transform.position, attackRange);
-        Debug.DrawRay(transform.position, AngleToDir(30f) * attackRange, Color.blue);
-        Debug.DrawRay(transform.position, AngleToDir(-30f) * attackRange, Color.blue);
-        //Debug.DrawRay(transform.position, player.position - transform.position.normalized, Color.yellow);
-        Debug.DrawRay(transform.position, transform.forward * attackRange, Color.cyan);
+    //private void OnDrawGizmos()
+    //{
+    //    Gizmos.DrawWireSphere(transform.position, attackRange);
+    //    Debug.DrawRay(transform.position, transform.forward + AngleToDir(30f) * attackRange, Color.blue);
+    //    Debug.DrawRay(transform.position, transform.forward + AngleToDir(-30f) * attackRange, Color.blue);
+    //    //Debug.DrawRay(transform.position, player.position - transform.position.normalized, Color.yellow);
+    //    Debug.DrawRay(transform.position, transform.forward * attackRange, Color.cyan);
 
-        hitTargetList.Clear();
-        Collider[] Targets = Physics.OverlapSphere(transform.position, attackRange, LayerMask.NameToLayer("Player"));
+    //    hitTargetList.Clear();
+    //    Collider[] Targets = Physics.OverlapSphere(transform.position, attackRange, LayerMask.NameToLayer("Player"));
 
-        if (Targets.Length == 0) return;
-        foreach (Collider EnemyColli in Targets)
-        {
-            Vector3 targetPos = EnemyColli.transform.position;
-            Vector3 targetDir = (targetPos - transform.position).normalized;
-            float targetAngle = Mathf.Acos(Vector3.Dot(transform.forward, targetDir)) * Mathf.Rad2Deg;
-            if (targetAngle <= attackRange * 0.5f && !Physics.Raycast(transform.position, targetDir, attackRange, LayerMask.NameToLayer("Obstacle")))
-            {
-                hitTargetList.Add(EnemyColli);
-                Debug.DrawLine(transform.position, targetPos, Color.red);
-            }
-        }
-    }
-
-    private void GetInputValues()
-    {
-        x = Input.GetAxisRaw("Horizontal");
-        z = Input.GetAxisRaw("Vertical");
-        dir = new Vector3(x, 0, z).normalized;
-
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            if(jumpCount < maxJumpCount)
-            {
-                isJumpKeyDown = true;
-            }
-        }
-    }
-
-    private void Move()
-    {
-        if(z >= 0)
-        {
-            speed = forwardSpeed;
-            if(z == 0 && x == 0)
-            {
-                speed = 0f;
-            }
-        }
-        else if(z < 0)
-        {
-            speed = backwardSpeed;
-        }
-
-        transform.Translate(dir * speed * Time.deltaTime);
-
-        if (isJumpKeyDown && jumpCount < maxJumpCount)
-        {
-            rig.AddForce(transform.up * jumpPower, ForceMode.Impulse);
-            jumpCount++;
-            isJumpKeyDown = false;
-        }
-    }
+    //    if (Targets.Length == 0) return;
+    //    foreach (Collider EnemyColli in Targets)
+    //    {
+    //        Vector3 targetPos = EnemyColli.transform.position;
+    //        Vector3 targetDir = (targetPos - transform.position).normalized;
+    //        float targetAngle = Mathf.Acos(Vector3.Dot(transform.forward, targetDir)) * Mathf.Rad2Deg;
+    //        if (targetAngle <= attackRange * 0.5f && !Physics.Raycast(transform.position, targetDir, attackRange, LayerMask.NameToLayer("Obstacle")))
+    //        {
+    //            hitTargetList.Add(EnemyColli);
+    //            Debug.DrawLine(transform.position, targetPos, Color.red);
+    //        }
+    //    }
+    //}
 
     private void Patrol()
     {
@@ -189,19 +154,6 @@ public class PEA_ScoutMove : MonoBehaviour
         {
             CheckIsArrived();
         }
-    }
-
-    // 랜덤으로 이동할 위치 정하기
-    private void SetRandomTarget()
-    {
-        // 목적지까지 남은 거리가 0.2f 이하일 때 목적지 재설정
-        //if(nav.remainingDistance <= 0.5f)
-        //{
-            x = Random.Range(player.position.x - maxDistanceWithPlayer, player.position.x + maxDistanceWithPlayer);
-            z = Random.Range(player.position.z - maxDistanceWithPlayer, player.position.z + maxDistanceWithPlayer);
-            target = new Vector3(x, transform.position.y, z);
-            nav.SetDestination(target);
-        //}
     }
 
     private void SetRandomWaitTime()
@@ -242,8 +194,8 @@ public class PEA_ScoutMove : MonoBehaviour
         }
         else if(state == State.Attack)
         {
-            state = State.Idle;
             SetRandomWaitTime();
+            state = State.Idle;
         }
     }
 
@@ -252,12 +204,13 @@ public class PEA_ScoutMove : MonoBehaviour
         print("check insight");
         Vector3 dirToPlayer = player.position - transform.position.normalized;
 
+        print(Vector3.Angle(transform.forward, dirToPlayer));
         if(Vector3.Angle(transform.forward, dirToPlayer) <= 30)
         {
-            print(Vector3.Angle(transform.forward, dirToPlayer));
             print("insight");
             isInSight = true;
             nav.isStopped = true;
+            nav.updateRotation = false;
             state = State.Attack;
         }
     }
@@ -269,6 +222,7 @@ public class PEA_ScoutMove : MonoBehaviour
         if(curTime >= 3f)
         {
             Fire();
+            curTime = 0f;
         }
     }
 
@@ -281,6 +235,8 @@ public class PEA_ScoutMove : MonoBehaviour
             //SetRandomTarget();
             SetRandomPatrolPoint();
             state = State.Move;
+            nav.isStopped = false;
+            nav.updateRotation = true;
         }
     }
 
@@ -295,6 +251,19 @@ public class PEA_ScoutMove : MonoBehaviour
             case WeaponState.PistolGun:
                 pistolGun.Fire();
                 break;
+        }
+    }
+
+    private void LookAtPlayer()
+    {
+        Vector3 dir = player.position - transform.position;
+
+        transform.localEulerAngles = Vector3.Lerp(transform.localEulerAngles, dir, 10 * Time.deltaTime);
+
+        if(transform.localEulerAngles.normalized.y - dir.y <= 1f)
+        {
+            transform.localEulerAngles = dir;
+            isRotate = false;
         }
     }
 
