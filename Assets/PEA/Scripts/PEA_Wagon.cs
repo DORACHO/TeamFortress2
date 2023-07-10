@@ -79,7 +79,7 @@ public class PEA_Wagon : MonoBehaviour
 
         //}
 
-        print(target);
+        print(target.transform.gameObject);
         print(state);
         //print("isBacking : " + isBacking);
         //print("isNearRed" + isNearRed);
@@ -170,11 +170,13 @@ public class PEA_Wagon : MonoBehaviour
 
         //transform.localEulerAngles = nav.velocity;
 
-        if (Physics.Raycast(transform.position, Vector3.down, out hit, 2f))
+        if (Physics.Raycast(transform.position, Vector3.down, out hit, 2f, LayerMask.NameToLayer("Rail")))
         {
             //nav.updateRotation = false;
             //print(hit.normal);
             transform.eulerAngles = new Vector3(hit.transform.eulerAngles.x, transform.eulerAngles.y, transform.eulerAngles.z);
+            //transform.forward = hit.transform.forward;
+            //print(hit.transform.gameObject);
             //transform.Rotate(hit.transform.eulerAngles.x, 0, 0);
 
             //Quaternion q = Quaternion.LookRotation(hit.transform.forward, hit.normal);
