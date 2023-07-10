@@ -27,54 +27,60 @@ public class EJPlayerConstruct : MonoBehaviour
         //Construct 선택창이 켜진다.
         if (Input.GetKeyDown(KeyCode.Q))
         {
-            
-            ONConsturctSelection();
-                //SentryGun
-                if (Input.GetKeyDown(KeyCode.Alpha1) && EJPSGoldOnHand.instance.GOLD >= 130)
-                {
-                    EJPSGoldOnHand.instance.GOLD -= 130;
-                    GameObject centryGun = Instantiate(sentryGunFactory);
-                    centryGun.transform.position = constructPosition.transform.position;
-                    OFFConstructSelection();
-                }
-
-                //Dispenser
-                if (Input.GetKeyDown(KeyCode.Alpha2) && EJPSGoldOnHand.instance.GOLD >= 100)
-                {
-                    EJPSGoldOnHand.instance.GOLD -= 100;
-                    GameObject dispenser = Instantiate(dispenserFactory);
-                    dispenser.transform.position = constructPosition.transform.position;
-                    OFFConstructSelection();
-                }
-
-                //Teleport_enter
-                if (Input.GetKeyDown(KeyCode.Alpha3) && EJPSGoldOnHand.instance.GOLD >= 50)
-                {
-                    EJPSGoldOnHand.instance.GOLD -= 150;
-                    GameObject teleportEnter = Instantiate(teleportEnterFactory);
-                    teleportEnter.transform.position = constructPosition.transform.position;
-                    OFFConstructSelection();
-                }
-
-                //Teleport_exit
-                if (Input.GetKeyDown(KeyCode.Alpha4) && EJPSGoldOnHand.instance.GOLD >= 50)
-                {
-                    EJPSGoldOnHand.instance.GOLD -= 150;
-                    GameObject teleportExit = Instantiate(teleportExitFactory);
-                    teleportExit.transform.position = constructPosition.transform.position;
-                    OFFConstructSelection();
-                }
-            
-            //Q를 한 번 더 누르면 선택창이 꺼진다.
-            if (Input.GetKeyDown(KeyCode.Q))
+            if (UIConstructSelection.activeSelf)
             {
+                OFFConstructSelection();
+            }
+            else
+            {
+                ONConsturctSelection();                 
+            }
+        }
+
+        if (UIConstructSelection.activeSelf)
+        {           
+            //SentryGun
+            if (Input.GetKeyDown(KeyCode.Alpha1) && EJPSGoldOnHand.instance.GOLD >= 130)
+            {
+                EJPSGoldOnHand.instance.GOLD -= 130;
+                GameObject centryGun = Instantiate(sentryGunFactory);
+                centryGun.transform.position = constructPosition.transform.position;
+                OFFConstructSelection();
+            }
+
+            //Dispenser
+            if (Input.GetKeyDown(KeyCode.Alpha2) && EJPSGoldOnHand.instance.GOLD >= 100)
+            {
+                EJPSGoldOnHand.instance.GOLD -= 100;
+                GameObject dispenser = Instantiate(dispenserFactory);
+                dispenser.transform.position = constructPosition.transform.position;
+                OFFConstructSelection();
+            }
+
+            //Teleport_enter
+            if (Input.GetKeyDown(KeyCode.Alpha3) && EJPSGoldOnHand.instance.GOLD >= 50)
+            {
+                EJPSGoldOnHand.instance.GOLD -= 150;
+                GameObject teleportEnter = Instantiate(teleportEnterFactory);
+                teleportEnter.transform.position = constructPosition.transform.position;
+                OFFConstructSelection();
+            }
+
+            //Teleport_exit
+            if (Input.GetKeyDown(KeyCode.Alpha4) && EJPSGoldOnHand.instance.GOLD >= 50)
+            {
+                EJPSGoldOnHand.instance.GOLD -= 150;
+                GameObject teleportExit = Instantiate(teleportExitFactory);
+                teleportExit.transform.position = constructPosition.transform.position;
                 OFFConstructSelection();
             }
         }
     }
+
+
     void ONConsturctSelection()
     {
-        UIConstructSelection.gameObject.SetActive(true);
+        UIConstructSelection.SetActive(true);
         print("q pressed");
     }
 

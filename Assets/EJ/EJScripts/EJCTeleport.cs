@@ -21,9 +21,8 @@ public class EJCTeleport : MonoBehaviour
 {
     bool isTeam;
     bool isBothThere;
-    public bool isPlayerEnter;
 
-    public GameObject targetObj;
+    GameObject targetObj;
     public GameObject enterance;
     public GameObject exit;
 
@@ -42,32 +41,10 @@ public class EJCTeleport : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        //bool을 가져오는 방법?
-        //if (other.name.Contains("Enemy"))
-        
+        targetObj = other.gameObject;
 
-            targetObj = other.gameObject;
-
-        //EJConstructTeleportExit exit = other.GetComponent<EJConstructTeleportExit>();
-
-        //if(exit.isTeam == true)
-        //{
-
-        //}
         EJPlayerMove pm = other.GetComponent<EJPlayerMove>();
         pm.Teleport(exit.transform.position);
-       // teleport();
-
-
-
     }
 
-
-    //private void teleport()
-    //{
-
-    //    targetObj.transform.position = exit.transform.position;
-
-
-    //}
 }

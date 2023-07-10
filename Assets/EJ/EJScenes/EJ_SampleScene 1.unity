@@ -510,7 +510,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &312026167
 RectTransform:
   m_ObjectHideFlags: 0
@@ -754,7 +754,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &664002853
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3310,12 +3310,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a49eef527a6376a498bc73d1cbacf5ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sentryGunFactory: {fileID: 2614009983193267655, guid: 69d4fc6bc04756047ba60728bd995399, type: 3}
-  dispenserFactory: {fileID: 2614009983193267655, guid: 69d4fc6bc04756047ba60728bd995399, type: 3}
-  teleportEnterFactory: {fileID: 2614009983193267655, guid: 69d4fc6bc04756047ba60728bd995399, type: 3}
-  teleportExitFactory: {fileID: 2614009983193267655, guid: 69d4fc6bc04756047ba60728bd995399, type: 3}
+  sentryGunFactory: {fileID: 7370301582402214407, guid: 69d4fc6bc04756047ba60728bd995399, type: 3}
+  dispenserFactory: {fileID: 7370301582402214407, guid: 69d4fc6bc04756047ba60728bd995399, type: 3}
+  teleportEnterFactory: {fileID: 7370301582402214407, guid: 69d4fc6bc04756047ba60728bd995399, type: 3}
+  teleportExitFactory: {fileID: 7370301582402214407, guid: 69d4fc6bc04756047ba60728bd995399, type: 3}
   constructPosition: {fileID: 1057812488}
-  UIConstructSelection: {fileID: 664002852}
+  UIConstructSelection: {fileID: 312026166}
 --- !u!114 &1766140786
 MonoBehaviour:
   m_ObjectHideFlags: 0

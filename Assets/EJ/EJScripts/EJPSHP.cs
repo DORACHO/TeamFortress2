@@ -5,7 +5,13 @@ using UnityEngine;
 
 public class EJPSHP : MonoBehaviour
 {
-    
+    public static EJPSHP instance;
+
+    private void Awake()
+    {
+        instance = this;
+    }
+
     public int normalHP = 125;
     public int overcuredHP = 185;
     public int emergencyOvercuredHP = 158;
