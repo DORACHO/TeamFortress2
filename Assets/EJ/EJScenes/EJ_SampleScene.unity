@@ -2716,6 +2716,11 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1740387854 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 450425431821620231, guid: d5ddb647e7c40a541a5148043bccfd72, type: 3}
+  m_PrefabInstance: {fileID: 450425432303182345}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1783552634 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2625197385462713509, guid: 13b48fd13601b064aa9c171ef4fd111d, type: 3}
@@ -3444,9 +3449,17 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1087002171}
     - target: {fileID: 450425431921690983, guid: d5ddb647e7c40a541a5148043bccfd72, type: 3}
+      propertyPath: gun
+      value: 
+      objectReference: {fileID: 1740387854}
+    - target: {fileID: 450425431921690983, guid: d5ddb647e7c40a541a5148043bccfd72, type: 3}
       propertyPath: hpText
       value: 
       objectReference: {fileID: 1087002171}
+    - target: {fileID: 450425431921690983, guid: d5ddb647e7c40a541a5148043bccfd72, type: 3}
+      propertyPath: firePosition
+      value: 
+      objectReference: {fileID: 3510963609355886683}
     - target: {fileID: 450425431921690983, guid: d5ddb647e7c40a541a5148043bccfd72, type: 3}
       propertyPath: leftBulletText
       value: 
@@ -3455,6 +3468,10 @@ PrefabInstance:
       propertyPath: bulletRulletText
       value: 
       objectReference: {fileID: 711149766}
+    - target: {fileID: 450425431921690983, guid: d5ddb647e7c40a541a5148043bccfd72, type: 3}
+      propertyPath: bulletmuzzleImpactFactory
+      value: 
+      objectReference: {fileID: 100006, guid: eba35a7701dd7754a87b1e19dd64dc03, type: 3}
     - target: {fileID: 450425431921690990, guid: d5ddb647e7c40a541a5148043bccfd72, type: 3}
       propertyPath: m_Name
       value: Player
@@ -3479,6 +3496,10 @@ PrefabInstance:
       propertyPath: itemBulletBoxS
       value: 
       objectReference: {fileID: 1369520945}
+    - target: {fileID: 450425432830948635, guid: d5ddb647e7c40a541a5148043bccfd72, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d5ddb647e7c40a541a5148043bccfd72, type: 3}
 --- !u!1001 &519321222120921772
@@ -3656,3 +3677,8 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 13b48fd13601b064aa9c171ef4fd111d, type: 3}
+--- !u!4 &3510963609355886683 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3961277913600393810, guid: d5ddb647e7c40a541a5148043bccfd72, type: 3}
+  m_PrefabInstance: {fileID: 450425432303182345}
+  m_PrefabAsset: {fileID: 0}

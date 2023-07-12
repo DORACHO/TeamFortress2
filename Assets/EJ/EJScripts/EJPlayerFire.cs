@@ -15,21 +15,26 @@ public class EJPlayerFire : MonoBehaviour
 
     //총알 효과를 담아줄 공장
     public GameObject[] bulletImpactFactories;
-
+    public GameObject bulletmuzzleImpactFactory;
+    public Transform firePosition;
 
     //Fire 변수들
+    RaycastHit hitInfo;
+    float impactTime = 2;
+    
+
     //현재까지 쏜 총알의 수
     int fireCount;
     int rulletFireCount;
 
     //장전한 총알
-    public int maxBulletRullet = 6;
-    public int leftBulletRullet;
+    int maxBulletRullet = 6;
+    int leftBulletRullet;
 
     //남은 총알 수
-    public int leftBullet;
+    int leftBullet;
     //총 총알 수 (탄창까지 합친 것)
-    public int maxbullet = 32;
+    int maxbullet = 32;
 
 
     //총알 불렛에 들어있는 총알 수 (max:6)
@@ -69,8 +74,7 @@ public class EJPlayerFire : MonoBehaviour
        if (Input.GetKeyDown(KeyCode.R))
         {
             fireCount = 0;
-            leftBullet = maxbullet;
-            
+            leftBullet = maxbullet;          
         }
     }
 
@@ -90,13 +94,28 @@ public class EJPlayerFire : MonoBehaviour
 
                 Ray ray = new Ray(Camera.main.transform.position, Camera.main.transform.forward);
 
-                //피격 레이어
-                //1. enemy
-                //2. Construct
+                //총구에서 효과 나오기
+                GameObject bulletmuzzleImpact = Instantiate(bulletmuzzleImpactFactory);
+                bulletmuzzleImpact.transform.position = firePosition.transform.position;
+
+                if (currentTime > impactTime)
+                {
+                    Destroy(bulletmuzzleImpact);
+                    currentTime = 0;
+                }
 
                 int layer = (1 << LayerMask.NameToLayer("Default"));
-                RaycastHit hitInfo;
 
+                //쏘면 knockback
+                EJCameraRotate knockback = GetComponentInChildren <EJCameraRotate>();
+
+                if (knockback != null)
+                {
+                    //knockback.KnockBack(hitInfo);
+                    knockback.StartKnockBack();
+                }
+
+                //fireCount UI계산
                 fireCount++;
                 rulletFireCount++;
 
@@ -128,11 +147,13 @@ public class EJPlayerFire : MonoBehaviour
                 if (Physics.Raycast(ray, out hitInfo, float.MaxValue, layer))
                 {
                     GameObject bulletImpact = Instantiate(bulletImpactFactories[(int)bulletImpactName.Floor]);
-
+                    
                     bulletImpact.transform.localScale = Vector3.one;
                     bulletImpact.transform.position = hitInfo.point;
-
                     bulletImpact.transform.forward = hitInfo.normal;
+
+                    //총구의 앞방향이 crossHair을 보게 한다.
+                    //gun.transform.LookAt(hitInfo.transform);
 
                     //맞은 곳에 따른 태그와 비교 필요
                     isAttackHit = true;
@@ -160,7 +181,6 @@ public class EJPlayerFire : MonoBehaviour
     {        
         leftBulletRullet += maxBulletRullet;
     }
-
 
 
     #region fire관련 UI표시 프로퍼티

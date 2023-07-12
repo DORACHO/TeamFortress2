@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class EJPlayerMove : MonoBehaviour
 {
+    public Animator anim;
     CharacterController cc;
 
     //Move 변수
@@ -12,9 +13,11 @@ public class EJPlayerMove : MonoBehaviour
     public float speedBackward;
     public float speedCrawl;
 
+    float knockbackSpeed = 5;
+
     //Jump 변수
-    public float jumpPower = 5;
-    public float gravity = -9.81f;
+    float jumpPower = 5;
+    float gravity = -9.81f;
     float yVelocity;
 
     int jumpCount;
@@ -59,7 +62,7 @@ public class EJPlayerMove : MonoBehaviour
 
             //Crawl
             //카메라 위치(시선)이 내려간다.
-            cam.transform.localPosition = new Vector3(0, -0.5f, 0); 
+            //cam.transform.localPosition = new Vector3(0, -0.5f, 0); 
         }
 
         //Move
@@ -89,6 +92,8 @@ public class EJPlayerMove : MonoBehaviour
 
     }
 
+
+
     //Teleport
     public void Teleport(Vector3 exitPos)
     {
@@ -96,4 +101,6 @@ public class EJPlayerMove : MonoBehaviour
         transform.position = exitPos;
         cc.enabled = true;
     }
+
+    
 }

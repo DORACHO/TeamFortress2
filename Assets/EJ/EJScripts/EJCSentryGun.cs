@@ -14,7 +14,7 @@ public class EJCSentryGun : MonoBehaviour
     //Fire target
     public LayerMask enemyLayer;
     GameObject target;
-    bool isEnemy = true;
+    //bool isEnemy = true;
     float attackRange = 8;
     int fireCount;
     int maxFireCount = 1;
