@@ -1,0 +1,6 @@
+# Made in Blockbench 3.2.2
+newmtl 0
+map_Kd syringe_gun.png 
+newmtl 1
+map_Kd hole.png 
+newmtl none
