@@ -359,6 +359,9 @@ MonoBehaviour:
   timeInterval: 0.1
   maxMultiplier: 10
   multiplierDistanceThreshold: 2
+  target: {fileID: 0}
+  attackRange: 5
+  state: 0
 --- !u!143 &6965893659779487515
 CharacterController:
   m_ObjectHideFlags: 0
@@ -421,7 +424,6 @@ MonoBehaviour:
   baseHPIncrease: 1
   HPIncrease: 0
   maxHP: 185
-  minMP: 0
   MPDecrease: 0
   HPIncreaseTimer: 0
   VFX: {fileID: 1095695559394279453, guid: a5e34ba6dd05b4f4480d0a76bc780d6e, type: 3}

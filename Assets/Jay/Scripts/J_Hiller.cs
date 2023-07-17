@@ -40,7 +40,7 @@ public class J_Hiller : MonoBehaviour
     NavMeshAgent agent;
     CharacterController cc;
     float timer = 0f;
-    bool isMovingBackward = false;
+    //bool isMovingBackward = false;
     Animator anim;
     public float attackRange = 5;
     Vector3 dir;

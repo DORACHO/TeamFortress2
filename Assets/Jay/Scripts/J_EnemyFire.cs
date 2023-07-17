@@ -1,4 +1,5 @@
 using JetBrains.Rider.Unity.Editor;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,10 +9,15 @@ using UnityEngine;
 //힐을 받게되면 HP가 올라간다
 //HP가 올라가면 MP는 줄어든다
 
+
+// ObjectPool처리하고싶다
+// 태어날 때 총알을 미리 만들어서 총알목록에 등록하고 비활성화 해놓고
+// 총알이 발사될때 목록에서 하나 가져와서 활성화하고싶다
+// 총알이 화면밖에 나가거나 적과 부딪혔다면 비활성화하고싶다
 public class J_EnemyFire : MonoBehaviour
 {
     //public float hillCheckDistance = 10f;
-    public LayerMask playerLayer;
+    public LayerMask playerLayer; 
     private int playerlayer;
     private bool isFire = false;
     public float speed = 15f;
@@ -31,6 +37,7 @@ public class J_EnemyFire : MonoBehaviour
     public GameObject VFX;
     private AudioSource audioSource;
     public AudioClip HealClip;
+    float currTime = 0;
 
 
     // Start is called before the first frame update
@@ -40,7 +47,6 @@ public class J_EnemyFire : MonoBehaviour
         //플레이어의 레이어 값 추출
         playerlayer = LayerMask.NameToLayer("Player");
         audioSource = GetComponent<AudioSource>();
-        
     }
 
     // Update is called once per frame
@@ -63,57 +69,57 @@ public class J_EnemyFire : MonoBehaviour
         //레이캐스트에 적 캐릭터가 닿았을 때 자동발사
         if (!isReloading && isFire)
         {
-            if (Time.deltaTime >= nextFireTime)
-            {
-                Fire();
-            }
-        }
-
-        {
             Fire();
-        }
-
-        void Fire()
-        {
-            Ray ray = new Ray(firePosition.position, firePosition.forward);
-            RaycastHit hit;
-
-            if (Physics.Raycast(ray, out hit, Mathf.Infinity, playerLayer))
+            currTime += Time.deltaTime;
+            if (currTime >= nextFireTime)
             {
-                PlayHealSound();
-                GameObject bullet = Instantiate(bulletFactory, firePosition.position, firePosition.rotation);
-                bullet.GetComponent<Rigidbody>().velocity = bullet.transform.up * speed;
-                //HP를 증가시키자
-                //int HPIncrease = baseHPIncrease ;
-                //HP를 시간에 따라 증가시키자
-                HPIncreaseTimer += Time.deltaTime;
+                //Fire();
+                currTime = 0;
+            }
+        }
+    }
 
-                if (HPManager.instance.HP > maxHP)
-                {
-                    HPManager.instance.HP = maxHP;
-                }
-                if (HPManager.instance.HP < maxHP)
-                {
-                    HPManager.instance.HP += 10 * Time.deltaTime;
-                }
-                //if(MPManager.instance.MP > minMP)
-                {
+    void Fire()
+    {
+        Ray ray = new Ray(firePosition.position, firePosition.forward);
+        RaycastHit hit;
+
+        if (Physics.Raycast(ray, out hit, Mathf.Infinity, playerLayer))
+        {
+            PlayHealSound();
+            //GameObject bullet = Instantiate(bulletFactory, firePosition.position, firePosition.rotation);
+            //bullet.GetComponent<Rigidbody>().velocity = bullet.transform.up * speed;
+            //HP를 증가시키자
+            //int HPIncrease = baseHPIncrease ;
+            //HP를 시간에 따라 증가시키자
+            HPIncreaseTimer += Time.deltaTime;
+
+            if (HPManager.instance.HP > maxHP)
+            {
+                HPManager.instance.HP = maxHP;
+            }
+            if (HPManager.instance.HP < maxHP)
+            {
+                HPManager.instance.HP += 10 * Time.deltaTime;
+            }
+            //if(MPManager.instance.MP > minMP)
+            {
                 //    MPManager.instance.MP -= 10 * Time.deltaTime;
-                }
-               // else
-                {
-                //    MPManager.instance.MP = 0;
-                }
-                VFX.transform.position = this.transform.position - new Vector3(5, 1, 0);
-   
             }
-        }
-        void PlayHealSound()
-        {
-            if(audioSource != null && HealClip != null)
+            // else
             {
-                audioSource.PlayOneShot(HealClip);
+                //    MPManager.instance.MP = 0;
             }
+            VFX.transform.position = firePosition.position;
+            J_ObjectPool.instance.Fire();
+            //bullet.SetActive(true);
+        }
+    }
+    void PlayHealSound()
+    {
+        if (audioSource != null && HealClip != null)
+        {
+            audioSource.PlayOneShot(HealClip);
         }
     }
 }

@@ -109,5 +109,16 @@ public class J_Medic : MonoBehaviour
         anim.SetTrigger("Move");
         agent.isStopped = false;
     }
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.name.Contains("Player"))
+        {
+            Destroy(collision.gameObject);
+        }
+        else
+        {
+           
+        }
+    }
 
 }
