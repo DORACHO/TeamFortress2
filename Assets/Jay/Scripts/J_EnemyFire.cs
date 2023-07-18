@@ -70,6 +70,7 @@ public class J_EnemyFire : MonoBehaviour
         if (!isReloading && isFire)
         {
             Fire();
+            PlayHealSound();
             currTime += Time.deltaTime;
             if (currTime >= nextFireTime)
             {
@@ -77,16 +78,18 @@ public class J_EnemyFire : MonoBehaviour
                 currTime = 0;
             }
         }
+        else if (audioSource.isPlaying)
+        {
+            StopSound();
+        }
     }
 
     void Fire()
     {
         Ray ray = new Ray(firePosition.position, firePosition.forward);
         RaycastHit hit;
-
         if (Physics.Raycast(ray, out hit, Mathf.Infinity, playerLayer))
         {
-            PlayHealSound();
             //GameObject bullet = Instantiate(bulletFactory, firePosition.position, firePosition.rotation);
             //bullet.GetComponent<Rigidbody>().velocity = bullet.transform.up * speed;
             //HP를 증가시키자
@@ -117,9 +120,15 @@ public class J_EnemyFire : MonoBehaviour
     }
     void PlayHealSound()
     {
-        if (audioSource != null && HealClip != null)
+        print("asdf");
+        if (!audioSource.isPlaying)
         {
-            audioSource.PlayOneShot(HealClip);
+            audioSource.clip = HealClip;
+            audioSource.Play();
         }
+    }
+    void StopSound()
+    {
+        audioSource.Stop();
     }
 }

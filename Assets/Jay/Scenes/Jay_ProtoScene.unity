@@ -1506,6 +1506,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 60668137471901635, guid: a2ead37b0d1eebd47baf430b9e7d57cf, type: 3}
+      propertyPath: Loop
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 60668137471901635, guid: a2ead37b0d1eebd47baf430b9e7d57cf, type: 3}
+      propertyPath: m_PlayOnAwake
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 60668137471901636, guid: a2ead37b0d1eebd47baf430b9e7d57cf, type: 3}
+      propertyPath: HealClip
+      value: 
+      objectReference: {fileID: 8300000, guid: cf75767478b790045b9ee6acfc7d73a7, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a2ead37b0d1eebd47baf430b9e7d57cf, type: 3}
 --- !u!1001 &519321222120921772
@@ -1738,7 +1750,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2577203827877127293, guid: 0e01b1e75668db74db073eed84e9a49e, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 2.57
+      value: 34.59
       objectReference: {fileID: 0}
     - target: {fileID: 2577203827877127293, guid: 0e01b1e75668db74db073eed84e9a49e, type: 3}
       propertyPath: m_LocalPosition.y
