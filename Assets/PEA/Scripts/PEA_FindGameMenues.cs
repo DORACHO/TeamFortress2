@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class FindGameMenues : MonoBehaviour
+public class PEA_FindGameMenues : MonoBehaviour
 {
     private enum State 
     {

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Door : MonoBehaviour
+public class PEA_Door : MonoBehaviour
 {
     private float speed = 6f;
     private float originY = 0f;

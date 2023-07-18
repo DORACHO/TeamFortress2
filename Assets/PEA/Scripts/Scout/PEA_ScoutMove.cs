@@ -38,8 +38,6 @@ public class PEA_ScoutMove : MonoBehaviour
     private int prevPatrolPoint = -1;                                        // 이전에 순찰갔던 순찰포인트
     private int jumpCount = 0;
     private int wagonPoint = 0;                                              // 수레가 지나갈 체크포인트 번호
-    private float x = 0f;
-    private float z = 0f;
     private float speed = 0f;
     private float curTime = 0f;
     private float waitTime = 0f;
@@ -52,6 +50,7 @@ public class PEA_ScoutMove : MonoBehaviour
 
     private readonly int maxJumpCount = 2;
     private readonly float jumpPower = 5f;
+    private readonly float respawnTime = 3f; 
     private readonly float forwardSpeed = 7.62f;
     private readonly float backwardSpeed = 6.86f;
     private readonly float sightAngle = 30f;                                 // 시야 각도 / 2(앞방향을 기준으로 계산할거라 2로 나눔) 
@@ -68,14 +67,16 @@ public class PEA_ScoutMove : MonoBehaviour
     private Vector3 dir = Vector3.zero;
     private Vector3 target = Vector3.zero;
 
-    private Rigidbody rig = null;
+    private Rigidbody rig;
     private NavMeshAgent nav;
     private Transform player;
     private PEA_ScatterGun scatterGun;
     private PEA_PistolGun pistolGun;
+    private Animator anim;
 
     // 에디터에서 연결해줄 변수들
     public PatrolPointByStep[] patrolStep;                                     // 랜덤으로 순찰할 지점들
+    public Transform respawnPoint;
     #endregion
 
 
@@ -90,6 +91,7 @@ public class PEA_ScoutMove : MonoBehaviour
     {
         rig = GetComponent<Rigidbody>();
         nav = GetComponent<NavMeshAgent>();
+        anim = GetComponentInChildren<Animator>();
         scatterGun = GetComponentInChildren<PEA_ScatterGun>();
         pistolGun = GetComponentInChildren<PEA_PistolGun>();
         player = GameObject.FindGameObjectWithTag("Player").transform;
@@ -124,6 +126,7 @@ public class PEA_ScoutMove : MonoBehaviour
                 break;
 
             case State.Die:
+                Respawn();
                 break;
         }
     }
@@ -166,6 +169,7 @@ public class PEA_ScoutMove : MonoBehaviour
             // 목적지에 도착하면 잠시 멈추기
             SetRandomWaitTime();
             state = State.Idle;
+            anim.SetTrigger("Idle");
         }
         else
         {
@@ -213,6 +217,7 @@ public class PEA_ScoutMove : MonoBehaviour
         {
             SetRandomWaitTime();
             state = State.Idle;
+            anim.SetTrigger("Idle");
         }
     }
 
@@ -229,6 +234,7 @@ public class PEA_ScoutMove : MonoBehaviour
             nav.isStopped = true;
             nav.updateRotation = false;
             state = State.Attack;
+            anim.SetTrigger("Fire");
         }
     }
 
@@ -252,6 +258,7 @@ public class PEA_ScoutMove : MonoBehaviour
             //SetRandomTarget();
             SetRandomPatrolPoint();
             state = State.Move;
+            anim.SetTrigger("Walk");
             nav.isStopped = false;
             nav.updateRotation = true;
         }
@@ -282,6 +289,25 @@ public class PEA_ScoutMove : MonoBehaviour
             transform.localEulerAngles = dir;
             isRotate = false;
         }
+    }
+
+    private void Respawn()
+    {
+        curTime += Time.deltaTime;
+        if(curTime <= respawnTime)
+        {
+            transform.position = respawnPoint.position;
+            respawnPoint.eulerAngles = respawnPoint.eulerAngles;
+            state = State.Idle;
+            transform.position = respawnPoint.position;
+            respawnPoint.rotation = respawnPoint.rotation;
+        }
+    }
+
+    public void Die()
+    {
+        state = State.Die;
+        anim.SetTrigger("Die");
     }
 
     private void OnCollisionEnter(Collision collision)
