@@ -114,6 +114,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 15
   returnTime: 2
+  HealClip: {fileID: 8300000, guid: cf75767478b790045b9ee6acfc7d73a7, type: 3}
 --- !u!54 &8718886297524942600
 Rigidbody:
   m_ObjectHideFlags: 0

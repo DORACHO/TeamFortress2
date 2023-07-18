@@ -70,7 +70,7 @@ public class J_EnemyFire : MonoBehaviour
         if (!isReloading && isFire)
         {
             Fire();
-            PlayHealSound();
+            //PlayHealSound();
             currTime += Time.deltaTime;
             if (currTime >= nextFireTime)
             {

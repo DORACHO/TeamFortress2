@@ -7,7 +7,7 @@ public class EJPlayerMove : MonoBehaviour
     Animator anim;
     CharacterController cc;
 
-    //Move 변수
+    //Chase 변수
     float speed = 5.71f;
     float speedForward;
     float speedBackward;
@@ -54,7 +54,7 @@ public class EJPlayerMove : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //Move
+        //Chase
         float h = Input.GetAxis("Horizontal");
         float v = Input.GetAxis("Vertical");
 
@@ -100,7 +100,7 @@ public class EJPlayerMove : MonoBehaviour
         }
 
 
-        //Move 방향에 따른 속도 조건
+        //Chase 방향에 따른 속도 조건
         if (v > 0)
         {
             speed = speedForward;
@@ -126,7 +126,7 @@ public class EJPlayerMove : MonoBehaviour
             isClickCtrl = false;
         }
 
-        //Move
+        //Chase
         Vector3 dir = new Vector3(h, 0, v);
         dir = cam.transform.TransformDirection(dir);
         dir.y = 0;
