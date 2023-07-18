@@ -61,10 +61,13 @@ public class J_Medic : MonoBehaviour
             agent.isStopped = true;
         }
     }
-
+    public Transform Players;
+    private Vector3 targetPos;
     private void UpdateAttack()
     {
-        transform.LookAt(target.transform);
+        //y값을 플레이어와 동일하게한다
+        targetPos = new Vector3(Players.position.x, transform.position.y, Players.position.z);
+        transform.LookAt(targetPos);
     }
 
     // 애니메이션 이벤트함수를 통해 호출되는 함수들
