@@ -1,0 +1,11 @@
+Model Information:
+* title:	Medic Box
+* source:	https://sketchfab.com/3d-models/medic-box-46379f9aa7a5463580b3945142237862
+* author:	Bluenoseddonkey (https://sketchfab.com/Bluenoseddonkey)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Medic Box" (https://sketchfab.com/3d-models/medic-box-46379f9aa7a5463580b3945142237862) by Bluenoseddonkey (https://sketchfab.com/Bluenoseddonkey) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
