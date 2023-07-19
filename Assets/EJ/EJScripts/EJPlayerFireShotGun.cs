@@ -10,6 +10,7 @@ public class EJPlayerFireShotGun : MonoBehaviour
     public GameObject bulletImpactFactory;
     public GameObject bulletMuzzleImpactFactory;
     public Transform muzzlePos;
+    public GameObject muzzleSprite;
     
     //산탄총
     int bulletForonetime = 9;
@@ -38,7 +39,7 @@ public class EJPlayerFireShotGun : MonoBehaviour
     // 총 쏠 수 있는지?
     public bool canFire = true;
     float currentTime;
-    float delayTime = 3.5f;
+    float delayTime = 0.5f;
 
     // 애니메이터
     public EJPlayerAnim stateMgr;
@@ -81,6 +82,9 @@ public class EJPlayerFireShotGun : MonoBehaviour
                 GameObject bulletMuzzleImpact = Instantiate(bulletMuzzleImpactFactory);
                 bulletMuzzleImpact.transform.position = muzzlePos.transform.position;
                 bulletMuzzleImpact.transform.forward = muzzlePos.transform.forward;
+
+                ONmuzzleSprite();
+                Invoke(nameof(OFFmuzzleSprite), 0.1f);
 
 
                 for (int i = 0; i < bulletForonetime; i++)
@@ -146,6 +150,16 @@ public class EJPlayerFireShotGun : MonoBehaviour
     void ONFire()
     {
         canFire = true;
+    }
+
+    void ONmuzzleSprite()
+    {
+        muzzleSprite.SetActive(true);
+    }
+
+    void OFFmuzzleSprite()
+    {
+        muzzleSprite.SetActive(false);
     }
 
     #region fire관련 UI표시 프로퍼티
