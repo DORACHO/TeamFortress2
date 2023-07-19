@@ -11,13 +11,13 @@ public class J_GunLookat : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //GameObject target = GameObject.Find("Player");
+        GameObject target = GameObject.Find("Player");
     }
 
     // Update is called once per frame
     void Update()
     {
-        targetPos = new Vector3(Players.position.x, transform.position.y, Players.position.z);
+        //targetPos = new Vector3(Players.position.x, transform.position.y, Players.position.z);
         transform.LookAt(targetPos);
         //플레이어의 위아래만(높이)만 따라가도록
     }

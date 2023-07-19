@@ -47,6 +47,7 @@ public class J_EnemyFire : MonoBehaviour
         //플레이어의 레이어 값 추출
         playerlayer = LayerMask.NameToLayer("Player");
         audioSource = GetComponent<AudioSource>();
+        VFX.SetActive(false);
     }
 
     // Update is called once per frame
@@ -113,6 +114,7 @@ public class J_EnemyFire : MonoBehaviour
             {
                 //    MPManager.instance.MP = 0;
             }
+            VFX.SetActive(true);
             VFX.transform.position = firePosition.position;
             J_ObjectPool.instance.Fire();
             //bullet.SetActive(true);

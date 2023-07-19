@@ -4,13 +4,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using PatrolNChase;
+using Unity.VisualScripting;
 
 public class J_Medic : MonoBehaviour
 {
+    J_MedicHP medicHP;
     NavMeshAgent agent;
     GameObject target;
     Animator anim;
-    public int targetdex;
+
     public enum State
     {
         Idle,
@@ -27,6 +29,7 @@ public class J_Medic : MonoBehaviour
     {
         agent = GetComponent<NavMeshAgent>();
         anim = GetComponent<Animator>();
+        medicHP = GetComponent<J_MedicHP>();
         
     }
 
@@ -42,24 +45,28 @@ public class J_Medic : MonoBehaviour
         }
     }
 
-    int targetIndex;
+    public int targetIndex;
     private void UpdatePatrol()
     {
+
         //길정보를 알고싶다
-        Vector3 pos =J_PathManager.instance.points[targetIndex].position;
+        Vector3 pos = J_PathManager.instance.points[targetIndex].position;
 
         //내가 길의 어떤 위치로 갈것인지 알고싶다
 
         //그곳으로 이동하고싶다
         agent.SetDestination(pos);
-
+        print(pos);
         //1까지 근접했다면 도착한것으로 하고싶다
+        
         pos.y = transform.position.y;
         float dist = Vector3.Distance(transform.position, pos);
         //도착했다면 targetIndex를 1증가시키고싶다
-        if (dist < agent.stoppingDistance)
+        if (dist <= agent.stoppingDistance)
         {
-            targetdex = (targetIndex + 1) % J_PathManager.instance.points.Length;
+            targetIndex = (targetIndex + 1) % J_PathManager.instance.points.Length;
+            //targetdex = (targetIndex + 1);
+            
         }
         //만약 플레이어가 내 인식거리안에 들어왔다면
         float dist2 = Vector3.Distance(transform.position, target.transform.position);
@@ -68,17 +75,18 @@ public class J_Medic : MonoBehaviour
             //추적상태로 전이하고싶다
             state = State.Chase;
         }
-
     }
-    float attackDistance = 5;
+    float attackDistance = 10;
 
     private void UpdateIdle()
     {
         //agent.SetDestination(J_PathManager. instance.points[0].position);
-        target = GameObject.Find("PlayerArm");
+        target = GameObject.FindWithTag("Player");
+        //target = GameObject.Find("PlayerArm");
         //target = GameObject.FindWithTag("Player");
         if (target != null)
         {
+            //순찰상태로 전이하고싶다
             state = State.Patrol;
             anim.SetTrigger("Move");
             agent.isStopped = false;
@@ -89,7 +97,9 @@ public class J_Medic : MonoBehaviour
     {
         //agent.SetDestination(J_PathManager.instance.points[0].position);
         agent.destination = target.transform.position;
+
         //목적지와 나의 거리를 재고싶다
+
         float distance = Vector3.Distance(this.transform.position, target.transform.position);
         if(distance < attackRange)
         {
@@ -112,7 +122,7 @@ public class J_Medic : MonoBehaviour
         targetPos = new Vector3(Players.position.x, transform.position.y, Players.position.z);
         transform.LookAt(targetPos);
     }
-
+    #region 애니메이션 이벤트함수를 통해 호출되는 함수들...
     // 애니메이션 이벤트함수를 통해 호출되는 함수들
     public void OnAttack_Hit()
     {
@@ -129,8 +139,9 @@ public class J_Medic : MonoBehaviour
         float distance = Vector3.Distance(this.transform.position, target.transform.position);
         if (distance > attackRange)
         {
+            print("AttackFinished");
             state = State.Chase;
-            anim.SetTrigger("Chase");
+            anim.SetTrigger("Move");
             agent.isStopped = false;
         }
     }
@@ -140,7 +151,7 @@ public class J_Medic : MonoBehaviour
         if (distance > attackRange) // 공격 범위 벗어남
         {
             state = State.Chase;
-            anim.SetTrigger("Chase");
+            anim.SetTrigger("Move");
             agent.isStopped = false;
         }
         else // 공격 가능한 거리
@@ -152,9 +163,10 @@ public class J_Medic : MonoBehaviour
     {
         // 리액션이 끝났으니 Move상태로 전이하고싶다.
         state = State.Chase;
-        anim.SetTrigger("Chase");
+        anim.SetTrigger("Move");
         agent.isStopped = false;
     }
+    #endregion
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.name.Contains("Player"))
@@ -162,9 +174,41 @@ public class J_Medic : MonoBehaviour
             Destroy(collision.gameObject);
         }
         else
-        {
+        { 
            
         }
     }
+    void DamageProcess(int damage = 1)
+    {
+        if (state == State.Die)
+        {
+            return;
+        }
+        agent.isStopped = true;
+        medicHP.HP -= 1;
+        if(medicHP.HP < 0)
+        {
+
+            state = State.Die;
+
+            Destroy(gameObject,5);
+            anim.SetTrigger("Die");
+
+            Collider col = GetComponentInChildren<Collider>();
+            if (col)
+            {
+                col.enabled = false;
+            }
+        }
+        else
+        {
+            state = State.Chase;
+            agent.isStopped = false;
+            anim.SetTrigger("Move");
+        }
+
+    }
+
+
 
 }

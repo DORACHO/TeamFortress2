@@ -20,14 +20,21 @@ public class J_MedicEvent : MonoBehaviour
     }
     void OnAttack_Hit()
     {
+        //print("AttackHit");
         medic.OnAttack_Hit();
     }
     void OnAttack_Finished()
     {
+        //print("AttackFinished");
         medic.OnAttack_Finished();
     }
     void OnAttackWait_Finished()
     {
+        //print("AttackWaitFinished");
         medic.OnAttackWait_Finished();
+    }
+    public void OnReact_Finished()
+    {
+        medic.OnReact_Finished();
     }
 }

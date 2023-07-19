@@ -1,0 +1,157 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &41012038445622604
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 41012038445622605}
+  - component: {fileID: 41012038445622607}
+  - component: {fileID: 41012038445622606}
+  m_Layer: 0
+  m_Name: MedicAI
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &41012038445622605
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 41012038445622604}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 512017577473629876}
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!95 &41012038445622607
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 41012038445622604}
+  m_Enabled: 1
+  m_Avatar: {fileID: 9000000, guid: 568410470481b884db4c1226a0383835, type: 3}
+  m_Controller: {fileID: 9100000, guid: 77f1d7b71f9844342a41bedf1b3c8aca, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &41012038445622606
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 41012038445622604}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 355e7e7b5f326fb4cb961558dadf4cbc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  state: 0
+  attackRange: 5
+  targetIndex: 0
+  farDistance: 10
+  Players: {fileID: 0}
+--- !u!1001 &41012038707657055
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 41012038445622605}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: 568410470481b884db4c1226a0383835, type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 568410470481b884db4c1226a0383835, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 568410470481b884db4c1226a0383835, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 568410470481b884db4c1226a0383835, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 568410470481b884db4c1226a0383835, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 568410470481b884db4c1226a0383835, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 568410470481b884db4c1226a0383835, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 568410470481b884db4c1226a0383835, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: -0.0050527863
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 568410470481b884db4c1226a0383835, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 568410470481b884db4c1226a0383835, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.9999873
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 568410470481b884db4c1226a0383835, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 568410470481b884db4c1226a0383835, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 568410470481b884db4c1226a0383835, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 180.579
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 568410470481b884db4c1226a0383835, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 568410470481b884db4c1226a0383835, type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 568410470481b884db4c1226a0383835, type: 3}
+      propertyPath: m_Name
+      value: MedicBot
+      objectReference: {fileID: 0}
+    - target: {fileID: 5866666021909216657, guid: 568410470481b884db4c1226a0383835, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 77f1d7b71f9844342a41bedf1b3c8aca, type: 2}
+    m_RemovedComponents:
+    - {fileID: 5866666021909216657, guid: 568410470481b884db4c1226a0383835, type: 3}
+  m_SourcePrefab: {fileID: 100100000, guid: 568410470481b884db4c1226a0383835, type: 3}
+--- !u!4 &512017577473629876 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 568410470481b884db4c1226a0383835, type: 3}
+  m_PrefabInstance: {fileID: 41012038707657055}
+  m_PrefabAsset: {fileID: 0}
