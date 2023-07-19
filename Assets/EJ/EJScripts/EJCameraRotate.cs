@@ -33,8 +33,8 @@ public class EJCameraRotate : MonoBehaviour
         targetCX = transform.localEulerAngles.x;
 
         //Q.순서대로 가져오는 방법?
-        fireSFX = GetComponent<AudioSource>();
-        reloadSFX = GetComponent<AudioSource>();
+        //fireSFX = GetComponent<AudioSource>();
+        //reloadSFX = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -54,6 +54,11 @@ public class EJCameraRotate : MonoBehaviour
 
        //UpdateCameraReact();
         cx = Mathf.Lerp(cx, targetCX, Time.deltaTime * 8);
+
+        //Whoareyou();
+        CameraChange2ChaseCam();
+        CameraChange2MainCam();          
+        Whoareyou();
 
     }
 
@@ -113,30 +118,81 @@ public class EJCameraRotate : MonoBehaviour
     //마지막 총알의 주체
     //Parent를 가져오는 방법?
 
-    GameObject murderer ;
+    GameObject murderer;
 
-    public void Whoareyou()
+    public bool chaseCameraON;
+    public bool mainCameraON;
+
+    public void CameraChange2ChaseCam()
     {
-        //transform.localEulerAngles = new Vector3(cx, 0, 0);
-
-        if(EJPSHP.instance.HP <= 0)
+        if (EJPSHP.instance.HP <= 0)
         {
-            transform.parent = null;
-
-            //디스턴스가 일정 이상일 때
-
-            //GetComponentInChildren<MeshRenderer>().enabled = false;
-            transform.position = Vector3.Lerp(transform.position, EJPSHP.instance.murdererPos, 0.7f);
+            OFFMainCamera();
+            ONChaseCamera();
         }
     }
 
-    public void PlayFireSFX()
+    public void CameraChange2MainCam()
     {
-        fireSFX.Play();
+        if (EJPSHP.instance.HP > 0)
+        {
+            ONMainCamera();
+            OFFChaseCamera();
+        }
     }
 
-    public void PlayReloadSFX()
+    public void Whoareyou()
     {
-        reloadSFX.Play();
+            if (chaseCameraON)
+            {
+                print("whoareyou 실행 중입니다");
+                GameObject chaseCamera = GameObject.FindWithTag("ChaseCamera");
+
+                CameraChange2ChaseCam();
+
+                Vector3 dir2Enemy = EJPSHP.instance.murdererPos - chaseCamera.transform.position;
+                dir2Enemy.Normalize();
+
+                // transform.parent = null;
+                //Vector3 murdererCamPos = EJPSHP.instance.murdererPos + (-dir2Enemy /*+ Vector3.up * 0.5f + Vector3.*/);
+                Vector3 murdererCamPos = EJPSHP.instance.murdererPos - (dir2Enemy * 2);
+
+                chaseCamera.transform.position = Vector3.Lerp(chaseCamera.transform.position, murdererCamPos, Time.deltaTime * 5);
+
+                chaseCamera.transform.LookAt(EJPSHP.instance.murdererPos);
+
+                Invoke(nameof(CameraChange2MainCam), 3);
+            }        
+    }
+
+    public void OFFMainCamera()
+    {
+        GetComponent<Camera>().enabled = false;
+        mainCameraON = false;
+        //print("메인카메라가 꺼졌습니다");
+
+    }
+    public void ONMainCamera()
+    {
+        GetComponent<Camera>().enabled = true;
+        mainCameraON = true;
+        //print("메인카메라가 켜졌습니다");
+    }
+
+    public void OFFChaseCamera()
+    {
+        GameObject chaseCamera = GameObject.FindWithTag("ChaseCamera");
+        chaseCamera.GetComponent<Camera>().enabled = false;
+        chaseCameraON = false;
+        //print("추적카메라가 꺼졌습니다");
+    }
+
+    public void ONChaseCamera()
+    {
+        GameObject chaseCamera = GameObject.FindWithTag("ChaseCamera");
+        chaseCamera.GetComponent<Camera>().enabled = true;
+        chaseCameraON = true;
+        //print("추적카메라가 켜졌습니다");
     }
 }
+

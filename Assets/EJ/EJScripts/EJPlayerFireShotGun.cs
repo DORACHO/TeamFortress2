@@ -80,8 +80,9 @@ public class EJPlayerFireShotGun : MonoBehaviour
                 RaycastHit hitInfo;
 
                 GameObject bulletMuzzleImpact = Instantiate(bulletMuzzleImpactFactory);
-                bulletMuzzleImpact.transform.position = muzzlePos.transform.position;
-                bulletMuzzleImpact.transform.forward = muzzlePos.transform.forward;
+                //bulletMuzzleImpact.transform.position = muzzlePos.transform.position;
+                bulletMuzzleImpact.transform.forward = muzzlePos.transform.right;
+                bulletMuzzleImpact.transform.parent = muzzlePos.transform;
 
                 ONmuzzleSprite();
                 Invoke(nameof(OFFmuzzleSprite), 0.1f);
@@ -96,12 +97,13 @@ public class EJPlayerFireShotGun : MonoBehaviour
                         print("Fire1 Clicked"); 
                         GameObject bulletImpact = Instantiate(bulletImpactFactory);
                         bulletImpact.transform.position = hitInfo.point;
-                        bulletImpact.transform.forward = hitInfo.normal;
+                        bulletImpact.transform.forward = hitInfo.normal;                       
 
                         //Enemy에게 Damage를 준다 (임시로 넣어둠)
                         //EJEnemyHPForTest.instance.ENEMY_HP -= 5;
 
-                        GetComponentInChildren<EJCameraRotate>().PlayFireSFX();
+                        //GetComponentInChildren<EJCameraRotate>().PlayFireSFX();
+                        EJSFX.instance.PlayFireSFX();
                     }
                 }
                 //UI표시
@@ -143,7 +145,7 @@ public class EJPlayerFireShotGun : MonoBehaviour
             leftBullet = maxBullet;
             leftMagazine = maxMagazine;
 
-            GetComponentInChildren<EJCameraRotate>().PlayReloadSFX();
+            EJSFX.instance.PlayLoadSFX();
         }
     }
 

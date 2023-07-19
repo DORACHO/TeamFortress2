@@ -21,15 +21,15 @@ public class EJPSHP : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        HP = HP;
+        HP = normalHP;
     }
 
     // Update is called once per frame
     void Update()
     {
-        
-        
+
     }
+
 
     public int HP
     {
@@ -45,19 +45,20 @@ public class EJPSHP : MonoBehaviour
     }
 
     public Vector3 murdererPos;
+    
     public void SetHP(int damage, Vector3 position)
     {
         if (HP > 0)
         {
             HP -= damage;
-
-            //계산하기
-            //방향 빼서 구하기
-            //계산해서 해보기
-            //normalize
             murdererPos = position;
         }
+    }
 
+    public void Rebirth()
+    {
+        HP = normalHP;
+        print("다시 태어났습니다");
     }
 
 }
