@@ -97,7 +97,15 @@ public class EJPlayerFireShotGun : MonoBehaviour
                         print("Fire1 Clicked"); 
                         GameObject bulletImpact = Instantiate(bulletImpactFactory);
                         bulletImpact.transform.position = hitInfo.point;
-                        bulletImpact.transform.forward = hitInfo.normal;                       
+                        bulletImpact.transform.forward = hitInfo.normal;
+
+                        print(hitInfo.collider.name);
+
+                        // 스카웃이 맞으면 스카웃한테 피해를 입힘
+                        if(TryGetComponent<PEA_ScoutHp>(out PEA_ScoutHp scoutHp))
+                        {
+                            scoutHp.Damage(1);
+                        }
 
                         //Enemy에게 Damage를 준다 (임시로 넣어둠)
                         //EJEnemyHPForTest.instance.ENEMY_HP -= 5;

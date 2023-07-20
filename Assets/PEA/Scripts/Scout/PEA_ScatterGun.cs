@@ -74,7 +74,7 @@ public class PEA_ScatterGun : MonoBehaviour
         //}
 
         //if (Input.GetKeyDown(KeyCode.R) && loadBullets < maxLoadBulletCount)
-        if (loadBullets < maxLoadBulletCount)
+        if (loadBullets == 0 &&  maxLoadBulletCount > 0)
         {
             state = State.Loading;
         }
@@ -111,6 +111,10 @@ public class PEA_ScatterGun : MonoBehaviour
                 damage += minimumDamage;
             }
         }
+
+        print(damage);
+        // 플레이어 데미지 주기
+        EJPSHP.instance.SetHP((int)damage, transform.position);
     }
 
     private void ReLoad()
@@ -174,8 +178,9 @@ public class PEA_ScatterGun : MonoBehaviour
                 }
             }
         }
+
         scoutSound.ScatterShoot();
-        ShowDamage();
+        //ShowDamage();
         loadBullets--;
         damage = 0;
         timeAfterFire = 0f;

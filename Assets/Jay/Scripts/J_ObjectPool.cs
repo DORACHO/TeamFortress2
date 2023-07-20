@@ -15,7 +15,7 @@ public class J_ObjectPool : MonoBehaviour
     void Start()
     {
         instance = this;
-        for(int i = 0; i< 30; i++)
+        for(int i = 0; i< 20; i++)
         {
             GameObject b = Instantiate(bullet, pos.position, Quaternion.identity);
             bulletqueue.Enqueue(b);

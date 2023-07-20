@@ -30,7 +30,7 @@ public class PEA_ScoutMove : MonoBehaviour
     }
 
     private State state = State.Idle;
-    private WeaponState weaponState = WeaponState.PistolGun;
+    private WeaponState weaponState = WeaponState.ScatterGun;
 
     // 변수들
     #region
@@ -49,6 +49,7 @@ public class PEA_ScoutMove : MonoBehaviour
     private bool isRotate = false;
 
     private readonly int maxJumpCount = 2;
+    private readonly float fireRate = 1f;                                    // 총 발사 시간 간격
     private readonly float jumpPower = 5f;
     private readonly float respawnTime = 3f; 
     private readonly float forwardSpeed = 7.62f;
@@ -225,7 +226,7 @@ public class PEA_ScoutMove : MonoBehaviour
         print("check insight");
         Vector3 dirToPlayer = player.position - transform.position.normalized;
 
-        print(Vector3.Angle(transform.forward, dirToPlayer));
+        //print(Vector3.Angle(transform.forward, dirToPlayer));
         if(Vector3.Angle(transform.forward, dirToPlayer) <= 30)
         {
             print("insight");
@@ -241,8 +242,9 @@ public class PEA_ScoutMove : MonoBehaviour
     {
         transform.LookAt(player);
         curTime += Time.deltaTime;
-        if(curTime >= 3f)
+        if(curTime >= fireRate)
         {
+            print("scout fire");
             Fire();
             curTime = 0f;
         }
@@ -280,8 +282,10 @@ public class PEA_ScoutMove : MonoBehaviour
     private void LookAtPlayer()
     {
         Vector3 dir = player.position - transform.position;
+        dir.y = transform.position.y;
 
-        transform.localEulerAngles = Vector3.Lerp(transform.localEulerAngles, dir, 10 * Time.deltaTime);
+        transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(dir), 10 * Time.deltaTime);
+        //transform.localEulerAngles = Vector3.Lerp(transform.localEulerAngles, dir, 10 * Time.deltaTime);
 
         if(transform.localEulerAngles.normalized.y - dir.y <= 1f)
         {
