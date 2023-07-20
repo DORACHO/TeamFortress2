@@ -23,12 +23,6 @@ public class GameManager : MonoBehaviour
         get { return isStart; } 
     }
 
-    public bool IsGoal
-    {
-        get { return isGoal; }
-    }
-   
-
     // Start is called before the first frame update
     void Start()
     {
@@ -46,21 +40,12 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //print(coroutine);
-        //print(isStart);
+        print(coroutine);
+        print(isStart);
 
-        if (isStart && !isGoal)
+        if (isStart)
         {
             PlayCountDown();
-
-            if (Input.GetKeyDown(KeyCode.RightShift))
-            {
-                GameOver();
-            }
-            else if (Input.GetKeyDown(KeyCode.Escape))
-            {
-                Goal();
-            }
         }
     }
 
@@ -105,13 +90,6 @@ public class GameManager : MonoBehaviour
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         Time.timeScale = 1;
         StartGame();
-    }
-
-    public void GoToMain()
-    {
-        Destroy(gameObject);
-        Destroy(UIManager.instance.gameObject);
-        SceneManager.LoadScene("Start");
     }
 
     public void QuitGame()

@@ -6,7 +6,7 @@ public class PEA_Door : MonoBehaviour
 {
     private float speed = 6f;
     private float originY = 0f;
-    private readonly float maxY = 12f;
+    private readonly float maxY = 3f;
 
     // Start is called before the first frame update
     void Start()

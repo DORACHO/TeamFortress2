@@ -6,6 +6,8 @@ using UnityEngine;
 
 public class EJPlayerFireShotGun : MonoBehaviour
 {
+    public EJCameraRotate ejcameraRotate;
+
     //muzzle 효과
     public GameObject bulletImpactFactory;
     public GameObject bulletMuzzleImpactFactory;
@@ -75,7 +77,23 @@ public class EJPlayerFireShotGun : MonoBehaviour
          {
             if (Input.GetButtonDown("Fire1") && fireCount<maxBullet)
             {
-                
+
+                //ejcameraRotate.UpdateCameraReact();
+
+                //GameObject mainCam = GameObject.FindWithTag("MainCamera");
+                //mainCam.GetComponent<EJCameraRotate>().UpdateCameraReact();
+                /*print(Camera.main.name);
+                if(Camera.main.TryGetComponent<EJCameraRotate>(out EJCameraRotate cameraRotate))
+                {
+                    cameraRotate.UpdateCameraReact();
+                }
+                else
+                {
+                    print("cameraRotate Null");
+                }*/
+                Camera.main.GetComponent<EJCameraRotateBackUP.EJCameraRotate>().UpdateCameraReact();
+                //GetComponentInChildren<EJCameraRotate>().UpdateCameraReact();
+
                 Ray ray = new Ray(Camera.main.transform.position, Camera.main.transform.forward);
                 RaycastHit hitInfo;
 
@@ -87,7 +105,6 @@ public class EJPlayerFireShotGun : MonoBehaviour
                 ONmuzzleSprite();
                 Invoke(nameof(OFFmuzzleSprite), 0.1f);
 
-
                 for (int i = 0; i < bulletForonetime; i++)
                 {
                     Debug.DrawRay(firePos[i].position, firePos[i].forward * maxRayDistance, Color.red);
@@ -97,15 +114,7 @@ public class EJPlayerFireShotGun : MonoBehaviour
                         print("Fire1 Clicked"); 
                         GameObject bulletImpact = Instantiate(bulletImpactFactory);
                         bulletImpact.transform.position = hitInfo.point;
-                        bulletImpact.transform.forward = hitInfo.normal;
-
-                        print(hitInfo.collider.name);
-
-                        // 스카웃이 맞으면 스카웃한테 피해를 입힘
-                        if(TryGetComponent<PEA_ScoutHp>(out PEA_ScoutHp scoutHp))
-                        {
-                            scoutHp.Damage(1);
-                        }
+                        bulletImpact.transform.forward = hitInfo.normal;                       
 
                         //Enemy에게 Damage를 준다 (임시로 넣어둠)
                         //EJEnemyHPForTest.instance.ENEMY_HP -= 5;
@@ -114,15 +123,14 @@ public class EJPlayerFireShotGun : MonoBehaviour
                         EJSFX.instance.PlayFireSFX();
                     }
                 }
+
                 //UI표시
                 fireCount++;
                 magazineFireCount++;
 
                 leftBullet = maxBullet - fireCount;
                 leftMagazine = maxMagazine - magazineFireCount;
-
-                GetComponentInChildren<EJCameraRotate>().UpdateCameraReact();
-
+                
             }
         }
         if (leftMagazine == 0 && leftBullet >= 6)

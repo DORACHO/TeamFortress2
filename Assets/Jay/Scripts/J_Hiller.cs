@@ -97,7 +97,7 @@ public class J_Hiller : MonoBehaviour
 
         //Vector3 velocity = (targetPositionWithOscillation - transform.position).normalized * speed;
         //velocity.y = yVelocity;
-        //cc.Chase(velocity * Time.deltaTime);
+        //cc.Move(velocity * Time.deltaTime);
 
         //timer += Time.deltaTime;
 
@@ -173,7 +173,7 @@ public class J_Hiller : MonoBehaviour
         if (target != null)
         {
             state = State.Move;
-            anim.SetTrigger("Chase");
+            anim.SetTrigger("Move");
             agent.isStopped = false;
         }
     }
@@ -208,7 +208,7 @@ public class J_Hiller : MonoBehaviour
 
         //Vector3 velocity = (targetPositionWithOscillation - transform.position).normalized * speed;
         //velocity.y = yVelocity;
-        //cc.Chase(velocity * Time.deltaTime);
+        //cc.Move(velocity * Time.deltaTime);
 
         //timer += Time.deltaTime;
 

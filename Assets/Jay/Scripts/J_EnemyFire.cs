@@ -70,7 +70,7 @@ public class J_EnemyFire : MonoBehaviour
         if (!isReloading && isFire)
         {
             Fire();
-            //PlayHealSound();
+            PlayHealSound();
             currTime += Time.deltaTime;
             if (currTime >= nextFireTime)
             {
@@ -96,15 +96,15 @@ public class J_EnemyFire : MonoBehaviour
             //int HPIncrease = baseHPIncrease ;
             //HP를 시간에 따라 증가시키자
             HPIncreaseTimer += Time.deltaTime;
-            EJPSHP.instance.SetHP(-1, this.transform.position);
-            //if (EJPSHP.instance.HP > maxHP)
-            //{
-            //    EJPSHP.instance.HP = maxHP;
-            //}
-            //if (EJPSHP.instance.HP < maxHP)
-            //{
-            //    EJPSHP.instance.HP += (int)(10 * Time.deltaTime);
-            //}
+
+            if (HPManager.instance.HP > maxHP)
+            {
+                HPManager.instance.HP = maxHP;
+            }
+            if (HPManager.instance.HP < maxHP)
+            {
+                HPManager.instance.HP += 10 * Time.deltaTime;
+            }
             //if(MPManager.instance.MP > minMP)
             {
                 //    MPManager.instance.MP -= 10 * Time.deltaTime;

@@ -31,7 +31,5 @@ public class PEA_ScoutHp : MonoBehaviour
         {
             scoutMove.Die();
         }
-
-        print(hp);
     }
 }

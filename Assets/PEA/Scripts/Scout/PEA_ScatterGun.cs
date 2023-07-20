@@ -51,16 +51,13 @@ public class PEA_ScatterGun : MonoBehaviour
     private GameObject preHit;                                      // 이전 hit
     private readonly float rayDistance = 10f;                       // 공격이 닿을 수 있는 최대 거리
 
-    // 소리
-    private PEA_ScoutSound scoutSound;
-
     // 에디터에서 연결해줄 변수
     public Transform[] firePos;
 
     // Start is called before the first frame update
     void Start()
     {
-        scoutSound = GetComponentInParent<PEA_ScoutSound>();
+        
     }
 
     // Update is called once per frame
@@ -74,7 +71,7 @@ public class PEA_ScatterGun : MonoBehaviour
         //}
 
         //if (Input.GetKeyDown(KeyCode.R) && loadBullets < maxLoadBulletCount)
-        if (loadBullets == 0 &&  maxLoadBulletCount > 0)
+        if (loadBullets < maxLoadBulletCount)
         {
             state = State.Loading;
         }
@@ -111,17 +108,12 @@ public class PEA_ScatterGun : MonoBehaviour
                 damage += minimumDamage;
             }
         }
-
-        print(damage);
-        // 플레이어 데미지 주기
-        EJPSHP.instance.SetHP((int)damage, transform.position);
     }
 
     private void ReLoad()
     {
         print("Redloading");
         curTime += Time.deltaTime;
-        scoutSound.ScatterReload();
 
         if(curTime >= loadingTime)
         {
@@ -148,7 +140,6 @@ public class PEA_ScatterGun : MonoBehaviour
         {
             return;
         }
-
         randomCritical = Random.Range(1, 100);
         if(randomCritical <= criticalPercent)
         {
@@ -178,9 +169,7 @@ public class PEA_ScatterGun : MonoBehaviour
                 }
             }
         }
-
-        scoutSound.ScatterShoot();
-        //ShowDamage();
+        ShowDamage();
         loadBullets--;
         damage = 0;
         timeAfterFire = 0f;

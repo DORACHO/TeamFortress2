@@ -13,15 +13,15 @@ public class HPManager : MonoBehaviour
         instance = this;
     }
     public TextMeshProUGUI textHP;
-    public int hp;
-    public int maxhp = 185;
+    public float hp;
+    public float maxhp = 185;
     // Start is called before the first frame update
     void Start()
     {
         HP = 125;
     }
 
-    public int HP
+    public float HP
     {
         get { return hp; }
         set
