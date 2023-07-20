@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PEA_ScatterSound : MonoBehaviour
+public class PEA_ScoutSound : MonoBehaviour
 {
     public  AudioSource gunAudioSource;
     public AudioSource footAudioSource;

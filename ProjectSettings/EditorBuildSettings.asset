@@ -9,6 +9,9 @@ EditorBuildSettings:
     path: Assets/PEA/Scenes/Start.unity
     guid: 010b9c7efd7f72149ab3083925a895cd
   - enabled: 1
+    path: Assets/PEA/Scenes/PEA_Map.unity
+    guid: 10deebbea0f368b42abb517fff3bb90b
+  - enabled: 1
     path: Assets/PEA/Scenes/PEA_Scene.unity
     guid: 9098686e20e21dd46b91d19a25a05f85
   m_configObjects: {}

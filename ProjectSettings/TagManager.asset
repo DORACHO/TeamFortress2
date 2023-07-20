@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Ground
   - Wagon
+  - Wagon_WayPoint
   layers:
   - Default
   - TransparentFX
