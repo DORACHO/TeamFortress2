@@ -147,8 +147,7 @@ public class EJPlayerFire : MonoBehaviour
                     canFire = false;
                     Invoke(nameof(OffFire), delayTime);
                     //Invoke(nameof(bulletRulletCharge), delayTime);
-                }
-               
+                }               
         
 
                 if (Physics.Raycast(ray, out hitInfo, float.MaxValue, layer))

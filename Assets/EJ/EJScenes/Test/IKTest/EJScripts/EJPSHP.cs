@@ -14,9 +14,12 @@ public class EJPSHP : MonoBehaviour
         instance = this;
     }
 
-    public int normalHP = 125;
-    public int maxNormalHP = 125;
-    public int overcuredHP = 185;
+    public int hp = 125;
+    //public int maxNormalHP = 125;
+    public int maxNormalHP = Mathf.Clamp(125, 0, 185);
+    public int overcuredHP = Mathf.Clamp(125, 0, 185);
+
+    //public int overcuredHP = 185;
     public int emergencyOvercuredHP = 158;
 
     public TextMeshProUGUI hpText;
@@ -30,7 +33,7 @@ public class EJPSHP : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-       
+        RestrictHP();
     }
 
 
@@ -38,17 +41,21 @@ public class EJPSHP : MonoBehaviour
     {
         get
         {
-            return normalHP;
+            return hp;
+
         }
         set
         {
-            normalHP = value;
+            hp = value;
             hpText.text = $"{value}";
+            
         }
     }
 
     public Vector3 murdererPos;
     
+    
+
     public void SetHP(int damage, Vector3 position)
     {
         if (HP > 0)
@@ -62,6 +69,18 @@ public class EJPSHP : MonoBehaviour
     {
         HP = maxNormalHP;
         print("다시 태어났습니다");
+    }
+
+    public void RestrictHP()
+    {
+        if (HP < 0)
+        {
+            HP = 0;
+        }
+        if (HP > 185)
+        {
+            HP = 185;
+        }
     }
 
     public void Dead()

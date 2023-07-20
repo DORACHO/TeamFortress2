@@ -6,6 +6,8 @@ using UnityEngine;
 
 public class EJPlayerFireShotGun : MonoBehaviour
 {
+    public EJCameraRotate ejcameraRotate;
+
     //muzzle 효과
     public GameObject bulletImpactFactory;
     public GameObject bulletMuzzleImpactFactory;
@@ -75,7 +77,23 @@ public class EJPlayerFireShotGun : MonoBehaviour
          {
             if (Input.GetButtonDown("Fire1") && fireCount<maxBullet)
             {
-                
+
+                //ejcameraRotate.UpdateCameraReact();
+
+                //GameObject mainCam = GameObject.FindWithTag("MainCamera");
+                //mainCam.GetComponent<EJCameraRotate>().UpdateCameraReact();
+                /*print(Camera.main.name);
+                if(Camera.main.TryGetComponent<EJCameraRotate>(out EJCameraRotate cameraRotate))
+                {
+                    cameraRotate.UpdateCameraReact();
+                }
+                else
+                {
+                    print("cameraRotate Null");
+                }*/
+                Camera.main.GetComponent<EJCameraRotateBackUP.EJCameraRotate>().UpdateCameraReact();
+                //GetComponentInChildren<EJCameraRotate>().UpdateCameraReact();
+
                 Ray ray = new Ray(Camera.main.transform.position, Camera.main.transform.forward);
                 RaycastHit hitInfo;
 
@@ -86,7 +104,6 @@ public class EJPlayerFireShotGun : MonoBehaviour
 
                 ONmuzzleSprite();
                 Invoke(nameof(OFFmuzzleSprite), 0.1f);
-
 
                 for (int i = 0; i < bulletForonetime; i++)
                 {
@@ -106,15 +123,14 @@ public class EJPlayerFireShotGun : MonoBehaviour
                         EJSFX.instance.PlayFireSFX();
                     }
                 }
+
                 //UI표시
                 fireCount++;
                 magazineFireCount++;
 
                 leftBullet = maxBullet - fireCount;
                 leftMagazine = maxMagazine - magazineFireCount;
-
-                GetComponentInChildren<EJCameraRotate>().UpdateCameraReact();
-
+                
             }
         }
         if (leftMagazine == 0 && leftBullet >= 6)

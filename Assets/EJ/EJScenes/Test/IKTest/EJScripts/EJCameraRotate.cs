@@ -72,10 +72,9 @@ namespace EJCameraRotateBackUP
         public void UpdateCameraReact()
         {
             //if (Input.GetButtonDown("Fire1"))
-            //if (GetComponent<EJPlayerFireShotGun>().canFire)
-            {
+            //if (GetComponent<EJPlayerFireShotGun>().canFire)            
                 cx -= 10;
-            }
+            print("카메라가 반동합니다");
         }
 
 
@@ -128,17 +127,17 @@ namespace EJCameraRotateBackUP
             if (EJPSHP.instance.HP <= 0)
             {
                 //Update에서 호출되지 않는 법 고민해야한다!...
-                EJPSHP.instance.Dead();
+                //EJPSHP.instance.Dead();
 
                 if (chaseCameraON)
                 {
-                    print("whoareyou 실행중입니다");
+                    //print("whoareyou 실행중입니다");
                     GameObject chaseCamera = GameObject.FindWithTag("ChaseCamera");
 
                     CameraChange2ChaseCam();
                     //01. 죽은 Player나오기
-                    ONCharacter();
-                    Vector3 characterCamPos = transform.position - Vector3.back;
+                    /*ONCharacter();
+                    Vector3 characterCamPos = transform.position - Vector3.back;*/
 
                     //02. Enemy로 Cam이동
                     Vector3 dir2Enemy = EJPSHP.instance.murdererPos - chaseCamera.transform.position;
@@ -154,7 +153,7 @@ namespace EJCameraRotateBackUP
 
                     //chaseCamera.transform.LookAt(EJPSHP.instance.murdererPos);
 
-                    Invoke(nameof(CameraChange2MainCam), 3);
+                    //Invoke(nameof(CameraChange2MainCam), 3);
                 }
             }
         }
