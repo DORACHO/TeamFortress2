@@ -5,7 +5,9 @@ using UnityEngine;
 
 public class EJPSHP : MonoBehaviour
 {
+    //public EJPlayerCharacterAnim stateMgr;
     public static EJPSHP instance;
+    public Animator characterAnim;
 
     private void Awake()
     {
@@ -13,6 +15,8 @@ public class EJPSHP : MonoBehaviour
     }
 
     public int normalHP = 125;
+    public int maxNormalHP = 125;
+    
     public int overcuredHP = 185;
     public int emergencyOvercuredHP = 158;
 
@@ -21,14 +25,23 @@ public class EJPSHP : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        HP = HP;
+        HP = maxNormalHP;
     }
 
     // Update is called once per frame
     void Update()
     {
-        
-        
+       
+    }
+
+
+    void restrictHP()
+    {
+        if (HP > overcuredHP)
+        {
+            HP = overcuredHP;
+        }
+
     }
 
     public int HP
@@ -45,19 +58,29 @@ public class EJPSHP : MonoBehaviour
     }
 
     public Vector3 murdererPos;
+    
     public void SetHP(int damage, Vector3 position)
     {
         if (HP > 0)
         {
             HP -= damage;
-
-            //계산하기
-            //방향 빼서 구하기
-            //계산해서 해보기
-            //normalize
             murdererPos = position;
         }
+    }
 
+    public void Rebirth()
+    {
+        HP = maxNormalHP;
+        print("다시 태어났습니다");
+    }
+
+    public void Dead()
+    {
+        if (EJPSHP.instance.HP < 0)
+        {
+            print("플레이어가 죽었습니다");
+            characterAnim.SetTrigger("Death");
+        }
     }
 
 }

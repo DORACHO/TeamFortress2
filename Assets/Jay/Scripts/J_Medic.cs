@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using PatrolNChase;
 
+
 public class J_Medic : MonoBehaviour
 {
     NavMeshAgent agent;

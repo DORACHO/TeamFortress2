@@ -45,4 +45,23 @@ public class CameraShake : MonoBehaviour
 			camTransform.localPosition = originalPos;
 		}
 	}
+
+
+	/*public void KnockBack()
+    {
+        //위로 올라갔다가, 스무스하게 내려가고 싶다.
+        transform.position = knockbackPos;
+        cx += knockbackRotation;
+
+        //만약에 나의 위치가 KnockbackPos와 가까워졌다면
+        float distance = Vector3.Distance(transform.position, player.transform.position + knockbackPos);
+
+        if (distance < 0.1f)
+        {
+            transform.position = Vector3.Lerp(knockbackPos, currentPosition, knockbackSpeed * Time.deltaTime);
+            cx = Mathf.Lerp(cx, cx - knockbackRotation, 0.8f);
+            isKnockBack = false;
+        }
+                
+    }*/
 }

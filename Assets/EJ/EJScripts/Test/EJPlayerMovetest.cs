@@ -9,7 +9,7 @@ namespace movetest
         public Animator anim;
         CharacterController cc;
 
-        //Chase 변수
+        //Move 변수
         public float speed = 5.71f;
         public float speedForward;
         public float speedBackward;
@@ -61,11 +61,11 @@ namespace movetest
         //MoveNJump
         public void UpdateMoveNJump()
         {
-            //Chase
+            //Move
             float h = Input.GetAxis("Horizontal");
             float v = Input.GetAxis("Vertical");
 
-            //Chase 방향에 따른 속도 조건
+            //Move 방향에 따른 속도 조건
             if (v > 0)
             {
                 speed = speedForward;
@@ -84,7 +84,7 @@ namespace movetest
                 //cam.transform.localPosition = new Vector3(0, -0.5f, 0); 
             }
 
-            //Chase
+            //Move
             Vector3 dir = new Vector3(h, 0, v);
             dir = cam.transform.TransformDirection(dir);
             dir.y = 0;

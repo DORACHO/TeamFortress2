@@ -57,7 +57,7 @@ namespace rotatetest
             //Vector3 knockBackdirection = - GetComponentInParent<EJPlayerFire>().firePosition.forward;
 
             //순간 이동처럼 밀리기 때문에 부자연
-            //cc.Chase(knockBackdirection * knockbackSpeed);     
+            //cc.Move(knockBackdirection * knockbackSpeed);     
 
             //카메라가 밀릴 포지션을 구한다.
             //Vector3 knockbackPos = transform.position + knockBackdirection * knockbackSpeed;

@@ -10,6 +10,7 @@ public class EJPlayerFireShotGun : MonoBehaviour
     public GameObject bulletImpactFactory;
     public GameObject bulletMuzzleImpactFactory;
     public Transform muzzlePos;
+    public GameObject muzzleSprite;
     
     //산탄총
     int bulletForonetime = 9;
@@ -38,7 +39,7 @@ public class EJPlayerFireShotGun : MonoBehaviour
     // 총 쏠 수 있는지?
     public bool canFire = true;
     float currentTime;
-    float delayTime = 3.5f;
+    float delayTime = 0.5f;
 
     // 애니메이터
     public EJPlayerAnim stateMgr;
@@ -79,8 +80,12 @@ public class EJPlayerFireShotGun : MonoBehaviour
                 RaycastHit hitInfo;
 
                 GameObject bulletMuzzleImpact = Instantiate(bulletMuzzleImpactFactory);
-                bulletMuzzleImpact.transform.position = muzzlePos.transform.position;
-                bulletMuzzleImpact.transform.forward = muzzlePos.transform.forward;
+                //bulletMuzzleImpact.transform.position = muzzlePos.transform.position;
+                bulletMuzzleImpact.transform.forward = muzzlePos.transform.right;
+                bulletMuzzleImpact.transform.parent = muzzlePos.transform;
+
+                ONmuzzleSprite();
+                Invoke(nameof(OFFmuzzleSprite), 0.1f);
 
 
                 for (int i = 0; i < bulletForonetime; i++)
@@ -92,12 +97,13 @@ public class EJPlayerFireShotGun : MonoBehaviour
                         print("Fire1 Clicked"); 
                         GameObject bulletImpact = Instantiate(bulletImpactFactory);
                         bulletImpact.transform.position = hitInfo.point;
-                        bulletImpact.transform.forward = hitInfo.normal;
+                        bulletImpact.transform.forward = hitInfo.normal;                       
 
                         //Enemy에게 Damage를 준다 (임시로 넣어둠)
                         //EJEnemyHPForTest.instance.ENEMY_HP -= 5;
 
-                        GetComponentInChildren<EJCameraRotate>().PlayFireSFX();
+                        //GetComponentInChildren<EJCameraRotate>().PlayFireSFX();
+                        EJSFX.instance.PlayFireSFX();
                     }
                 }
                 //UI표시
@@ -139,13 +145,23 @@ public class EJPlayerFireShotGun : MonoBehaviour
             leftBullet = maxBullet;
             leftMagazine = maxMagazine;
 
-            GetComponentInChildren<EJCameraRotate>().PlayReloadSFX();
+            EJSFX.instance.PlayLoadSFX();
         }
     }
 
     void ONFire()
     {
         canFire = true;
+    }
+
+    void ONmuzzleSprite()
+    {
+        muzzleSprite.SetActive(true);
+    }
+
+    void OFFmuzzleSprite()
+    {
+        muzzleSprite.SetActive(false);
     }
 
     #region fire관련 UI표시 프로퍼티
