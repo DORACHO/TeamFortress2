@@ -232,7 +232,7 @@ public class PEA_Wagon : MonoBehaviour
                 // 체크포인트에 도착하면 스카웃에게 알려줌
                 if (targetIndex == checkPointIndex)
                 {
-                    scoutMove.PassByCheckPoint();
+                    scoutMove.PassByCheckPoint();                                           
                 }
 
                 // 마지막 종착점에 도착하면 게임이 종료됨.

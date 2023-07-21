@@ -56,13 +56,16 @@ public class PEA_PistolGun : MonoBehaviour
     private RaycastHit hit;
     private readonly float rayDistance = 10f;                       // 공격이 닿을 수 있는 최대 거리
 
+    // 소리
+    private PEA_ScoutSound scoutSound;
+
     // 에디터에서 연결해줄 변수
     public Transform firePos;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        scoutSound = GetComponentInParent<PEA_ScoutSound>();
     }
 
     // Update is called once per frame
