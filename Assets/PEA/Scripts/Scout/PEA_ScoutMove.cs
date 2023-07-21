@@ -99,7 +99,7 @@ public class PEA_ScoutMove : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        print(state);
+        //print(state);
         switch (state)
         {
             case State.Idle:

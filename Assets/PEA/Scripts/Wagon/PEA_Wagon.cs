@@ -75,7 +75,7 @@ public class PEA_Wagon : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        print(target.transform.gameObject);
+        //print(target.transform.gameObject);
         //print(state);
         //print("isBacking : " + isBacking);
         //print("isNearRed" + isNearRed);

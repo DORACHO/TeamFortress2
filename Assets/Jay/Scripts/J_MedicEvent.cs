@@ -20,7 +20,7 @@ public class J_MedicEvent : MonoBehaviour
     }
     void OnAttack_Hit()
     {
-        medic.OnAttack_Hit();
+       // medic.OnAttack_Hit();
     }
     void OnAttack_Finished()
     {

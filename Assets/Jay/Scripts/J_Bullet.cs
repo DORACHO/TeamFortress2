@@ -4,44 +4,72 @@ using UnityEngine;
 
 public class J_Bullet : MonoBehaviour
 {
-    public int bValue = 10;
     public float speed = 5f;
     Rigidbody rb;
     float currTime = 0;
     public float returnTime = 2;
+
+    private bool canFire;
+    private int maxBullet = 10;
+    private int currentBullet = 0;
+
     // Start is called before the first frame update
     void Start()
     {
-        rb= GetComponent<Rigidbody>();
-        rb.velocity = transform.forward*speed;
+        rb = GetComponent<Rigidbody>();
+        rb.velocity = transform.forward * speed;
     }
 
     // Update is called once per frame
     void Update()
     {
-        currTime += Time.deltaTime;
-        if(currTime > returnTime)
+        if (!canFire)
         {
-            J_ObjectPool.instance.Fire_Finished(gameObject);
-            currTime = 0;
+            currTime += Time.deltaTime;
+            if (currTime > returnTime)
+            {
+                canFire = true;
+                currTime = 0;
+
+
+                if (currentBullet >= maxBullet)
+                    return;
+
+                FireBullet();
+
+                //J_ObjectPool.instance.Fire_Finished(gameObject);
+
+
+            }
         }
-        
-        transform.forward = rb.velocity.normalized;
-        //GetComponent<Rigidbody>().velocity = transform.up * speed;
+
+    }
+
+    void FireBullet()
+    {
+        if (canFire)
+        {
+            rb.velocity = transform.forward * speed;
+            currentBullet++;
+            canFire = false;
+        }
     }
 
     private void OnCollisionEnter(Collision collision)
     {
         var otherRB = collision.gameObject.GetComponent<Rigidbody>();
-        if(otherRB != null)
+        if (otherRB != null)
         {
             otherRB.AddForce(transform.forward * otherRB.mass * 20, ForceMode.Impulse);
         }
+
+        J_ObjectPool.instance.Fire_Finished(gameObject);
+        currentBullet--;
 
     }
     private void OnTriggerEnter(Collider other)
     {
         J_ObjectPool.instance.Fire_Finished(gameObject);
+        currentBullet--;
     }
-
 }

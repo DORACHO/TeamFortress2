@@ -18,6 +18,21 @@ namespace MedicAI
 {
     public class J_EnemyFire1 : MonoBehaviour
     {
+        public static J_EnemyFire1 instance;
+
+        private void Awake()
+        {
+            instance = this;
+        }
+
+        public enum State
+        {
+            Wait,
+            Reloading,
+            Fire,
+        }
+        public State state;
+        
         //public float hillCheckDistance = 10f;
         public LayerMask playerLayer;
         private int playerlayer;
@@ -41,6 +56,10 @@ namespace MedicAI
         public AudioClip HealClip;
         float currTime = 0;
 
+        public int bulletCount;
+        public int maxBulletCount = 10;
+
+
 
         // Start is called before the first frame update
         void Start()
@@ -51,10 +70,53 @@ namespace MedicAI
             audioSource = GetComponent<AudioSource>();
             VFX.SetActive(false);
         }
+        
 
         // Update is called once per frame
         void Update()
         {
+            switch (state)
+            {
+                case State.Wait:
+                    UpdateWait();
+                    break;
+                case State.Reloading:
+                    UpdateReloading();
+
+                    break;
+                case State.Fire:
+                    UpdateFire();
+                    break;
+            }
+
+            // 발사상태에서는
+            //레이캐스트에 적 캐릭터가 닿았을 때 Ray로 타겟에게 총을 쏠 수 있다.
+            // 총을 쏠 수 있을때 총쏘는 간격을 nextFireTime으로 하고싶다.
+            // 최대 발사 횟수는 maxBulletCount로 하고싶다.
+            // 다 쏘고나면 리로드 상태로 전이하고싶다.
+
+            // 리로드 상태라면 리로드 시간동안 아무것도 하지않다가. 시간이 다되면 bulletCount를 0으로 초기화 하고
+            // 대기상태로 전이하고싶다.
+            if (!isReloading && isFire)
+            {
+                
+                
+            }
+            else if (audioSource.isPlaying)
+            {
+                StopSound();
+            }
+
+            if (false == isFire)
+            {
+                //PlayHealSound();
+                
+            }
+        }
+ 
+        private void UpdateWait()
+        {
+            // 대기상태에서 할일은 레이캐스트에 적 캐릭터가 닿았을 때 발사상태로 전이하고싶다.
             Debug.DrawRay(firePosition.position, firePosition.forward * 20f, Color.green);
 
             //float boxSize = 1f;
@@ -66,59 +128,67 @@ namespace MedicAI
                                 out hit,               //검출된 객체의 정보를 반환받을 변수
                                 1 << playerlayer))     // 검출할 레이어
             {
-                isFire = true;
-            }
+                state = State.Fire;
+                //코쿠틴 시작
+                J_HPBackGround.Instance.StartImage();
 
-            //레이캐스트에 적 캐릭터가 닿았을 때 자동발사
-            if (!isReloading && isFire)
-            {
-                Fire();
-                //PlayHealSound();
-                currTime += Time.deltaTime;
-                if (currTime >= nextFireTime)
-                {
-                    //Fire();
-                    currTime = 0;
-                }
-            }
-            else if (audioSource.isPlaying)
-            {
-                StopSound();
             }
         }
 
-        void Fire()
+        private void UpdateFire()
+        {
+
+            EJPSHP.instance.SetHP(-1, this.transform.position);
+            currTime += Time.deltaTime;
+            if (currTime >= 3)//nextFireTime)
+            {
+                state = State.Reloading;
+                //코루틴 스탑
+                J_HPBackGround.Instance.EndImage();
+                //if (bulletCount >= maxBulletCount)
+                //{
+                //    state = State.Reloading;
+                //}
+                //else
+                //{
+                //    Fire();
+                //    bulletCount++;
+                //}
+                currTime = 0;
+            }
+        }
+
+        private void UpdateReloading()
+        {
+            currTime += Time.deltaTime;
+            if (currTime >= 2)
+            {
+                state = State.Wait;
+                currTime = 0;
+            }
+        }
+
+
+
+        public void Fire()
         {
             Ray ray = new Ray(firePosition.position, firePosition.forward);
             RaycastHit hit;
             if (Physics.Raycast(ray, out hit, Mathf.Infinity, playerLayer))
             {
-                //GameObject bullet = Instantiate(bulletFactory, firePosition.position, firePosition.rotation);
-                //bullet.GetComponent<Rigidbody>().velocity = bullet.transform.up * speed;
-                //HP를 증가시키자
-                //int HPIncrease = baseHPIncrease ;
-                //HP를 시간에 따라 증가시키자
                 HPIncreaseTimer += Time.deltaTime;
                 EJPSHP.instance.SetHP(-1, this.transform.position);
-                //if (EJPSHP.instance.HP > maxHP)
-                //{
-                //    EJPSHP.instance.HP = maxHP;
-                //}
-                //if (EJPSHP.instance.HP < maxHP)
-                //{
-                //    EJPSHP.instance.HP +=(int)(10 * Time.deltaTime);
-                //}
-                //if(MPManager.instance.MP > minMP)
-                {
-                    //    MPManager.instance.MP -= 10 * Time.deltaTime;
-                }
-                // else
-                {
-                    //    MPManager.instance.MP = 0;
-                }
+   
                 VFX.SetActive(true);
                 VFX.transform.position = firePosition.position;
+                J_HPBackGround.Instance.StartImage();
+                print("111111111111");
                 J_ObjectPool.instance.Fire();
+            }
+            else
+            {
+                print("22222222222");
+                J_HPBackGround.Instance.EndImage();
             }
         }
         void PlayHealSound()
@@ -135,5 +205,6 @@ namespace MedicAI
             audioSource.Stop();
         }
     }
-
 }
+
+  

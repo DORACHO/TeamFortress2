@@ -1,4 +1,7 @@
 using PatrolNChase;
+using System;
+using System.Threading;
+using System.Timers;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.UIElements;
@@ -23,6 +26,14 @@ namespace MedicAI
         }
         public State state;
         public float attackRange =40;
+
+        float currTime;
+        float respawnTime = 3f;
+
+
+        //에디터에서 연결해줄 변수
+        public Transform respawnPoint;
+
         // Start is called before the first frame update
         void Start()
         {
@@ -40,46 +51,18 @@ namespace MedicAI
                 case State.Chase: UpdateChase(); break;
                 case State.Attack: UpdateAttack(); break;
                 case State.Patrol: UpdatePatrol(); break;
+                case State.Die: Respawn(); break;
             }
         }
 
+    
         public int targetIndex;
-        private void UpdatePatrol()
-        {
-
-            //길정보를 알고싶다
-            Vector3 pos = J_PathManager.instance.points[targetIndex].position;
-
-            //내가 길의 어떤 위치로 갈것인지 알고싶다
-
-            //그곳으로 이동하고싶다
-            agent.SetDestination(pos);
-            print(pos);
-            //1까지 근접했다면 도착한것으로 하고싶다
-
-            pos.y = transform.position.y;
-            float dist = Vector3.Distance(transform.position, pos);
-            //도착했다면 targetIndex를 1증가시키고싶다
-            if (dist <= agent.stoppingDistance)
-            {
-                targetIndex = (targetIndex + 1) % J_PathManager.instance.points.Length;
-                //targetdex = (targetIndex + 1);
-
-            }
-            //만약 플레이어가 내 인식거리안에 들어왔다면
-            float dist2 = Vector3.Distance(transform.position, target.transform.position);
-            if (dist2 < attackDistance)
-            {
-                //추적상태로 전이하고싶다
-                state = State.Chase;
-            }
-        }
-        float attackDistance = 10;
+   
 
         private void UpdateIdle()
         {
             //agent.SetDestination(J_PathManager. instance.points[0].position);
-            target = GameObject.FindWithTag("Player");
+            target = GameObject.FindGameObjectWithTag("Player");
             //target = GameObject.Find("PlayerArm");
             //target = GameObject.FindWithTag("Player");
             if (target != null)
@@ -110,16 +93,73 @@ namespace MedicAI
                 state = State.Patrol;
             }
 
+            //움직이고 있을 때 확률적으로 점프를 하도록 한다
+
         }
+        private void UpdatePatrol()
+        {
+            //길정보를 알고싶다
+            Vector3 pos = J_PathManager.instance.points[targetIndex].position;
+
+            //내가 길의 어떤 위치로 갈것인지 알고싶다
+
+            //그곳으로 이동하고싶다
+            agent.SetDestination(pos);
+            print(pos);
+            //1까지 근접했다면 도착한것으로 하고싶다
+
+            pos.y = transform.position.y;
+            float dist = Vector3.Distance(transform.position, pos);
+            //도착했다면 targetIndex를 1증가시키고싶다
+            if (dist <= agent.stoppingDistance)
+            {
+                targetIndex = (targetIndex + 1) % J_PathManager.instance.points.Length;
+                //targetdex = (targetIndex + 1);
+
+            }
+            //만약 플레이어가 내 인식거리안에 들어왔다면
+            float dist2 = Vector3.Distance(transform.position, target.transform.position);
+            if (dist2 < attackDistance)
+            {
+                //추적상태로 전이하고싶다
+                state = State.Chase;
+            }
+        }
+        float attackDistance = 10;
         public float farDistance = 20;
         public Transform Players;
         private Vector3 targetPos;
+
+
+
         private void UpdateAttack()
         {
             //y값을 플레이어와 동일하게한다
             targetPos = new Vector3(Players.position.x, transform.position.y, Players.position.z);
             transform.LookAt(targetPos);
         }
+
+        private void UpdateDie()
+        {
+            
+            state = State.Die;
+            anim.SetTrigger("Die");
+        }
+        private void Respawn()
+        {
+            currTime += Time.deltaTime;
+            if (currTime <= respawnTime)
+            {
+                transform.position = respawnPoint.position;
+                respawnPoint.eulerAngles = respawnPoint.eulerAngles;
+                state = State.Idle;
+                transform.position = respawnPoint.position;
+                respawnPoint.rotation = respawnPoint.rotation;
+            }
+        }
+
+
+
         #region 애니메이션 이벤트함수를 통해 호출되는 함수들...
         // 애니메이션 이벤트함수를 통해 호출되는 함수들
         public void OnAttack_Hit()
@@ -132,6 +172,12 @@ namespace MedicAI
 
             }
         }
+
+
+
+
+
+
         public void OnAttack_Finished()
         {
             float distance = Vector3.Distance(this.transform.position, target.transform.position);
