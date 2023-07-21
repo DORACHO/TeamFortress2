@@ -30,7 +30,7 @@ public class PEA_ScoutMove : MonoBehaviour
     }
 
     private State state = State.Idle;
-    private WeaponState weaponState = WeaponState.PistolGun;
+    private WeaponState weaponState = WeaponState.ScatterGun;
 
     // º¯¼öµé
     #region
