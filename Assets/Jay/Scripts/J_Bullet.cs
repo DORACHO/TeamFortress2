@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class J_Bullet : MonoBehaviour
 {
+    public int bValue = 10;
     public float speed = 5f;
     Rigidbody rb;
     float currTime = 0;

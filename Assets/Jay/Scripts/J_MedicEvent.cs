@@ -24,10 +24,10 @@ public class J_MedicEvent : MonoBehaviour
     }
     void OnAttack_Finished()
     {
-        medic.OnAttack_Finished();
+        //medic.OnAttack_Finished();
     }
     void OnAttackWait_Finished()
     {
-        medic.OnAttackWait_Finished();
+        //medic.OnAttackWait_Finished();
     }
 }
