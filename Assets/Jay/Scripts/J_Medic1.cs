@@ -23,6 +23,7 @@ namespace MedicAI
             React,
             Die,
             Patrol,
+            mustFollow,
         }
         public State state;
         public float attackRange =40;
@@ -30,7 +31,7 @@ namespace MedicAI
         float currTime;
         float respawnTime = 3f;
 
-
+        bool isClicked = false;
         //에디터에서 연결해줄 변수
         public Transform respawnPoint;
 
@@ -48,14 +49,18 @@ namespace MedicAI
             switch (state)
             {
                 case State.Idle: UpdateIdle(); break;
-                case State.Chase: UpdateChase(); break;
+                case State.Chase: UpdateChase();  break;
                 case State.Attack: UpdateAttack(); break;
                 case State.Patrol: UpdatePatrol(); break;
                 case State.Die: Respawn(); break;
             }
+            if (Input.GetKeyDown(KeyCode.M)  )
+            {
+                isClicked = true;
+                UpdateChase();
+            }
         }
 
-    
         public int targetIndex;
    
 
@@ -93,9 +98,12 @@ namespace MedicAI
                 state = State.Patrol;
             }
 
-            //움직이고 있을 때 확률적으로 점프를 하도록 한다
+         
 
         }
+        //플레이어가 2번 버튼을 누르면 플레이어에게 향하고싶다
+        //State는 mustFollow 
+        
         private void UpdatePatrol()
         {
             //길정보를 알고싶다
@@ -105,7 +113,7 @@ namespace MedicAI
 
             //그곳으로 이동하고싶다
             agent.SetDestination(pos);
-            print(pos);
+            //print(pos);
             //1까지 근접했다면 도착한것으로 하고싶다
 
             pos.y = transform.position.y;
@@ -119,7 +127,7 @@ namespace MedicAI
             }
             //만약 플레이어가 내 인식거리안에 들어왔다면
             float dist2 = Vector3.Distance(transform.position, target.transform.position);
-            if (dist2 < attackDistance)
+            if (dist2 < attackDistance || isClicked == true)
             {
                 //추적상태로 전이하고싶다
                 state = State.Chase;
