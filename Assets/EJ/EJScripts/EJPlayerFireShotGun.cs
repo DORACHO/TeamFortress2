@@ -8,8 +8,16 @@ public class EJPlayerFireShotGun : MonoBehaviour
 {
     public EJCameraRotate ejcameraRotate;
 
+    enum bulletImpactName
+    {
+        Floor,
+        Enemy
+    }
+
+    //bulletImpact 효과
+    public GameObject[] bulletImpactFactory;
+
     //muzzle 효과
-    public GameObject bulletImpactFactory;
     public GameObject bulletMuzzleImpactFactory;
     public Transform muzzlePos;
     public GameObject muzzleSprite;
@@ -53,10 +61,12 @@ public class EJPlayerFireShotGun : MonoBehaviour
         leftMagazine = maxMagazine;
         canFire = true;
 
-        layer = (1 << LayerMask.NameToLayer("Enemy"));
+        enemyLayer = (1 << LayerMask.NameToLayer("Enemy"));
+        mapLayer = (1 << LayerMask.NameToLayer("Map"));
     }
 
-    int layer;
+    int enemyLayer;
+    int mapLayer;
 
     // Update is called once per frame
     void Update()
@@ -109,18 +119,48 @@ public class EJPlayerFireShotGun : MonoBehaviour
                 {
                     Debug.DrawRay(firePos[i].position, firePos[i].forward * maxRayDistance, Color.red);
                     
-                   if (Physics.Raycast(firePos[i].position, firePos[i].forward, out hitInfo, maxRayDistance))
+                   if (Physics.Raycast(firePos[i].position, firePos[i].forward, out hitInfo, maxRayDistance, enemyLayer))
                    {
                         print("Fire1 Clicked"); 
-                        GameObject bulletImpact = Instantiate(bulletImpactFactory);
+                        GameObject bulletImpact = Instantiate(bulletImpactFactory[0]);
+                       
+                        //맞은 게임오브젝트에 단위벡터 짜리 큐브를 하나 만들고
+                        //그곳에 이펙트가 쏴지면 좋겠다?
+
+                        //똑같은 크기의 이펙트가 생성되도록 하는 법?
+                       // bulletImpact.transform.localScale.Normalize();
                         bulletImpact.transform.position = hitInfo.point;
-                        bulletImpact.transform.forward = hitInfo.normal;                       
+                        bulletImpact.transform.forward = hitInfo.normal;
+                        bulletImpact.transform.parent = hitInfo.transform;
 
                         //Enemy에게 Damage를 준다 (임시로 넣어둠)
                         //EJEnemyHPForTest.instance.ENEMY_HP -= 5;
 
                         //GetComponentInChildren<EJCameraRotate>().PlayFireSFX();
                         EJSFX.instance.PlayFireSFX();
+
+                        Destroy(bulletImpact, 3);
+                    }
+
+                    if (Physics.Raycast(firePos[i].position, firePos[i].forward, out hitInfo, maxRayDistance, mapLayer))
+                    {
+                        print("Fire1 Clicked");
+                        GameObject bulletImpact = Instantiate(bulletImpactFactory[1], hitInfo.transform);
+
+                        //똑같은 크기의 이펙트가 생성되도록 하는 법?
+                        //bulletImpact.transform.localScale.Normalize();
+
+                        bulletImpact.transform.position = hitInfo.point;
+                        bulletImpact.transform.forward = hitInfo.normal;
+                        bulletImpact.transform.parent = hitInfo.transform;
+
+                        //Enemy에게 Damage를 준다 (임시로 넣어둠)
+                        //EJEnemyHPForTest.instance.ENEMY_HP -= 5;
+
+                        //GetComponentInChildren<EJCameraRotate>().PlayFireSFX();
+                        EJSFX.instance.PlayFireSFX();
+
+                        Destroy(bulletImpact, 3);
                     }
                 }
 
@@ -151,6 +191,7 @@ public class EJPlayerFireShotGun : MonoBehaviour
              Invoke(nameof(ONFire), delayTime);
         }
     }
+
 
     public void UpdateBulletCharge()
     {

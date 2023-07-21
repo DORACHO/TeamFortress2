@@ -36,6 +36,10 @@ public class EJPlayerMove : MonoBehaviour
     //isGrounded가 계속 상태가 같지 않은 이유인가?
     bool isJumpingNow = false;
 
+    //walking SFX
+    public AudioSource walkingSFXSource;
+    //public AudioClip walkingSFX;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -50,7 +54,7 @@ public class EJPlayerMove : MonoBehaviour
 
         anim = GetComponentInChildren<Animator>();
     }
-
+    
     // Update is called once per frame
     void Update()
     {
@@ -58,10 +62,18 @@ public class EJPlayerMove : MonoBehaviour
         float h = Input.GetAxis("Horizontal");
         float v = Input.GetAxis("Vertical");
 
+        
         //만약에 움직이는 상태라면
         if(h != 0 || v != 0)
         {
+            if (walkingSFXSource.isPlaying == false)
+            {
+                //GetComponentInChildren<EJSFX_Walk>().PlayWalkSFX();
+                walkingSFXSource.Play();
+            }
+
             print("움직이고 있습니다!");
+
             //if(isClickCtrl)
             //{
             //    stateMgr.ChangeState(EJPlayerAnim.State.Crouch);
@@ -80,6 +92,7 @@ public class EJPlayerMove : MonoBehaviour
         }
         else
         {
+            walkingSFXSource.Stop();
             //print("정지해있습니다!");
             //if (isClickCtrl)
             //{

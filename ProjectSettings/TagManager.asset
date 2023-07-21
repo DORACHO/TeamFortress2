@@ -6,7 +6,8 @@ TagManager:
   tags:
   - Ground
   - Wagon
-  - Wagon_WayPoint
+  - ChaseCamera
+  - fullBodyPlayer
   layers:
   - Default
   - TransparentFX
