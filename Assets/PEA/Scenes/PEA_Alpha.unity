@@ -24570,15 +24570,59 @@ MonoBehaviour:
   wayPoints:
   - {fileID: 610106086}
   - {fileID: 659305995}
+  - {fileID: 106394599}
+  - {fileID: 111056845}
+  - {fileID: 1446098782}
+  - {fileID: 1065681956}
+  - {fileID: 480484677}
+  - {fileID: 1246975379}
+  - {fileID: 1607913832}
+  - {fileID: 1962602493}
+  - {fileID: 534327276}
   - {fileID: 1753867181}
-  - {fileID: 0}
+  - {fileID: 1978408849}
+  - {fileID: 1585360692}
+  - {fileID: 1456972792}
+  - {fileID: 317431686}
+  - {fileID: 2100387155}
+  - {fileID: 673264707}
+  - {fileID: 469540054}
+  - {fileID: 1119199258}
+  - {fileID: 936137006}
+  - {fileID: 771997118}
+  - {fileID: 1932870831}
+  - {fileID: 2077346743}
+  - {fileID: 1944930160}
+  - {fileID: 466142330}
+  - {fileID: 1284021391}
+  - {fileID: 741155217}
   - {fileID: 651890502}
+  - {fileID: 688137747}
+  - {fileID: 1319423283}
+  - {fileID: 1638323761}
+  - {fileID: 828016235}
+  - {fileID: 179158338}
+  - {fileID: 1635375757}
+  - {fileID: 364421772}
+  - {fileID: 1585227289}
+  - {fileID: 1008395447}
   - {fileID: 999254780}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 621422576}
+  - {fileID: 604889181}
+  - {fileID: 453976429}
+  - {fileID: 2063363751}
+  - {fileID: 1315565032}
+  - {fileID: 532942639}
+  - {fileID: 1723918920}
+  - {fileID: 1413223336}
+  - {fileID: 1511091645}
+  - {fileID: 941112486}
+  - {fileID: 899743179}
+  - {fileID: 869772944}
+  - {fileID: 1916929320}
+  - {fileID: 744761914}
+  - {fileID: 756382876}
+  - {fileID: 2046749658}
   scoutMove: {fileID: 1132897660}
 --- !u!4 &1676329320
 Transform:
@@ -26676,6 +26720,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stateMgr: {fileID: 1810839191}
+  walkingSFXSource: {fileID: 0}
 --- !u!143 &1810839197
 CharacterController:
   m_ObjectHideFlags: 0
@@ -26721,7 +26766,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ejcameraRotate: {fileID: 0}
-  bulletImpactFactory: {fileID: 100002, guid: 35a8b060d7b03464cad828ad46434d32, type: 3}
+  bulletImpactFactory:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   bulletMuzzleImpactFactory: {fileID: 2361510173062788813, guid: 23959cb02a7b2084eacba71b8397881a, type: 3}
   muzzlePos: {fileID: 294008752}
   muzzleSprite: {fileID: 2031030878}
@@ -29172,6 +29220,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stateMgr: {fileID: 1982814490}
+  walkingSFXSource: {fileID: 0}
 --- !u!143 &1982814496
 CharacterController:
   m_ObjectHideFlags: 0
@@ -29217,7 +29266,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ejcameraRotate: {fileID: 0}
-  bulletImpactFactory: {fileID: 100002, guid: 35a8b060d7b03464cad828ad46434d32, type: 3}
+  bulletImpactFactory:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   bulletMuzzleImpactFactory: {fileID: 2361510173062788813, guid: 23959cb02a7b2084eacba71b8397881a, type: 3}
   muzzlePos: {fileID: 71504690}
   muzzleSprite: {fileID: 787881774}
