@@ -9,7 +9,10 @@ EditorBuildSettings:
     path: Assets/PEA/Scenes/Start.unity
     guid: 010b9c7efd7f72149ab3083925a895cd
   - enabled: 1
-    path: Assets/Scenes/Alpha/Alpha_Scene.unity
+    path: Assets/PEA/Scenes/PEA_Alpha.unity
+    guid: a0ea48ea0df615c4198eaa64665bf8cb
+  - enabled: 1
+    path: Assets/Alpha_Scene.unity
     guid: fe762d1c192277e4ea8ce09a2248b15b
   - enabled: 1
     path: Assets/PEA/Scenes/PEA_Map.unity

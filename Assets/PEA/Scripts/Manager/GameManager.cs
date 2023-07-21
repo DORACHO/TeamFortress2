@@ -40,8 +40,8 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        print(coroutine);
-        print(isStart);
+        //print(coroutine);
+        //print(isStart);
 
         if (isStart)
         {

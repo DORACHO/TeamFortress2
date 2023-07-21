@@ -30,14 +30,14 @@ public class PEA_ScoutMove : MonoBehaviour
     }
 
     private State state = State.Idle;
-    private WeaponState weaponState = WeaponState.PistolGun;
+    private WeaponState weaponState = WeaponState.ScatterGun;
 
     // 변수들
     #region
     private int curPatrolPoint = -1;                                         // 현재 순찰가는 순찰포인트
     private int prevPatrolPoint = -1;                                        // 이전에 순찰갔던 순찰포인트
     private int jumpCount = 0;
-    private int wagonPoint = 0;                                              // 수레가 지나갈 체크포인트 번호
+    private int wagonPoint = 0;                                              // 수레가 지나간 체크포인트 번호
     private float speed = 0f;
     private float curTime = 0f;
     private float waitTime = 0f;
@@ -82,7 +82,6 @@ public class PEA_ScoutMove : MonoBehaviour
 
     public int WagonPoint
     {
-        set { wagonPoint = value; }
         get { return wagonPoint; }
     }
 
@@ -289,6 +288,13 @@ public class PEA_ScoutMove : MonoBehaviour
             transform.localEulerAngles = dir;
             isRotate = false;
         }
+    }
+
+    // 수레가 체크포인트를 지나갔을 때 호출
+    // 순찰도는 포인트들이 달라짐
+    public void PassByCheckPoint()
+    {
+        wagonPoint++;
     }
 
     private void Respawn()
