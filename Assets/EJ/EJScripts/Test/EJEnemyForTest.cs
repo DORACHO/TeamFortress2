@@ -29,7 +29,7 @@ public class EJEnemyForTest : MonoBehaviour
     void Update()
     {
         currentTime += Time.deltaTime;
-        target = GameObject.Find("PlayerArm");
+        target = GameObject.FindWithTag("Player");
         print(target);
         UpdateMove();
         UpdateAttack();

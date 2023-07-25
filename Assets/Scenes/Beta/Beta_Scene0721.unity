@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.10014667, g: 0.18747084, b: 0.26273152, a: 1}
+  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -9203,7 +9203,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 735420820}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Scouts
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -11046,6 +11046,14 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: bf200cc8e90d660499b2f41b5d06b601, type: 3}
       propertyPath: m_Name
       value: ScatterGun
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: bf200cc8e90d660499b2f41b5d06b601, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1889830579506605054, guid: bf200cc8e90d660499b2f41b5d06b601, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bf200cc8e90d660499b2f41b5d06b601, type: 3}
@@ -18636,7 +18644,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: 6a6d942c5ac629244bd401840eac610f, type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 6a6d942c5ac629244bd401840eac610f, type: 3}
       propertyPath: m_LocalPosition.x
@@ -19698,6 +19706,14 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: bf200cc8e90d660499b2f41b5d06b601, type: 3}
       propertyPath: m_Name
       value: ScatterGun
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: bf200cc8e90d660499b2f41b5d06b601, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1889830579506605054, guid: bf200cc8e90d660499b2f41b5d06b601, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bf200cc8e90d660499b2f41b5d06b601, type: 3}
@@ -22736,6 +22752,14 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: bf200cc8e90d660499b2f41b5d06b601, type: 3}
       propertyPath: m_Name
       value: ScatterGun
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: bf200cc8e90d660499b2f41b5d06b601, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1889830579506605054, guid: bf200cc8e90d660499b2f41b5d06b601, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bf200cc8e90d660499b2f41b5d06b601, type: 3}
@@ -28851,6 +28875,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: ScatterGun
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: bf200cc8e90d660499b2f41b5d06b601, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1889830579506605054, guid: bf200cc8e90d660499b2f41b5d06b601, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bf200cc8e90d660499b2f41b5d06b601, type: 3}
 --- !u!4 &1909565400 stripped
@@ -29955,7 +29987,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ejcameraRotate: {fileID: 0}
   bulletImpactFactory:
-  - {fileID: 9173483050681597966, guid: d0d1f55f933385546b5ba9c2708ea7a3, type: 3}
+  - {fileID: 100002, guid: 35a8b060d7b03464cad828ad46434d32, type: 3}
   - {fileID: 9173483050681597966, guid: d0d1f55f933385546b5ba9c2708ea7a3, type: 3}
   bulletMuzzleImpactFactory: {fileID: 2361510173062788813, guid: 23959cb02a7b2084eacba71b8397881a, type: 3}
   muzzlePos: {fileID: 287521463}
@@ -30033,7 +30065,7 @@ Transform:
   m_GameObject: {fileID: 1998173303}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -24.3, y: 11, z: -94.7}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 842841264}

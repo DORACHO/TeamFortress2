@@ -3,7 +3,22 @@ guid: 497f2bd3485b3524a93c9daee5208b74
 ModelImporter:
   serializedVersion: 21300
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: models_player_engineer_engineer_head_red_1
+    second: {fileID: 2100000, guid: c1a455331de057848a3b90ea050a3b1f, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: models_player_engineer_engineer_mech_hand_2
+    second: {fileID: 2100000, guid: 43be34775bd0f2c47a7746c8e6956ef3, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: models_player_engineer_engineer_red_0
+    second: {fileID: 2100000, guid: 49ef030bbb48188478d85b1495faa677, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

@@ -2,8 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace EJCameraRotateBackUP
-{
+
+
     public class EJCameraRotate : MonoBehaviour
     {
         //Rotate 변수
@@ -58,6 +58,7 @@ namespace EJCameraRotateBackUP
             CameraChange2ChaseCam();
             CameraChange2MainCam();
             Whoareyou();
+
 
         }
 
@@ -199,5 +200,17 @@ namespace EJCameraRotateBackUP
             chaseCameraON = true;
             //print("추적카메라가 켜졌습니다");
         }
+
+        //Camera FOV를 75에서 60으로
+        public void TeleportZoomIn()
+        {
+            print("teleportZoomin");
+            float originFOV = GetComponent<Camera>().fieldOfView;
+
+            GetComponent<Camera>().fieldOfView += 30;
+            GetComponent<Camera>().fieldOfView = Mathf.Lerp(GetComponent<Camera>().fieldOfView, originFOV, 0.7f);
+
+            //GetComponent<Camera>().fieldOfView = originFOV;
     }
+    
 }

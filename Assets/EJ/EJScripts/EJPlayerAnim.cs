@@ -6,11 +6,13 @@ public class EJPlayerAnim : MonoBehaviour
 {
     public Animator anim;
 
+
     //player State
     public enum State
     {
         Fire,
-        Reload
+        Reload,
+        Construct
     }
 
     public State state;
@@ -38,12 +40,20 @@ public class EJPlayerAnim : MonoBehaviour
 
         switch (state)
         {
-            case State.Fire:                
-                anim.SetTrigger("Idle");
+            case State.Fire:   
+                if(!anim.GetCurrentAnimatorStateInfo(0).IsName("Idle"))
+                anim.SetTrigger("Idle");              
                 break;
             case State.Reload:
                 anim.SetTrigger("ReLoad");
                 break;
+            case State.Construct:
+                if (!anim.GetCurrentAnimatorStateInfo(0).IsName("Construct"))
+                anim.SetTrigger("Construct");             
+                break;
         }
     }
+
+
 }
+
