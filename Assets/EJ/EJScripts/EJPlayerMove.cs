@@ -16,8 +16,9 @@ public class EJPlayerMove : MonoBehaviour
     float knockbackSpeed = 5;
 
     //Jump 변수
-    float jumpPower = 5;
+    float jumpPower = 5f;
     float gravity = -9.81f;
+    //-9.81f
     float yVelocity;
 
     int jumpCount;
@@ -71,8 +72,6 @@ public class EJPlayerMove : MonoBehaviour
                 //GetComponentInChildren<EJSFX_Walk>().PlayWalkSFX();
                 walkingSFXSource.Play();
             }
-
-            print("움직이고 있습니다!");
 
             //if(isClickCtrl)
             //{
@@ -172,15 +171,15 @@ public class EJPlayerMove : MonoBehaviour
         cc.Move(velocity * Time.deltaTime);
     }
 
-
-
     //Teleport
+    //시간 지연 시키기
+    //CamZoomIn
+    //dissolve 흰화면 crossdissolve
+    //파티클 효과
     public void Teleport(Vector3 exitPos)
     {
         cc.enabled = false;
         transform.position = exitPos;
         cc.enabled = true;
     }
-
-
 }

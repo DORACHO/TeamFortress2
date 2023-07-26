@@ -6,11 +6,10 @@ using UnityEngine;
 
 public class EJPlayerFireShotGun : MonoBehaviour
 {
-    public EJCameraRotate ejcameraRotate;
 
     enum bulletImpactName
     {
-        Floor,
+        Default,
         Enemy
     }
 
@@ -62,11 +61,11 @@ public class EJPlayerFireShotGun : MonoBehaviour
         canFire = true;
 
         enemyLayer = (1 << LayerMask.NameToLayer("Enemy"));
-        mapLayer = (1 << LayerMask.NameToLayer("Map"));
+        defaultLayer = (1 << LayerMask.NameToLayer("Default"));
     }
 
     int enemyLayer;
-    int mapLayer;
+    int defaultLayer;
 
     // Update is called once per frame
     void Update()
@@ -83,25 +82,12 @@ public class EJPlayerFireShotGun : MonoBehaviour
         currentTime += Time.deltaTime;
         stateMgr.ChangeState(EJPlayerAnim.State.Fire);
 
+
         if (canFire)
          {
             if (Input.GetButtonDown("Fire1") && fireCount<maxBullet)
             {
-
-                //ejcameraRotate.UpdateCameraReact();
-
-                //GameObject mainCam = GameObject.FindWithTag("MainCamera");
-                //mainCam.GetComponent<EJCameraRotate>().UpdateCameraReact();
-                /*print(Camera.main.name);
-                if(Camera.main.TryGetComponent<EJCameraRotate>(out EJCameraRotate cameraRotate))
-                {
-                    cameraRotate.UpdateCameraReact();
-                }
-                else
-                {
-                    print("cameraRotate Null");
-                }*/
-                Camera.main.GetComponent<EJCameraRotateBackUP.EJCameraRotate>().UpdateCameraReact();
+                Camera.main.GetComponent<EJCameraRotate>().UpdateCameraReact();
                 //GetComponentInChildren<EJCameraRotate>().UpdateCameraReact();
 
                 Ray ray = new Ray(Camera.main.transform.position, Camera.main.transform.forward);
@@ -122,7 +108,7 @@ public class EJPlayerFireShotGun : MonoBehaviour
                    if (Physics.Raycast(firePos[i].position, firePos[i].forward, out hitInfo, maxRayDistance, enemyLayer))
                    {
                         print("Fire1 Clicked"); 
-                        GameObject bulletImpact = Instantiate(bulletImpactFactory[0]);
+                        GameObject bulletImpact = Instantiate(bulletImpactFactory[1]);
                        
                         //맞은 게임오브젝트에 단위벡터 짜리 큐브를 하나 만들고
                         //그곳에 이펙트가 쏴지면 좋겠다?
@@ -142,10 +128,10 @@ public class EJPlayerFireShotGun : MonoBehaviour
                         Destroy(bulletImpact, 3);
                     }
 
-                    if (Physics.Raycast(firePos[i].position, firePos[i].forward, out hitInfo, maxRayDistance, mapLayer))
+                    if (Physics.Raycast(firePos[i].position, firePos[i].forward, out hitInfo, maxRayDistance, defaultLayer))
                     {
                         print("Fire1 Clicked");
-                        GameObject bulletImpact = Instantiate(bulletImpactFactory[1], hitInfo.transform);
+                        GameObject bulletImpact = Instantiate(bulletImpactFactory[0]);
 
                         //똑같은 크기의 이펙트가 생성되도록 하는 법?
                         //bulletImpact.transform.localScale.Normalize();
@@ -220,6 +206,7 @@ public class EJPlayerFireShotGun : MonoBehaviour
     {
         muzzleSprite.SetActive(false);
     }
+
 
     #region fire관련 UI표시 프로퍼티
     public int LEFT_BULLET

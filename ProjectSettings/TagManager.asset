@@ -8,6 +8,11 @@ TagManager:
   - Wagon
   - ChaseCamera
   - fullBodyPlayer
+  - Wagon_WayPoint
+  - ArmBody
+  - ToolWrench
+  - ToolHandgun
+  - TeleportExit
   layers:
   - Default
   - TransparentFX

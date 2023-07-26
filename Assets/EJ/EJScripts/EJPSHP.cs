@@ -9,6 +9,8 @@ public class EJPSHP : MonoBehaviour
     public static EJPSHP instance;
     public Animator characterAnim;
 
+    public GameObject playerRespawnPoint;
+
     private void Awake()
     {
         instance = this;
@@ -32,7 +34,18 @@ public class EJPSHP : MonoBehaviour
     void Update()
     {
         RestrictHP();
-        Dead();
+       
+ /*       if (HP <= 0)
+        {
+            GetComponentInChildren<EJCameraRotate>().Whoareyou();
+        }*/
+
+
+        //medic호출
+        if (Input.GetKeyDown(KeyCode.M))
+        {
+            EJSFX.instance.CallMedicSFX();
+        }
     }
 
 
@@ -45,11 +58,11 @@ public class EJPSHP : MonoBehaviour
         set
         {
             currentHP = value;
-            hpText.text = $"{value}";
+            hpText.text = $"{value}";            
         }
     }
 
-    public Vector3 murdererPos;
+    public Vector3 murdererPos;      
     public void SetHP(int damage, Vector3 position)
     {
         if (HP > 0)
@@ -71,35 +84,38 @@ public class EJPSHP : MonoBehaviour
         }
     }
 
+
+
+
     public void Dead()
     {
-        if (EJPSHP.instance.HP <= 0)
-        {
+     
             print("플레이어가 죽었습니다");
-            //EJPlayerModelChangeState.instance.OFFArmModel();
-            //EJPlayerModelChangeState.instance.ONFullBodyModel();
+            EJPlayerModelChangeState.instance.OFFArmModel();
+            EJPlayerModelChangeState.instance.ONFullBodyModel();
 
             characterAnim.SetTrigger("Death");
 
             Invoke(nameof(Rebirth), 5);
-        }
+
     }
 
-    Vector3 respawnPoint;
 
     public void Rebirth()
     {
         //Model을 armbody로 다시 바꾼다
         //EJPlayerModelChangeState.instance.ONArmModel();
         //EJPlayerModelChangeState.instance.OFFFullBodyModel();
+        HP = normalMaxHP;
+
+        GetComponentInChildren<EJCameraRotate>().TeleportZoomIn();
+        GetComponentInChildren<EJCameraRotate>().TeleportDissolve();
 
         //리스폰 위치 나중에 수정
-        respawnPoint = new Vector3(-24.3f, 11, -94.7f);
-        transform.position = respawnPoint;
+        transform.position = playerRespawnPoint.transform.position + Vector3.up*3;
+        print("다시 태어났습니다");
 
         //HP를 회복시켜 둔다.
-        HP = normalMaxHP;
-        print("다시 태어났습니다");
     }
-
+    
 }
