@@ -3,7 +3,10 @@ guid: c722c76c9f1449c4d880db391c78393e
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - FireSFX: {fileID: 8300000, guid: dd99df4e650399e409877b51e6ffca50, type: 3}
+  - LoadSFX: {fileID: 8300000, guid: b35d80167dfcded4f8844a663ddaf387, type: 3}
+  - SentryGunSFX: {fileID: 8300000, guid: dd99df4e650399e409877b51e6ffca50, type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

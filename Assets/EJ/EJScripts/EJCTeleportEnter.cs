@@ -55,6 +55,7 @@ public class EJCTeleportEnter : MonoBehaviour
         //zoomInCam
         //현재 안되는 상태 왜?
         other.GetComponentInChildren<EJCameraRotate>().TeleportZoomIn();
+        other.GetComponentInChildren<EJCameraRotate>().TeleportDissolve();
         
     }
 

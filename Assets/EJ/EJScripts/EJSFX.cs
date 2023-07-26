@@ -8,6 +8,7 @@ public class EJSFX : MonoBehaviour
 
     public AudioClip FireSFX;
     public AudioClip LoadSFX;
+    public AudioClip TeleportSFX;
 
     AudioSource audiosource;
 
@@ -31,5 +32,9 @@ public class EJSFX : MonoBehaviour
     public void PlayLoadSFX()
     {
         audiosource.PlayOneShot(LoadSFX);
+    }
+    public void PlayTeleportSFX()
+    {
+        audiosource.PlayOneShot(TeleportSFX);
     }
 }
