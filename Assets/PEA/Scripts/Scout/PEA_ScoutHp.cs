@@ -10,10 +10,20 @@ public class PEA_ScoutHp : MonoBehaviour
     private readonly int maxHp = 125;
 
     private PEA_ScoutMove scoutMove;
+    private PEA_ScoutMove_Standby scoutStandby;
 
     // Start is called before the first frame update
     void Start()
     {
+        if(TryGetComponent<PEA_ScoutMove>(out scoutMove))
+        {
+            
+        }
+        else
+        {
+            TryGetComponent<PEA_ScoutMove_Standby>(out scoutStandby);
+        }
+
         hp = maxHp;
     }
 
@@ -29,7 +39,14 @@ public class PEA_ScoutHp : MonoBehaviour
         hp -= damage;
         if(hp <= 0)
         {
-            scoutMove.Die();
+            if(scoutMove != null)
+            {
+                scoutMove.Die();
+            }
+            else
+            {
+                scoutStandby.Die();
+            }
         }
     }
 }

@@ -74,35 +74,12 @@ public class PEA_PistolGun : MonoBehaviour
         if (loadBullets == 0 && maxLoadBulletCount != 0)
         {
             state = State.Loading;
+            scoutSound.PistolReload();
         }
 
-        if (isRebounding)
+        if(state == State.Loading)
         {
-            ReboundRecovery();
-        }
-
-        switch (state)
-        {
-            case State.Loading:
-                ReLoad();
-                break;
-
-            case State.Fire:
-                CheckTimeAfterFire();
-                break;
-
-            case State.Wait:
-                break;
-        }
-    }
-
-    // 공격 후 시간 재기
-    private void CheckTimeAfterFire()
-    {
-        timeAfterFire += Time.deltaTime;
-        if(timeAfterFire >= attackInterval)
-        {
-            state = State.Wait;
+            ReLoad();
         }
     }
 
@@ -155,16 +132,7 @@ public class PEA_PistolGun : MonoBehaviour
     // 총 쏘기
     public void Fire()
     {
-        if(state == State.Wait)
-        {
-            state = State.Fire;
-        }
-        else
-        {
-            return;
-        }
-
-        // 이번 공격으로 차명타를 입힐지 랜덤으로 정한다
+        // 이번 공격으로 치명타를 입힐지 랜덤으로 정한다
         randomCritical = Random.Range(1, 100);
         if (randomCritical <= criticalPercent)
         {
@@ -176,14 +144,16 @@ public class PEA_PistolGun : MonoBehaviour
         }
 
         // 총구의 앞방향으로 레이를 쏘고, 거리에 따라 데미지 측정
+        scoutSound.PistolShoot();
         Debug.DrawRay(firePos.position, firePos.forward * rayDistance, Color.red);
         if (Physics.Raycast(firePos.position, firePos.forward, out hit, rayDistance))
         {
             SetDamage(Vector3.Distance(transform.position, hit.point), isCritical);
+            //플레이어가 맞으면 플레이어한테 데미지 주기
         }
 
         // 반동주기, 측정된 데미지 출력, 장전된 총알 하나씩 빼기, 사용된 변수들 초기화해주기
-        Rebound();
+        //Rebound();
         ShowDamage();
         loadBullets--;
         curTime = 0f;
