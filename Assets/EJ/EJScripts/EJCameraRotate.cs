@@ -67,9 +67,12 @@ public class EJCameraRotate : MonoBehaviour
         cx = Mathf.Lerp(cx, targetCX, Time.deltaTime * 8);
 
 
-        CameraChange2ChaseCam();
-        CameraChange2MainCam();
-        Whoareyou();
+        //CameraChange2ChaseCam();
+        //CameraChange2MainCam();
+        if (EJPSHP.instance.HP <= 0)
+        {
+            Whoareyou();
+        }
 
         if (isZooming && isDissolved)
         {
@@ -127,31 +130,29 @@ public class EJCameraRotate : MonoBehaviour
 
     public void CameraChange2ChaseCam()
     {
-        if (EJPSHP.instance.HP <= 0)
-        {
+
             OFFMainCamera();
             ONChaseCamera();
-        }
+               
     }
 
     public void CameraChange2MainCam()
     {
-        if (EJPSHP.instance.HP > 0)
-        {
+            print("mainCam으로 바뀌었습니다");
             ONMainCamera();
             OFFChaseCamera();
-        }
+
+            EJPSHP.instance.Rebirth();
+
     }
 
     public void Whoareyou()
     {
-        if (EJPSHP.instance.HP <= 0)
-        {
+
             //Update에서 호출되지 않는 법 고민해야한다!...
             //EJPSHP.instance.Dead();
 
-            if (chaseCameraON)
-            {
+   
                 //print("whoareyou 실행중입니다");
                 GameObject chaseCamera = GameObject.FindWithTag("ChaseCamera");
 
@@ -164,32 +165,18 @@ public class EJCameraRotate : MonoBehaviour
                 Vector3 dir2Enemy = EJPSHP.instance.murdererPos - chaseCamera.transform.position;
                 dir2Enemy.Normalize();
 
-                // transform.parent = null;
-                //Vector3 murdererCamPos = EJPSHP.instance.murdererPos + (-dir2Enemy /*+ Vector3.up * 0.5f + Vector3.*/);
                 Vector3 murdererCamPos = EJPSHP.instance.murdererPos - (dir2Enemy * 3);
 
                 chaseCamera.transform.position = Vector3.Lerp(chaseCamera.transform.position, murdererCamPos, Time.deltaTime * 5);
-
                 chaseCamera.transform.forward = Vector3.Lerp(chaseCamera.transform.forward, dir2Enemy, Time.deltaTime * 5);
 
                 //chaseCamera.transform.LookAt(EJPSHP.instance.murdererPos);
 
-                //Invoke(nameof(CameraChange2MainCam), 3);
-            }
-        }
+                Invoke(nameof(CameraChange2MainCam), 5);
+                  
     }
 
-    public void ONCharacter()
-    {
-        GameObject fullBodyModel = GameObject.FindWithTag("fullBodyPlayer");
-        fullBodyModel.SetActive(true);
-    }
 
-    public void OFFCharacter()
-    {
-        GameObject fullBodyModel = GameObject.FindWithTag("fullBodyPlayer");
-        fullBodyModel.SetActive(false);
-    }
 
     public void OFFMainCamera()
     {

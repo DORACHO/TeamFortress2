@@ -22,6 +22,8 @@ public class EJPlayerConstruct : MonoBehaviour
     public GameObject UITextexitO;
     public GameObject UITextexitX;
 
+    bool isPositionFixed;
+
     //상태변경
     public EJPlayerAnim stateMgr;
 
@@ -64,15 +66,25 @@ public class EJPlayerConstruct : MonoBehaviour
             //SentryGun
             if (Input.GetKeyDown(KeyCode.Alpha1) && EJPSGoldOnHand.instance.GOLD >= 130)
             {
+                ConstPos.SetActive(true);
+                //isPositionFixed = false;
 
-                EJPSGoldOnHand.instance.GOLD -= 130;
-                GameObject centryGun = Instantiate(sentryGunFactory);
-                centryGun.transform.position = constructPosition.transform.position;
-                OFFConstructSelection();
-                Wrench2Gun();
-                UITextsentrygunX.SetActive(false);
-                UITextsentrygunO.SetActive(true);
-
+                if (ConstPos.activeSelf && isPositionFixed)
+                {
+                    ConstPos.SetActive(false);
+                    EJPSGoldOnHand.instance.GOLD -= 130;
+                    GameObject centryGun = Instantiate(sentryGunFactory);
+                    centryGun.transform.position = constructPosition.transform.position;
+                    OFFConstructSelection();
+                    Wrench2Gun();
+                    UITextsentrygunX.SetActive(false);
+                    UITextsentrygunO.SetActive(true);
+                }
+                else 
+                {
+                    ConstPos.SetActive(true);
+                    isPositionFixed = true;
+                }
             }
 
             //Teleport_enter

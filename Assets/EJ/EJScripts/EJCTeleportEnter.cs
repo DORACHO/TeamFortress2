@@ -45,15 +45,13 @@ public class EJCTeleportEnter : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        print("텔레포트 입구에 들어갔습니다");
-        print(exit);// 왜 계속 null인가..
+        //print("텔레포트 입구에 들어갔습니다");
+        //print(exit);// 왜 계속 null인가..
 
         EJPlayerMove Player = other.GetComponent<EJPlayerMove>();
         Vector3 exitPos = exit.transform.position + Vector3.up *10;
         Player.Teleport(exitPos);
 
-        //zoomInCam
-        //현재 안되는 상태 왜?
         other.GetComponentInChildren<EJCameraRotate>().TeleportZoomIn();
         other.GetComponentInChildren<EJCameraRotate>().TeleportDissolve();
         
