@@ -145,15 +145,15 @@ namespace MedicAI
                 state = State.Reloading;
                 //코루틴 스탑
                 J_HPBackGround.Instance.EndImage();
-                //if (bulletCount >= maxBulletCount)
-                //{
-                //    state = State.Reloading;
-                //}
-                //else
-                //{
-                //    Fire();
-                //    bulletCount++;
-                //}
+                if (bulletCount >= maxBulletCount)
+                {
+                    state = State.Reloading;
+                }
+                else
+                {
+                    Fire();
+                    bulletCount++;
+                }
                 currTime = 0;
             }
         }
@@ -161,7 +161,7 @@ namespace MedicAI
         private void UpdateReloading()
         {
             currTime += Time.deltaTime;
-            if (currTime >= 2)
+            if (currTime >= 1)
             {
                 state = State.Wait;
                 currTime = 0;
