@@ -126,7 +126,8 @@ public class EJCSentryGun : MonoBehaviour
                 EJSFX_SentryGun.instance.PlaySentryFireSFX();
 
                 fireCount++;
-                Destroy(target);
+                target.GetComponent<PEA_ScoutHp>().Damage(125);
+                //Destroy(target);
             }
         }
     }

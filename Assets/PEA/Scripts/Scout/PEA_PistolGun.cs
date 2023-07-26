@@ -149,6 +149,7 @@ public class PEA_PistolGun : MonoBehaviour
         if (Physics.Raycast(firePos.position, firePos.forward, out hit, rayDistance))
         {
             SetDamage(Vector3.Distance(transform.position, hit.point), isCritical);
+            EJPSHP.instance.SetHP((int)damage, transform.position);
             //플레이어가 맞으면 플레이어한테 데미지 주기
         }
 

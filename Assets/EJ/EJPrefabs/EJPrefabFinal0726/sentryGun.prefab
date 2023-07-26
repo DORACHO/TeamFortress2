@@ -7538,14 +7538,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 99548e14b63b3dc4798a41beec1d6929, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  firePosition: {fileID: 0}
-  bulletImpactFactory: {fileID: 0}
-  bulletFactory: {fileID: 0}
+  firePosition: {fileID: 7250131515022988199}
+  bulletImpactFactory: {fileID: 100002, guid: 1ea5c804ee92b264a94b5aee13f71868, type: 3}
+  bulletFactory: {fileID: 100002, guid: 1ea5c804ee92b264a94b5aee13f71868, type: 3}
   enemyLayer:
     serializedVersion: 2
-    m_Bits: 0
-  head: {fileID: 0}
-  bulletParent: {fileID: 0}
+    m_Bits: 64
+  head: {fileID: 2332224168625026162}
+  bulletParent: {fileID: 7250131515022988199}
 --- !u!114 &8787279054610101520
 MonoBehaviour:
   m_ObjectHideFlags: 0

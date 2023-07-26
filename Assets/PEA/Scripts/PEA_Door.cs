@@ -6,7 +6,7 @@ public class PEA_Door : MonoBehaviour
 {
     private float speed = 6f;
     private float originY = 0f;
-    private readonly float maxY = 12f;
+    private readonly float maxY = 6f;
 
     // Start is called before the first frame update
     void Start()
@@ -17,18 +17,21 @@ public class PEA_Door : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (GameManager.instance.IsStart && transform.position.y < originY + maxY)
+        if (GameManager.instance.IsStart)
         {
             DoorOpen();
-        }
-        else if(GameManager.instance.IsStart && transform.position.y >= originY + maxY)
-        {
-            enabled = false;
         }
     }
 
     private void DoorOpen()
     {
         transform.Translate(transform.up * speed * Time.deltaTime);
+
+        if(transform.position.y >= originY + maxY)
+        {
+            print("doorOpened");
+            enabled = false;
+
+        }
     }
 }
