@@ -66,7 +66,7 @@ public class PEA_ScatterGun : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        CheckTimeAfterFire();
+        //CheckTimeAfterFire();
 
         //if (Input.GetMouseButtonDown(0) && !isLoading && timeAfterFire >= attackInterval && loadBullets > 0)
         //{
@@ -74,7 +74,7 @@ public class PEA_ScatterGun : MonoBehaviour
         //}
 
         //if (Input.GetKeyDown(KeyCode.R) && loadBullets < maxLoadBulletCount)
-        if (loadBullets < maxLoadBulletCount)
+        if (loadBullets == 0 && maxLoadBulletCount > 0)
         {
             state = State.Loading;
         }
