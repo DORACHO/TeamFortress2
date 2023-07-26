@@ -9273,6 +9273,10 @@ PrefabInstance:
       propertyPath: textHP
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 8068143542331236402, guid: 9d7260ef4a2a1854986df40a6ac09c75, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8068143544005684352, guid: 9d7260ef4a2a1854986df40a6ac09c75, type: 3}
       propertyPath: m_Name
       value: PointManagers
