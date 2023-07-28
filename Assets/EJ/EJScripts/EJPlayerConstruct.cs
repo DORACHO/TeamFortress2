@@ -61,38 +61,84 @@ public class EJPlayerConstruct : MonoBehaviour
             }
         }
 
-        if (UIConstructSelection.activeSelf)
-        {           
+        if (UIConstructSelection.activeSelf && ConstPos.activeSelf == false)
+        {
             //SentryGun
             if (Input.GetKeyDown(KeyCode.Alpha1) && EJPSGoldOnHand.instance.GOLD >= 130)
             {
                 ConstPos.SetActive(true);
-                //isPositionFixed = false;
-
-                if (ConstPos.activeSelf && isPositionFixed)
-                {
-                    ConstPos.SetActive(false);
-                    EJPSGoldOnHand.instance.GOLD -= 130;
-                    GameObject centryGun = Instantiate(sentryGunFactory);
-                    centryGun.transform.position = constructPosition.transform.position;
-                    OFFConstructSelection();
-                    Wrench2Gun();
-                    UITextsentrygunX.SetActive(false);
-                    UITextsentrygunO.SetActive(true);
-                }
-                else 
-                {
-                    ConstPos.SetActive(true);
-                    isPositionFixed = true;
-                }
+                OFFConstructSelection();
             }
 
-            //Teleport_enter
             if (Input.GetKeyDown(KeyCode.Alpha3) && EJPSGoldOnHand.instance.GOLD >= 50)
+            {
+                ConstPos.SetActive(true);
+                OFFConstructSelection();
+            }
+
+            if (Input.GetKeyDown(KeyCode.Alpha4) && EJPSGoldOnHand.instance.GOLD >= 50)
+            {
+                ConstPos.SetActive(true);
+                OFFConstructSelection();
+            }
+        }
+
+        else if (UIConstructSelection.activeSelf == false && ConstPos.activeSelf)
+        {
+            if (Input.GetKeyDown(KeyCode.Alpha1) && EJPSGoldOnHand.instance.GOLD >= 130)
+            {
+                ConstPos.SetActive(false);
+                EJPSGoldOnHand.instance.GOLD -= 130;
+                GameObject sentryGun = Instantiate(sentryGunFactory);
+                sentryGun.transform.position = constructPosition.transform.position - Vector3.up * 0.7f;
+                //OFFConstructSelection();
+                Wrench2Gun();
+                UITextsentrygunX.SetActive(false);
+                UITextsentrygunO.SetActive(true);
+
+                //ConstPos.SetActive(true);
+                //OFFConstructSelection();
+            }
+
+            if (Input.GetKeyDown(KeyCode.Alpha3) && EJPSGoldOnHand.instance.GOLD >= 50)
+            {
+                ConstPos.SetActive(false);
+                EJPSGoldOnHand.instance.GOLD -= 150;
+                GameObject teleportEnter = Instantiate(teleportEnterFactory);
+                teleportEnter.transform.position = constructPosition.transform.position - Vector3.up * 0.7f;
+                //OFFConstructSelection();
+                Wrench2Gun();
+                UITextenterX.SetActive(false);
+                UITextenterO.SetActive(true);
+            }
+
+            if (Input.GetKeyDown(KeyCode.Alpha4) && EJPSGoldOnHand.instance.GOLD >= 50)
+            {
+                ConstPos.SetActive(false);
+                EJPSGoldOnHand.instance.GOLD -= 150;
+                GameObject teleportExit = Instantiate(teleportExitFactory);
+                //publicTeleportExit = teleportExit;
+                //print(publicTeleportExit);
+
+                teleportExit.transform.position = constructPosition.transform.position - Vector3.up * 0.7f;
+                //OFFConstructSelection();
+                Wrench2Gun();
+                UITextexitX.SetActive(false);
+                UITextexitO.SetActive(true);
+            }
+        }
+
+
+
+
+       /* if (UIConstructSelection.activeSelf)
+            {
+                //Teleport_enter
+                if (Input.GetKeyDown(KeyCode.Alpha3) && EJPSGoldOnHand.instance.GOLD >= 50)
             {
                 EJPSGoldOnHand.instance.GOLD -= 150;
                 GameObject teleportEnter = Instantiate(teleportEnterFactory);
-                teleportEnter.transform.position = constructPosition.transform.position;
+                teleportEnter.transform.position = constructPosition.transform.position - Vector3.up * 0.7f;
                 OFFConstructSelection();
                 Wrench2Gun();
                 UITextenterX.SetActive(false);
@@ -107,13 +153,13 @@ public class EJPlayerConstruct : MonoBehaviour
                 publicTeleportExit = teleportExit;
                 print(publicTeleportExit);
 
-                teleportExit.transform.position = constructPosition.transform.position;
+                teleportExit.transform.position = constructPosition.transform.position - Vector3.up * 0.7f;
                 OFFConstructSelection();
                 Wrench2Gun();
                 UITextexitX.SetActive(false);
                 UITextexitO.SetActive(true);
             }
-        }
+        }*/
     }
 
 

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -24,21 +25,27 @@ public class EJPSHP : MonoBehaviour
 
     public TextMeshProUGUI hpText;
 
+    //죽었을 때 countDown
+    public TextMeshProUGUI countDownNum;
+
     // Start is called before the first frame update
     void Start()
     {
         HP = normalMaxHP;
+        
     }
 
     // Update is called once per frame
     void Update()
     {
         RestrictHP();
-       
- /*       if (HP <= 0)
+
+        if (HP <= 0)
         {
-            GetComponentInChildren<EJCameraRotate>().Whoareyou();
-        }*/
+            //StartCoroutine(orderedRespawn());
+            StartCoroutine(orderedRespawn2());
+        }
+
 
 
         //medic호출
@@ -108,9 +115,6 @@ public class EJPSHP : MonoBehaviour
         //EJPlayerModelChangeState.instance.OFFFullBodyModel();
         HP = normalMaxHP;
 
-        GetComponentInChildren<EJCameraRotate>().TeleportZoomIn();
-        GetComponentInChildren<EJCameraRotate>().TeleportDissolve();
-
         //리스폰 위치 나중에 수정
         transform.position = playerRespawnPoint.transform.position + Vector3.up*3;
         print("다시 태어났습니다");
@@ -118,4 +122,79 @@ public class EJPSHP : MonoBehaviour
         //HP를 회복시켜 둔다.
     }
     
+    IEnumerator orderedRespawn()
+    {
+        //10초 카운트다운
+        
+        StartCoroutine(CountDownCoroutine(10));
+
+        //GetComponentInChildren<EJCameraRotate>().Whoareyou();
+        GetComponentInChildren<EJCameraRotate>().Whoareyou2();
+
+        yield return new WaitForSeconds(3f);
+
+        GetComponentInChildren<EJCameraRotate>().CameraChange2MainCam();
+       
+        //두 줄 실행이 안되는데 모르겠음
+        //GetComponentInChildren<EJCameraRotate>().TeleportZoomIn();
+       //GetComponentInChildren<EJCameraRotate>().TeleportDissolve();
+
+        Rebirth();
+
+        yield return new WaitForSeconds(0.5f);
+        
+    }
+
+    IEnumerator orderedRespawn2()
+    {
+        //10초 카운트다운
+
+        StartCoroutine(CountDownCoroutine(10));
+
+        //GetComponentInChildren<EJCameraRotate>().Whoareyou();
+        GetComponentInChildren<EJCameraRotate>().Whoareyou1();
+
+        yield return new WaitForSeconds(1f);
+        GetComponentInChildren<EJCameraRotate>().Whoareyou2();
+
+        yield return new WaitForSeconds(3f);
+
+        GetComponentInChildren<EJCameraRotate>().CameraChange2MainCam();
+
+        //두 줄 실행이 안되는데 모르겠음
+        //GetComponentInChildren<EJCameraRotate>().TeleportZoomIn();
+        //GetComponentInChildren<EJCameraRotate>().TeleportDissolve();
+
+        Rebirth();
+
+        yield return new WaitForSeconds(0.5f);
+
+    }
+
+    int leftSeconds;
+
+    private IEnumerator CountDownCoroutine(int seconds)
+    {
+        ONCountDown();
+        for (int i = seconds; i >= 0; i--)
+        {
+            leftSeconds = i;
+            countDownNum.text = $"{leftSeconds}";
+            yield return new WaitForSeconds(1f);
+        }
+        OFFCountDown();
+    }
+
+    public void ONCountDown()
+    {
+        TextMeshProUGUI countDownText = countDownNum;
+        countDownText.enabled = true;
+    }
+
+    public void OFFCountDown()
+    {
+        TextMeshProUGUI countDownText = countDownNum;
+        countDownText.enabled = false;
+    }
+
 }

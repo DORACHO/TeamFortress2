@@ -69,10 +69,10 @@ public class EJCameraRotate : MonoBehaviour
 
         //CameraChange2ChaseCam();
         //CameraChange2MainCam();
-        if (EJPSHP.instance.HP <= 0)
+/*        if (EJPSHP.instance.HP <= 0)
         {
             Whoareyou();
-        }
+        }*/
 
         if (isZooming && isDissolved)
         {
@@ -142,10 +142,11 @@ public class EJCameraRotate : MonoBehaviour
             ONMainCamera();
             OFFChaseCamera();
 
-            EJPSHP.instance.Rebirth();
+            //EJPSHP.instance.Rebirth();
 
     }
 
+    public bool isWhoareyouDone;
     public void Whoareyou()
     {
 
@@ -170,12 +171,39 @@ public class EJCameraRotate : MonoBehaviour
                 chaseCamera.transform.position = Vector3.Lerp(chaseCamera.transform.position, murdererCamPos, Time.deltaTime * 5);
                 chaseCamera.transform.forward = Vector3.Lerp(chaseCamera.transform.forward, dir2Enemy, Time.deltaTime * 5);
 
-                //chaseCamera.transform.LookAt(EJPSHP.instance.murdererPos);
+        //chaseCamera.transform.LookAt(EJPSHP.instance.murdererPos);
 
-                Invoke(nameof(CameraChange2MainCam), 5);
-                  
+        //Invoke(nameof(CameraChange2MainCam), 5);
+
+    }
+    public void Whoareyou1()
+    {
+        GameObject chaseCamera = GameObject.FindWithTag("ChaseCamera");
+        CameraChange2ChaseCam();
+
+        //01. 죽은 Player나오기
+        ONFullBodyModel();
+        OFFArmBodyModel();
+        Vector3 characterCamPos = transform.position - Vector3.back;
+
+        chaseCamera.transform.position = Vector3.Lerp(chaseCamera.transform.position, characterCamPos, Time.deltaTime * 5);
     }
 
+    public void Whoareyou2()
+    {
+
+        GameObject chaseCamera = GameObject.FindWithTag("ChaseCamera");
+
+        //02. Enemy로 Cam이동
+        Vector3 dir2Enemy2 = EJPSHP.instance.murdererPos - chaseCamera.transform.position;
+        dir2Enemy2.Normalize();
+
+        Vector3 murdererCamPos = EJPSHP.instance.murdererPos - (dir2Enemy2 * 3);
+
+        chaseCamera.transform.position = Vector3.Lerp(chaseCamera.transform.position, murdererCamPos, Time.deltaTime * 5);
+        chaseCamera.transform.forward = Vector3.Lerp(chaseCamera.transform.forward, dir2Enemy2, Time.deltaTime * 5);
+
+    }
 
 
     public void OFFMainCamera()
@@ -265,5 +293,29 @@ public class EJCameraRotate : MonoBehaviour
             whiteDissolve.a = originAlpha;
             UIwhiteDissolve.color = whiteDissolve;
         }        
+    }
+
+    public void ONFullBodyModel()
+    {
+        GameObject fullbodymodel = GameObject.FindWithTag("fullBodyPlayer");
+        fullbodymodel.SetActive(true);
+    }
+
+    public void OFFFullBodyModel()
+    {
+        GameObject fullbodymodel = GameObject.FindWithTag("fullBodyPlayer");
+        fullbodymodel.SetActive(false);
+    }
+
+    public void ONArmBodyModel()
+    {
+        GameObject fullbodymodel = GameObject.FindWithTag("ArmBody");
+        fullbodymodel.SetActive(true);
+    }
+
+    public void OFFArmBodyModel()
+    {
+        GameObject fullbodymodel = GameObject.FindWithTag("ArmBody");
+        fullbodymodel.SetActive(false);
     }
 }
