@@ -10,6 +10,7 @@ public class EJSFX : MonoBehaviour
     public AudioClip LoadSFX;
     public AudioClip TeleportSFX;
     public AudioClip callMedicSFX;
+    public AudioClip killedSFX;
 
     AudioSource audiosource;
 
@@ -41,5 +42,9 @@ public class EJSFX : MonoBehaviour
     public void CallMedicSFX()
     {
         audiosource.PlayOneShot(callMedicSFX);
+    }
+    public void PlayKilledSFX()
+    {
+        audiosource.PlayOneShot(killedSFX);
     }
 }

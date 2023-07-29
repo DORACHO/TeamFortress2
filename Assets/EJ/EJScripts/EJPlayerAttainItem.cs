@@ -20,7 +20,7 @@ public class EJPlayerAttainItem : MonoBehaviour
         if (other.gameObject.name.Contains("ItemBulletBoxS"))
         {
             Destroy(other.gameObject);
-            EJPSGoldOnHand.instance.GOLD += 40;
+            EJPSGoldOnHand.instance.GOLD += 3000;
         }
         if (other.gameObject.name.Contains("ItemBulletBoxM"))
         {

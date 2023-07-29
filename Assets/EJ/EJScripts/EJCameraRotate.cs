@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -34,6 +35,12 @@ public class EJCameraRotate : MonoBehaviour
     //Audio 변수
     public AudioSource fireSFX;
     public AudioSource reloadSFX;
+
+    //사망 시, Model 체인지
+    public GameObject armModel;
+    public GameObject fullbodyModel;
+    public TextMeshProUGUI countDownNum;
+    public GameObject respawnPoint;
 
     // Start is called before the first frame update
     void Start()
@@ -80,7 +87,11 @@ public class EJCameraRotate : MonoBehaviour
             WhiteDissolve();
         }
 
-
+        if (EJPSHP.instance.HP <= 0)
+        {
+            //StartCoroutine(orderedRespawn());
+            StartCoroutine(RespawnincameraScript());
+        }
     }
 
 
@@ -151,10 +162,8 @@ public class EJCameraRotate : MonoBehaviour
     {
 
             //Update에서 호출되지 않는 법 고민해야한다!...
-            //EJPSHP.instance.Dead();
-
-   
-                //print("whoareyou 실행중입니다");
+            //EJPSHP.instance.Dead();   
+            //print("whoareyou 실행중입니다");
                 GameObject chaseCamera = GameObject.FindWithTag("ChaseCamera");
 
                 CameraChange2ChaseCam();
@@ -176,20 +185,71 @@ public class EJCameraRotate : MonoBehaviour
         //Invoke(nameof(CameraChange2MainCam), 5);
 
     }
+
+
+
     public void Whoareyou1()
     {
+
+            GameObject chaseCamera = GameObject.FindWithTag("ChaseCamera");
+            CameraChange2ChaseCam();
+
+            //01. 죽은 Player나오기
+            ONFullBodyModel();
+            OFFArmBodyModel();
+
+            EJSFX.instance.PlayKilledSFX();
+
+            Vector3 characterCamPos = transform.position + Vector3.back*5;
+
+            chaseCamera.transform.position = Vector3.Lerp(chaseCamera.transform.position, characterCamPos, Time.deltaTime * 5);
+            
+        
+
+    }
+
+    public void Whoareyou2()
+    {
+
+            GameObject chaseCamera = GameObject.FindWithTag("ChaseCamera");
+
+            //02. Enemy로 Cam이동
+            Vector3 dir2Enemy2 = EJPSHP.instance.murdererPos - chaseCamera.transform.position;
+            dir2Enemy2.Normalize();
+
+            Vector3 murdererCamPos = EJPSHP.instance.murdererPos - (dir2Enemy2 * 3);
+
+            chaseCamera.transform.position = Vector3.Lerp(chaseCamera.transform.position, murdererCamPos, Time.deltaTime * 5);
+            chaseCamera.transform.forward = Vector3.Lerp(chaseCamera.transform.forward, dir2Enemy2, Time.deltaTime * 5);
+            OFFFullBodyModel();
+            ONArmBodyModel();
+                         
+    }
+
+
+
+    public IEnumerator Whoareyou1coroutine()
+    {
+
         GameObject chaseCamera = GameObject.FindWithTag("ChaseCamera");
         CameraChange2ChaseCam();
 
         //01. 죽은 Player나오기
         ONFullBodyModel();
         OFFArmBodyModel();
-        Vector3 characterCamPos = transform.position - Vector3.back;
+
+        EJSFX.instance.PlayKilledSFX();
+
+        Vector3 characterCamPos = transform.position + Vector3.back * 5;
 
         chaseCamera.transform.position = Vector3.Lerp(chaseCamera.transform.position, characterCamPos, Time.deltaTime * 5);
+
+        whoareyou1coroutineRunning = false;
+        yield return null;
+
     }
 
-    public void Whoareyou2()
+    public IEnumerator Whoareyou2coroutine()
     {
 
         GameObject chaseCamera = GameObject.FindWithTag("ChaseCamera");
@@ -202,7 +262,11 @@ public class EJCameraRotate : MonoBehaviour
 
         chaseCamera.transform.position = Vector3.Lerp(chaseCamera.transform.position, murdererCamPos, Time.deltaTime * 5);
         chaseCamera.transform.forward = Vector3.Lerp(chaseCamera.transform.forward, dir2Enemy2, Time.deltaTime * 5);
+        OFFFullBodyModel();
+        ONArmBodyModel();
 
+        whoareyou2coroutineRunning = false;
+        yield return null;
     }
 
 
@@ -297,25 +361,120 @@ public class EJCameraRotate : MonoBehaviour
 
     public void ONFullBodyModel()
     {
-        GameObject fullbodymodel = GameObject.FindWithTag("fullBodyPlayer");
-        fullbodymodel.SetActive(true);
+        //GameObject fullbodymodel = GameObject.FindWithTag("fullBodyPlayer");
+        //fullbodymodel.SetActive(true);
+        fullbodyModel.SetActive(true);
+        print("fullbody ON");
     }
 
     public void OFFFullBodyModel()
     {
-        GameObject fullbodymodel = GameObject.FindWithTag("fullBodyPlayer");
-        fullbodymodel.SetActive(false);
+        //GameObject fullbodymodel = GameObject.FindWithTag("fullBodyPlayer");
+        //fullbodymodel.SetActive(false);
+        fullbodyModel.SetActive(false);
+        print("fullbody OFF");
     }
 
     public void ONArmBodyModel()
     {
-        GameObject fullbodymodel = GameObject.FindWithTag("ArmBody");
-        fullbodymodel.SetActive(true);
+        //GameObject fullbodymodel = GameObject.FindWithTag("ArmBody");
+        //fullbodymodel.SetActive(true);
+        armModel.SetActive(true);
+        print("armbody ON");
     }
 
     public void OFFArmBodyModel()
     {
-        GameObject fullbodymodel = GameObject.FindWithTag("ArmBody");
-        fullbodymodel.SetActive(false);
+        //GameObject fullbodymodel = GameObject.FindWithTag("ArmBody");
+        //fullbodymodel.SetActive(false);
+        armModel.SetActive(false);
+        print("armbody OFF");
+    }
+
+    //****************respawnCoroutineSuccess****************//
+    bool whoareyou1coroutineRunning = false;
+    bool whoareyou2coroutineRunning = false;
+    bool countDownCalled = false;
+    bool rebirthCalled = false;
+    
+    bool mainCamON = false;
+
+    IEnumerator RespawnincameraScript()
+    {
+
+        if (!countDownCalled)
+        {
+            StartCoroutine(CountDownCoroutine(10));
+            countDownCalled = true;
+        }
+
+        if (!whoareyou1coroutineRunning)
+        {
+            whoareyou2coroutineRunning = true;
+            StartCoroutine(Whoareyou1coroutine());
+        }
+
+        yield return new WaitForSeconds(2f);
+
+        if (!whoareyou2coroutineRunning)
+        {
+            whoareyou2coroutineRunning = true;
+            StartCoroutine(Whoareyou2coroutine());
+        }
+
+        yield return new WaitForSeconds(3f);
+
+        if (!mainCamON)
+        {
+            CameraChange2MainCam();
+            mainCamON = true;
+        }
+
+        if (!rebirthCalled)
+        {
+            RebirthinCamScript();
+            TeleportZoomIn();
+            TeleportDissolve();
+
+            rebirthCalled = true;
+
+        }
+
+        yield return new WaitForSeconds(0.5f);
+    }
+
+    //01. CountDown
+    int leftSeconds;
+    private IEnumerator CountDownCoroutine(int seconds)
+    {
+        ONCountDown();
+        for (int i = seconds; i >= 0; i--)
+        {
+            leftSeconds = i;
+            countDownNum.text = $"{leftSeconds}";
+            yield return new WaitForSeconds(1f);
+        }
+        OFFCountDown();
+    }
+
+    public void ONCountDown()
+    {
+        TextMeshProUGUI countDownText = countDownNum;
+        countDownText.enabled = true;
+    }
+
+    public void OFFCountDown()
+    {
+        TextMeshProUGUI countDownText = countDownNum;
+        countDownText.enabled = false;
+    }
+
+    //02.Rebirth
+    public void RebirthinCamScript()
+    {
+        EJPSHP.instance.HP = EJPSHP.instance.normalMaxHP;
+
+        GameObject player = transform.parent.gameObject;
+        player.transform.position = respawnPoint.transform.position + Vector3.up * 5;
     }
 }

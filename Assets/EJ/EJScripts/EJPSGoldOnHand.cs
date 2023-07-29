@@ -23,7 +23,7 @@ public class EJPSGoldOnHand : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        goldOnHand = 3000;
+        goldOnHand = 0;
     }
 
     // Update is called once per frame

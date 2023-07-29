@@ -48,7 +48,7 @@ public class EJPlayerFireShotGun : MonoBehaviour
     // 총 쏠 수 있는지?
     public bool canFire = true;
     float currentTime;
-    float delayTime = 0.5f;
+    float delayTime = 0.2f;
 
     // 애니메이터
     public EJPlayerAnim stateMgr;
@@ -155,17 +155,17 @@ public class EJPlayerFireShotGun : MonoBehaviour
                 magazineFireCount++;
 
                 leftBullet = maxBullet - fireCount;
-                leftMagazine = maxMagazine - magazineFireCount;
-                
+                leftMagazine = maxMagazine - magazineFireCount;              
             }
         }
+
         if (leftMagazine == 0 && leftBullet >= 6)
         {
              leftMagazine += maxMagazine;
              magazineFireCount = 0;
         }
         else if (leftBullet == 0 && leftBullet < 6)
-       {
+        {
              leftMagazine += leftBullet;
              magazineFireCount = 0;
         }
@@ -176,6 +176,7 @@ public class EJPlayerFireShotGun : MonoBehaviour
              canFire = false;
              Invoke(nameof(ONFire), delayTime);
         }
+
     }
 
 

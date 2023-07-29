@@ -79,7 +79,7 @@ public class EJCSentryGun : MonoBehaviour
            
             for (int i = 0; i < enemies.Length; i++)
             {
-                if (fireCount < maxFireCount)
+                if (fireCount < maxFireCount && EJEnemyHPForTest.instance.ENEMY_HP>0)
                 {
                     target = enemies[i].gameObject;
 
@@ -127,6 +127,8 @@ public class EJCSentryGun : MonoBehaviour
 
                 fireCount++;
                 target.GetComponent<PEA_ScoutHp>().Damage(125);
+                int enemyhp = target.GetComponent<EJEnemyHPForTest>().ENEMY_HP;
+                enemyhp -= 75;
                 //Destroy(target);
             }
         }

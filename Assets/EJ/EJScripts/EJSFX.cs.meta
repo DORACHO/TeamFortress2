@@ -6,7 +6,9 @@ MonoImporter:
   defaultReferences:
   - FireSFX: {fileID: 8300000, guid: dd99df4e650399e409877b51e6ffca50, type: 3}
   - LoadSFX: {fileID: 8300000, guid: b35d80167dfcded4f8844a663ddaf387, type: 3}
-  - SentryGunSFX: {fileID: 8300000, guid: dd99df4e650399e409877b51e6ffca50, type: 3}
+  - TeleportSFX: {fileID: 8300000, guid: 907b88bab24868b4c897f4edb57ef333, type: 3}
+  - callMedicSFX: {fileID: 8300000, guid: 0b1aebb1fc9acf54ab6652fdb2c69d13, type: 3}
+  - killedSFX: {fileID: 8300000, guid: be02fc680e27a674296e10bba0157200, type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

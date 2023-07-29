@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class EJPSHP : MonoBehaviour
 {
-    //public EJPlayerCharacterAnim stateMgr;
+    public EJPlayerAnim4fullbody stateMgr;
     public static EJPSHP instance;
     public Animator characterAnim;
 
@@ -31,8 +31,7 @@ public class EJPSHP : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        HP = normalMaxHP;
-        
+        HP = normalMaxHP;       
     }
 
     // Update is called once per frame
@@ -40,10 +39,10 @@ public class EJPSHP : MonoBehaviour
     {
         RestrictHP();
 
-        if (HP <= 0)
-        {
+         if (HP <= 0)
+        {           
             //StartCoroutine(orderedRespawn());
-            StartCoroutine(orderedRespawn2());
+            //StartCoroutine(orderedRespawn2());
         }
 
 
@@ -94,7 +93,7 @@ public class EJPSHP : MonoBehaviour
 
 
 
-    public void Dead()
+/*    public void Dead()
     {
      
             print("플레이어가 죽었습니다");
@@ -105,21 +104,17 @@ public class EJPSHP : MonoBehaviour
 
             Invoke(nameof(Rebirth), 5);
 
-    }
+    }*/
 
 
     public void Rebirth()
     {
-        //Model을 armbody로 다시 바꾼다
-        //EJPlayerModelChangeState.instance.ONArmModel();
-        //EJPlayerModelChangeState.instance.OFFFullBodyModel();
+        //HP를 회복시켜 둔다.
         HP = normalMaxHP;
 
         //리스폰 위치 나중에 수정
-        transform.position = playerRespawnPoint.transform.position + Vector3.up*3;
-        print("다시 태어났습니다");
-
-        //HP를 회복시켜 둔다.
+        transform.position = playerRespawnPoint.transform.position + Vector3.up*5;
+        print("다시 태어났습니다");       
     }
     
     IEnumerator orderedRespawn()
@@ -128,12 +123,13 @@ public class EJPSHP : MonoBehaviour
         
         StartCoroutine(CountDownCoroutine(10));
 
-        //GetComponentInChildren<EJCameraRotate>().Whoareyou();
-        GetComponentInChildren<EJCameraRotate>().Whoareyou2();
+        GetComponentInChildren<EJCameraRotate>().Whoareyou();
+
 
         yield return new WaitForSeconds(3f);
 
         GetComponentInChildren<EJCameraRotate>().CameraChange2MainCam();
+
        
         //두 줄 실행이 안되는데 모르겠음
         //GetComponentInChildren<EJCameraRotate>().TeleportZoomIn();
@@ -145,17 +141,32 @@ public class EJPSHP : MonoBehaviour
         
     }
 
+
+    bool countDownCalled;
+    bool rebirthCalled;
+    bool whoareyou1Called;
+    bool whoareyou2Called;
+    bool mainCamON;
+
     IEnumerator orderedRespawn2()
     {
         //10초 카운트다운
+        if (!countDownCalled)
+        {
+            StartCoroutine(CountDownCoroutine(10));
+            //stateMgr.ChangeState4Fullbody(EJPlayerAnim4fullbody.State.Dead);
+            countDownCalled = true;
+        }
 
-        StartCoroutine(CountDownCoroutine(10));
+ 
+        StartCoroutine(GetComponentInChildren<EJCameraRotate>().Whoareyou1coroutine());
 
-        //GetComponentInChildren<EJCameraRotate>().Whoareyou();
-        GetComponentInChildren<EJCameraRotate>().Whoareyou1();
+        yield return new WaitForSeconds(2f);
 
-        yield return new WaitForSeconds(1f);
-        GetComponentInChildren<EJCameraRotate>().Whoareyou2();
+        //GetComponentInChildren<EJCameraRotate>().Whoareyou2();
+
+        StartCoroutine(GetComponentInChildren<EJCameraRotate>().Whoareyou2coroutine());
+        
 
         yield return new WaitForSeconds(3f);
 
@@ -164,8 +175,13 @@ public class EJPSHP : MonoBehaviour
         //두 줄 실행이 안되는데 모르겠음
         //GetComponentInChildren<EJCameraRotate>().TeleportZoomIn();
         //GetComponentInChildren<EJCameraRotate>().TeleportDissolve();
+        
 
-        Rebirth();
+        if (!rebirthCalled)
+        {
+            Rebirth();
+            rebirthCalled = true;
+        }
 
         yield return new WaitForSeconds(0.5f);
 
@@ -195,6 +211,23 @@ public class EJPSHP : MonoBehaviour
     {
         TextMeshProUGUI countDownText = countDownNum;
         countDownText.enabled = false;
+    }
+
+    public void Whoareyou1inthisScript()
+    {
+        GetComponentInChildren<EJCameraRotate>().Whoareyou1();
+        print("whoareyou1이 실행되었습니다");
+    }
+
+    public void Whoareyou2inthisScript()
+    {
+        GetComponentInChildren<EJCameraRotate>().Whoareyou2();
+    }
+
+    public void modelchange()
+    {
+        GetComponentInChildren<EJCameraRotate>().OFFFullBodyModel();
+        GetComponentInChildren<EJCameraRotate>().ONArmBodyModel();
     }
 
 }

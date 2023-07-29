@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EJPlayerModelChangeState : MonoBehaviour
 {
-    public static EJPlayerModelChangeState instance;
+   /* public static EJPlayerModelChangeState instance;
     // Start is called before the first frame update
     void Start()
     {
@@ -32,5 +32,5 @@ public class EJPlayerModelChangeState : MonoBehaviour
     public void ONFullBodyModel()
     {
         GameObject.FindWithTag("fullBodyPlayer").SetActive(true);
-    }
+    }*/
 }
