@@ -149,8 +149,18 @@ public class PEA_PistolGun : MonoBehaviour
         if (Physics.Raycast(firePos.position, firePos.forward, out hit, rayDistance))
         {
             SetDamage(Vector3.Distance(transform.position, hit.point), isCritical);
-            EJPSHP.instance.SetHP((int)damage, transform.position);
-            //플레이어가 맞으면 플레이어한테 데미지 주기
+
+            // 플레이어가 맞으면 플레이어한테 데미지 주기
+            if (hit.transform.CompareTag("Player"))
+            {
+                print("pistolgun player");
+                EJPSHP.instance.SetHP((int)damage, transform.position);
+            }
+            // 힐러가 맞으면 힐러한테 데미지 주기
+            else if (hit.transform.CompareTag("Hiller"))
+            {
+                hit.transform.GetComponent<MedicAI.J_Medic1>().DamageProcess((int)damage);
+            }
         }
 
         // 반동주기, 측정된 데미지 출력, 장전된 총알 하나씩 빼기, 사용된 변수들 초기화해주기
@@ -161,8 +171,8 @@ public class PEA_PistolGun : MonoBehaviour
         damage = 0;
         //timeAfterFire = 0f;
 
-        print("load Bullet : " + loadBullets);
-        print("number Of Ammunition : " + numberOfAmmunition);
+        //print("load Bullet : " + loadBullets);
+        //print("number Of Ammunition : " + numberOfAmmunition);
     }
 
     private void Rebound()

@@ -13,6 +13,7 @@ TagManager:
   - ToolWrench
   - ToolHandgun
   - TeleportExit
+  - Hiller
   layers:
   - Default
   - TransparentFX

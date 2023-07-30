@@ -42,11 +42,15 @@ public class PEA_ScoutHp : MonoBehaviour
             if(scoutMove != null)
             {
                 scoutMove.Die();
+                print("scout die");
             }
             else
             {
                 scoutStandby.Die();
+                print("scoutStandby Die");
             }
         }
+
+        //print("damage " + hp);
     }
 }

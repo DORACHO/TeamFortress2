@@ -15,7 +15,7 @@ public class PEA_Wagon : MonoBehaviour
 
 
     // 웨이포인트들 중에 체크포인트의 인덱스값
-    private int checkPointIndex = 1;
+    private int checkPointIndex = 27;
 
     private enum State
     {
@@ -44,7 +44,7 @@ public class PEA_Wagon : MonoBehaviour
     private RaycastHit hit;
 
     public Transform[] wayPoints;
-    public PEA_ScoutMove scoutMove;
+    public PEA_ScoutMove[] scoutMove;
 
     public int TargetIndex
     {
@@ -120,7 +120,7 @@ public class PEA_Wagon : MonoBehaviour
     private void SetTarget(bool isBacking)
     {
         // 역행중이면 타겟을 이전으로 돌려주고 정주행중이면 다음 타겟으로 넘어감
-        if (isBacking)
+        if (isBacking && step > 0)
         {
             step--;
         }
@@ -178,11 +178,11 @@ public class PEA_Wagon : MonoBehaviour
         dir = target.position - transform.position;
         if (isBacking)
         {
-            transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(-dir), turnSpeed * Time.deltaTime); 
+            transform.rotation = Quaternion.Lerp(transform.rotation, target.rotation, turnSpeed * Time.deltaTime); 
         }
         else
         {
-            transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(dir), turnSpeed * Time.deltaTime);
+            transform.rotation = Quaternion.Lerp(transform.rotation, target.rotation, turnSpeed * Time.deltaTime);
         }
         //dir.x = 0f;
 
@@ -229,10 +229,13 @@ public class PEA_Wagon : MonoBehaviour
         {
             if (!isBacking)
             {
-                // 체크포인트에 도착하면 스카웃에게 알려줌
+                // 체크포인트에 도착하면 스카웃들에게 알려줌
                 if (targetIndex == checkPointIndex)
                 {
-                    scoutMove.PassByCheckPoint();                                           
+                    for (int i = 0; i < scoutMove.Length; i++)
+                    {
+                        scoutMove[i].PassByCheckPoint();                                          
+                    }
                 }
 
                 // 마지막 종착점에 도착하면 게임이 종료됨.
