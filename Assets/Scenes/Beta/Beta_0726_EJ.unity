@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.10014667, g: 0.18747084, b: 0.26273152, a: 1}
+  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -8627,6 +8627,10 @@ PrefabInstance:
       propertyPath: killedSFX
       value: 
       objectReference: {fileID: 8300000, guid: be02fc680e27a674296e10bba0157200, type: 3}
+    - target: {fileID: 5399554232400300791, guid: 282231d30a7eea5459188abc8c0ff72e, type: 3}
+      propertyPath: callMedicSFX
+      value: 
+      objectReference: {fileID: 8300000, guid: 6328cb87cc8eccb439dc49e57bf0491d, type: 3}
     - target: {fileID: 5399554232933376126, guid: 282231d30a7eea5459188abc8c0ff72e, type: 3}
       propertyPath: armModel
       value: 

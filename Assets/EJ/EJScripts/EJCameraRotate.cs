@@ -101,6 +101,7 @@ public class EJCameraRotate : MonoBehaviour
             StartCoroutine(RespawnincameraScript22());
             respawned = true;
             
+
             
 
             //CountDowndeltaTime(10);
@@ -272,7 +273,7 @@ public class EJCameraRotate : MonoBehaviour
             yield return new WaitForSeconds(Time.deltaTime);
         }
 
-        print("5mWHOAREYOU1");
+        //print("5mWHOAREYOU1");
         //chaseCamera.transform.forward = Camera.main.transform.forward;
         //chaseCamera.transform.LookAt(player.transform);
 
@@ -559,8 +560,8 @@ public class EJCameraRotate : MonoBehaviour
 
     public void AllFalse()
     {
-        whoareyou1coroutineRunning = false;
-        whoareyou2coroutineRunning = false;
+        //whoareyou1coroutineRunning = false;
+        //whoareyou2coroutineRunning = false;
         countDownCalled = false;
         rebirthCalled = false;
         respawnMove = false;
