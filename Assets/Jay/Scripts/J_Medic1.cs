@@ -35,6 +35,7 @@ namespace MedicAI
         //에디터에서 연결해줄 변수
         public Transform respawnPoint;
 
+        
         // Start is called before the first frame update
         void Start()
         {
