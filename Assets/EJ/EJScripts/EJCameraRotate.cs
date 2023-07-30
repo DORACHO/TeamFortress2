@@ -41,7 +41,7 @@ public class EJCameraRotate : MonoBehaviour
     public GameObject fullbodyModel;
     public TextMeshProUGUI countDownNum;
     public GameObject respawnPoint;
-    bool respawned;
+    bool respawned = false;
 
     float countTime;
 
@@ -92,14 +92,15 @@ public class EJCameraRotate : MonoBehaviour
             WhiteDissolve();
         }
 
-        if (EJPSHP.instance.HP <= 0 )
+        if (EJPSHP.instance.HP <= 0 &&!respawned)
         {
-
+            
             //StartCoroutine(orderedRespawn());
             //StartCoroutine(RespawnincameraScript());
             //StartCoroutine(CountDownCoroutine(10));
             StartCoroutine(RespawnincameraScript22());
-            //respawned = true;
+            respawned = true;
+            
             
 
             //CountDowndeltaTime(10);
@@ -258,7 +259,20 @@ public class EJCameraRotate : MonoBehaviour
 
         Vector3 characterCamPos = transform.position + Vector3.back * 5;
 
-        chaseCamera.transform.position = Vector3.Lerp(chaseCamera.transform.position, characterCamPos, Time.deltaTime * 3.5f);
+        while (true)
+        {
+            chaseCamera.transform.position = Vector3.Lerp(chaseCamera.transform.position, characterCamPos, Time.deltaTime * 3.5f);
+
+
+            if (Vector3.Distance(chaseCamera.transform.position, characterCamPos) < 0.5f)
+            {
+                break;
+            }
+
+            yield return new WaitForSeconds(Time.deltaTime);
+        }
+
+        print("5mWHOAREYOU1");
         //chaseCamera.transform.forward = Camera.main.transform.forward;
         //chaseCamera.transform.LookAt(player.transform);
 
@@ -278,8 +292,19 @@ public class EJCameraRotate : MonoBehaviour
 
         Vector3 murdererCamPos = EJPSHP.instance.murdererPos - (dir2Enemy2 * 3);
 
+        while (true)
+        {
+
         chaseCamera.transform.position = Vector3.Lerp(chaseCamera.transform.position, murdererCamPos, Time.deltaTime * 5);
         chaseCamera.transform.forward = Vector3.Lerp(chaseCamera.transform.forward, dir2Enemy2, Time.deltaTime * 5);
+
+            if (Vector3.Distance(chaseCamera.transform.position, murdererCamPos)<0.5f)
+            {
+                break;
+            }
+            yield return new WaitForSeconds(Time.deltaTime);
+
+        }
 
 
         //whoareyou2coroutineRunning = false;
@@ -541,6 +566,7 @@ public class EJCameraRotate : MonoBehaviour
         respawnMove = false;
         mainCamON = false;
         teleportzoom = false;
+        respawned = false;
     }
 
     //01. CountDown
