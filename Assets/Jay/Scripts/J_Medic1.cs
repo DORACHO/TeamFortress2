@@ -64,7 +64,7 @@ namespace MedicAI
         public int targetIndex;
    
 
-        private void UpdateIdle()
+        void UpdateIdle()
         {
             //agent.SetDestination(J_PathManager. instance.points[0].position);
             target = GameObject.FindGameObjectWithTag("Player");
@@ -79,7 +79,7 @@ namespace MedicAI
             }
         }
 
-        private void UpdateChase()
+        void UpdateChase()
         {
             //agent.SetDestination(J_PathManager.instance.points[0].position);
             agent.destination = target.transform.position;
@@ -98,13 +98,11 @@ namespace MedicAI
                 state = State.Patrol;
             }
 
-         
-
         }
         //플레이어가 2번 버튼을 누르면 플레이어에게 향하고싶다
         //State는 mustFollow 
         
-        private void UpdatePatrol()
+        void UpdatePatrol()
         {
             //길정보를 알고싶다
             Vector3 pos = J_PathManager.instance.points[targetIndex].position;
@@ -138,22 +136,20 @@ namespace MedicAI
         public Transform Players;
         private Vector3 targetPos;
 
-
-
-        private void UpdateAttack()
+        void UpdateAttack()
         {
             //y값을 플레이어와 동일하게한다
             targetPos = new Vector3(Players.position.x, transform.position.y, Players.position.z);
             transform.LookAt(targetPos);
         }
 
-        private void UpdateDie()
+       void UpdateDie()
         {
             
             state = State.Die;
             anim.SetTrigger("Die");
         }
-        private void Respawn()
+        void Respawn()
         {
             currTime += Time.deltaTime;
             if (currTime <= respawnTime)
@@ -166,11 +162,9 @@ namespace MedicAI
             }
         }
 
-
-
         #region 애니메이션 이벤트함수를 통해 호출되는 함수들...
         // 애니메이션 이벤트함수를 통해 호출되는 함수들
-        public void OnAttack_Hit()
+        void OnAttack_Hit()
         {
             anim.SetBool("bAttack", false);
             float distance = Vector3.Distance(this.transform.position, target.transform.position);
@@ -181,12 +175,7 @@ namespace MedicAI
             }
         }
 
-
-
-
-
-
-        public void OnAttack_Finished()
+        void OnAttack_Finished()
         {
             float distance = Vector3.Distance(this.transform.position, target.transform.position);
             if (distance > attackRange)
@@ -197,7 +186,7 @@ namespace MedicAI
                 agent.isStopped = false;
             }
         }
-        public void OnAttackWait_Finished()
+        void OnAttackWait_Finished()
         {
             float distance = Vector3.Distance(this.transform.position, target.transform.position);
             if (distance > attackRange) // 공격 범위 벗어남
@@ -230,7 +219,8 @@ namespace MedicAI
 
             }
         }
-        void DamageProcess(int damage = 1)
+        //공격당함
+        public void DamageProcess(int damage = 1)
         {
             if (state == State.Die)
             {

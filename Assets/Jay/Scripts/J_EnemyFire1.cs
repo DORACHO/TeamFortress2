@@ -1,3 +1,4 @@
+using JetBrains.Annotations;
 using JetBrains.Rider.Unity.Editor;
 using System;
 using System.Collections;
@@ -51,7 +52,7 @@ namespace MedicAI
         //public int minMP = 0;
         public float MPDecrease;
         public float HPIncreaseTimer = 0f;
-        public GameObject VFX;
+        //public GameObject VFX;
         private AudioSource audioSource;
         public AudioClip HealClip;
         float currTime = 0;
@@ -59,7 +60,8 @@ namespace MedicAI
         public int bulletCount;
         public int maxBulletCount = 10;
 
-
+        public GameObject LaserEffect;
+        
 
         // Start is called before the first frame update
         void Start()
@@ -68,7 +70,8 @@ namespace MedicAI
             //플레이어의 레이어 값 추출
             playerlayer = LayerMask.NameToLayer("Player");
             audioSource = GetComponent<AudioSource>();
-            VFX.SetActive(false);
+            //VFX.SetActive(false);
+            LaserEffect.SetActive(false);
         }
         
 
@@ -169,7 +172,6 @@ namespace MedicAI
         }
 
 
-
         public void Fire()
         {
             Ray ray = new Ray(firePosition.position, firePosition.forward);
@@ -178,9 +180,10 @@ namespace MedicAI
             {
                 HPIncreaseTimer += Time.deltaTime;
                 EJPSHP.instance.SetHP(-1, this.transform.position);
-   
-                VFX.SetActive(true);
-                VFX.transform.position = firePosition.position;
+                LaserEffect.SetActive(true);
+                LaserEffect.transform.position = firePosition.position;
+                //VFX.SetActive(true);
+                //VFX.transform.position = firePosition.position;
                 J_HPBackGround.Instance.StartImage();
                 print("111111111111");
                 J_ObjectPool.instance.Fire();

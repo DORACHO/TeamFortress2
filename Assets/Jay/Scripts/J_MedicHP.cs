@@ -1,3 +1,4 @@
+using MedicAI;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,8 +10,7 @@ using UnityEngine.UI;
 public class J_MedicHP : MonoBehaviour
 {
     int hp;
-    public int maxHP = 2;
-    public Slider sliderHP;
+    private readonly int maxHp = 150;
 
     public int HP
     {
@@ -19,14 +19,16 @@ public class J_MedicHP : MonoBehaviour
         {
             hp = value;
             //체력이 변경되면 UI로 표현하고싶다
-            sliderHP.value = hp;
+
         }
     }
     // Start is called before the first frame update
     void Start()
     {
-        
+        hp = maxHp;
     }
+
+
 
     // Update is called once per frame
     void Update()
