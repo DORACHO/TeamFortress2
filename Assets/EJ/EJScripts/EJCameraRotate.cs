@@ -41,6 +41,9 @@ public class EJCameraRotate : MonoBehaviour
     public GameObject fullbodyModel;
     public TextMeshProUGUI countDownNum;
     public GameObject respawnPoint;
+    bool respawned;
+
+    float countTime;
 
     // Start is called before the first frame update
     void Start()
@@ -58,6 +61,8 @@ public class EJCameraRotate : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        countTime += Time.deltaTime;
+
         //Mouse의 움직임에 따라 Rotate
         float mx = Input.GetAxis("Mouse X");
         float my = Input.GetAxis("Mouse Y");
@@ -87,13 +92,24 @@ public class EJCameraRotate : MonoBehaviour
             WhiteDissolve();
         }
 
-        if (EJPSHP.instance.HP <= 0)
+        if (EJPSHP.instance.HP <= 0 )
         {
+
             //StartCoroutine(orderedRespawn());
-            StartCoroutine(RespawnincameraScript());
+            //StartCoroutine(RespawnincameraScript());
+            //StartCoroutine(CountDownCoroutine(10));
+            StartCoroutine(RespawnincameraScript22());
+            //respawned = true;
+            
+
+            //CountDowndeltaTime(10);
+            //RespawnInvoke();
+
+
+           // StopAllCoroutines();
         }
     }
-
+   
 
 
     public bool isKnockBack;
@@ -153,11 +169,9 @@ public class EJCameraRotate : MonoBehaviour
             ONMainCamera();
             OFFChaseCamera();
 
-            //EJPSHP.instance.Rebirth();
-
     }
 
-    public bool isWhoareyouDone;
+   
     public void Whoareyou()
     {
 
@@ -200,10 +214,12 @@ public class EJCameraRotate : MonoBehaviour
 
             EJSFX.instance.PlayKilledSFX();
 
+            
+
             Vector3 characterCamPos = transform.position + Vector3.back*5;
 
             chaseCamera.transform.position = Vector3.Lerp(chaseCamera.transform.position, characterCamPos, Time.deltaTime * 5);
-            
+        chaseCamera.transform.forward = Camera.main.transform.forward;
         
 
     }
@@ -242,10 +258,12 @@ public class EJCameraRotate : MonoBehaviour
 
         Vector3 characterCamPos = transform.position + Vector3.back * 5;
 
-        chaseCamera.transform.position = Vector3.Lerp(chaseCamera.transform.position, characterCamPos, Time.deltaTime * 5);
+        chaseCamera.transform.position = Vector3.Lerp(chaseCamera.transform.position, characterCamPos, Time.deltaTime * 3.5f);
+        //chaseCamera.transform.forward = Camera.main.transform.forward;
+        //chaseCamera.transform.LookAt(player.transform);
 
-        whoareyou1coroutineRunning = false;
-        yield return null;
+        //whoareyou1coroutineRunning = false;
+        yield return new WaitForSeconds(2f);
 
     }
 
@@ -262,11 +280,10 @@ public class EJCameraRotate : MonoBehaviour
 
         chaseCamera.transform.position = Vector3.Lerp(chaseCamera.transform.position, murdererCamPos, Time.deltaTime * 5);
         chaseCamera.transform.forward = Vector3.Lerp(chaseCamera.transform.forward, dir2Enemy2, Time.deltaTime * 5);
-        OFFFullBodyModel();
-        ONArmBodyModel();
 
-        whoareyou2coroutineRunning = false;
-        yield return null;
+
+        //whoareyou2coroutineRunning = false;
+        yield return new WaitForSeconds(2f);
     }
 
 
@@ -396,8 +413,74 @@ public class EJCameraRotate : MonoBehaviour
     bool whoareyou2coroutineRunning = false;
     bool countDownCalled = false;
     bool rebirthCalled = false;
-    
+    bool respawnMove = false;
+
+    bool whoareyou1Done = false;
+    bool whoareyou2Done = false;
+
     bool mainCamON = false;
+
+
+    IEnumerator RespawnincameraScript22()
+    {
+        // CountDowndeltaTime(10);
+        StartCoroutine(CountDownCoroutine(10));
+
+        yield return StartCoroutine(Whoareyou1coroutine());    
+        yield return StartCoroutine(Whoareyou2coroutine());      
+        
+        if (!mainCamON)
+        {
+            CameraChange2MainCam();
+            mainCamON = true;          
+        }
+
+        if (!rebirthCalled)
+        {
+            RespawnMove();
+            rebirthCalled = true;
+        }
+
+        AllFalse();
+    }
+    
+
+
+    /*void RespawnInvoke()
+    {
+        if (!whoareyou1Done)
+        {
+            Whoareyou1();
+            whoareyou1Done = false;
+        }
+
+        Invoke(nameof(Whoareyou2), 2f);
+
+        CameraChange2MainCam();
+
+        Invoke(nameof(RespawnincameraScript),3f);
+
+
+    }*/
+
+
+    void CountDowndeltaTime(int seconds)
+    {
+        ONCountDown();
+        countTime = 0;
+
+        for (int i = seconds-1; i >= 0; i--)
+        {
+            if (countTime > 1f)
+            {
+                leftSeconds = i;
+                countDownNum.text = $"{leftSeconds}";
+                countTime = 0;
+            }                       
+        }
+
+        OFFCountDown();
+    }
 
     IEnumerator RespawnincameraScript()
     {
@@ -406,12 +489,14 @@ public class EJCameraRotate : MonoBehaviour
         {
             StartCoroutine(CountDownCoroutine(10));
             countDownCalled = true;
+            //yield return null;
         }
 
         if (!whoareyou1coroutineRunning)
         {
-            whoareyou2coroutineRunning = true;
-            StartCoroutine(Whoareyou1coroutine());
+            whoareyou1coroutineRunning = true;
+            yield return StartCoroutine(Whoareyou1coroutine());
+            //yield return null;
         }
 
         yield return new WaitForSeconds(2f);
@@ -419,7 +504,8 @@ public class EJCameraRotate : MonoBehaviour
         if (!whoareyou2coroutineRunning)
         {
             whoareyou2coroutineRunning = true;
-            StartCoroutine(Whoareyou2coroutine());
+            yield return StartCoroutine(Whoareyou2coroutine());
+            //print("whoareyou2runned");
         }
 
         yield return new WaitForSeconds(3f);
@@ -428,19 +514,33 @@ public class EJCameraRotate : MonoBehaviour
         {
             CameraChange2MainCam();
             mainCamON = true;
+            yield return null;
         }
 
-        if (!rebirthCalled)
+        if (!respawnMove)
         {
-            RebirthinCamScript();
-            TeleportZoomIn();
-            TeleportDissolve();
-
-            rebirthCalled = true;
-
+            RespawnMove();
+            
+            respawnMove = true;
+            //yield return null;
         }
+
 
         yield return new WaitForSeconds(0.5f);
+
+        AllFalse();
+        //yield return null;
+    }
+
+    public void AllFalse()
+    {
+        whoareyou1coroutineRunning = false;
+        whoareyou2coroutineRunning = false;
+        countDownCalled = false;
+        rebirthCalled = false;
+        respawnMove = false;
+        mainCamON = false;
+        teleportzoom = false;
     }
 
     //01. CountDown
@@ -469,12 +569,38 @@ public class EJCameraRotate : MonoBehaviour
         countDownText.enabled = false;
     }
 
-    //02.Rebirth
+    bool teleportzoom = false;
+
+    //02.시작 지점으로 Respawn
+    public void RespawnMove()
+    {
+        print("RespawnMove");
+        
+        GameObject player = transform.parent.gameObject;
+        print(player);
+        player.transform.position = respawnPoint.transform.position + Vector3.up* 5;
+
+        if (!teleportzoom)
+        {
+        TeleportZoomIn();
+        TeleportDissolve();
+            EJPSHP.instance.HP = EJPSHP.instance.normalMaxHP;
+            ONArmBodyModel();
+            OFFFullBodyModel();
+            teleportzoom = true;
+        }
+    }
+    //03.Rebirth
     public void RebirthinCamScript()
     {
+        GameObject player = transform.parent.gameObject;
+        print("Player에 담긴 것은"+player);
+        player.transform.position = respawnPoint.transform.position + Vector3.up * 5;
+        print("Respawn포인트는" + respawnPoint.transform);
         EJPSHP.instance.HP = EJPSHP.instance.normalMaxHP;
 
-        GameObject player = transform.parent.gameObject;
-        player.transform.position = respawnPoint.transform.position + Vector3.up * 5;
+        ONArmBodyModel();
+        OFFFullBodyModel();
     }
+
 }

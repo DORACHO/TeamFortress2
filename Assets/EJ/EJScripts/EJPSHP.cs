@@ -39,11 +39,11 @@ public class EJPSHP : MonoBehaviour
     {
         RestrictHP();
 
-         if (HP <= 0)
+/*         if (HP <= 0)
         {           
             //StartCoroutine(orderedRespawn());
             //StartCoroutine(orderedRespawn2());
-        }
+        }*/
 
 
 

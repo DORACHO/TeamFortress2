@@ -191,6 +191,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ShotGun2
       objectReference: {fileID: 0}
+    - target: {fileID: 2912878976633946431, guid: 64f5f318608429f449f41dee49ac07ed, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4636348672243915654, guid: 64f5f318608429f449f41dee49ac07ed, type: 3}
       propertyPath: m_RootOrder
       value: 0

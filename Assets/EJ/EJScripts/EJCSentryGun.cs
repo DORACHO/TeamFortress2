@@ -109,7 +109,7 @@ public class EJCSentryGun : MonoBehaviour
 
     private void UpdateRayFire()
     {
-        print("fire!");
+        //print("fire!");
 
         RaycastHit hitInfo;
         Ray ray = new Ray(firePosition.transform.position, firePosition.transform.forward);
@@ -129,6 +129,7 @@ public class EJCSentryGun : MonoBehaviour
                 target.GetComponent<PEA_ScoutHp>().Damage(125);
                 int enemyhp = target.GetComponent<EJEnemyHPForTest>().ENEMY_HP;
                 enemyhp -= 75;
+
                 //Destroy(target);
             }
         }

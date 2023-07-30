@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
+  m_IndirectSpecularColor: {r: 0.10014667, g: 0.18747084, b: 0.26273152, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2869,6 +2869,11 @@ PrefabInstance:
 Transform:
   m_CorrespondingSourceObject: {fileID: 4000013848046870, guid: 32f01941b7ab75d4791c8d0d65d80086, type: 3}
   m_PrefabInstance: {fileID: 295487002}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &297806201 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5399554232591461803, guid: 282231d30a7eea5459188abc8c0ff72e, type: 3}
+  m_PrefabInstance: {fileID: 1080170397}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &302072927
 GameObject:
@@ -8523,6 +8528,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 5399554231639518027, guid: 282231d30a7eea5459188abc8c0ff72e, type: 3}
+      propertyPath: ToolGun
+      value: 
+      objectReference: {fileID: 297806201}
+    - target: {fileID: 5399554231639518027, guid: 282231d30a7eea5459188abc8c0ff72e, type: 3}
       propertyPath: ConstPos
       value: 
       objectReference: {fileID: 678784559}
@@ -8638,6 +8647,10 @@ PrefabInstance:
       propertyPath: UIwhiteDissolve
       value: 
       objectReference: {fileID: 1718051671}
+    - target: {fileID: 6566499082960667996, guid: 282231d30a7eea5459188abc8c0ff72e, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6566499083920521507, guid: 282231d30a7eea5459188abc8c0ff72e, type: 3}
       propertyPath: m_Enabled
       value: 0

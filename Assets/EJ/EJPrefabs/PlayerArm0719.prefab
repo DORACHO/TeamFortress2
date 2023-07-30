@@ -1615,11 +1615,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 8810121258416900073}
+  UIwhiteDissolve: {fileID: 0}
   fireSFX: {fileID: 0}
   reloadSFX: {fileID: 0}
+  armModel: {fileID: 0}
+  fullbodyModel: {fileID: 0}
+  countDownNum: {fileID: 0}
+  respawnPoint: {fileID: 0}
   isKnockBack: 0
   chaseCameraON: 0
   mainCameraON: 0
+  isWhoareyouDone: 0
 --- !u!1 &5162408443258469723
 GameObject:
   m_ObjectHideFlags: 0
@@ -3202,7 +3208,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f9ae79fd5bc7e2478d80bdb00200462, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bulletImpactFactory: {fileID: 100002, guid: 35a8b060d7b03464cad828ad46434d32, type: 3}
+  bulletImpactFactory:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   bulletMuzzleImpactFactory: {fileID: 2361510173062788813, guid: 23959cb02a7b2084eacba71b8397881a, type: 3}
   muzzlePos: {fileID: 8810121258187541955}
   muzzleSprite: {fileID: 8810121258322895176}
@@ -3265,6 +3274,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stateMgr: {fileID: 8810121258416900075}
+  walkingSFXSource: {fileID: 0}
 --- !u!114 &8810121258416900079
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3277,10 +3287,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 70acf92984714894b9fb9e4238fd12cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  normalHP: 125
+  stateMgr: {fileID: 0}
+  characterAnim: {fileID: 0}
+  playerRespawnPoint: {fileID: 0}
+  currentHP: 125
+  normalMaxHP: 125
   overcuredHP: 185
   emergencyOvercuredHP: 158
   hpText: {fileID: 0}
+  countDownNum: {fileID: 0}
   murdererPos: {x: 0, y: 0, z: 0}
 --- !u!114 &8810121258416900076
 MonoBehaviour:
@@ -3312,11 +3327,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sentryGunFactory: {fileID: 7370301582402214407, guid: 69d4fc6bc04756047ba60728bd995399, type: 3}
-  dispenserFactory: {fileID: 2614009983193267655, guid: 69d4fc6bc04756047ba60728bd995399, type: 3}
   teleportEnterFactory: {fileID: 1909964627954703094, guid: 810bdc6a0eed97342a63a981c9ff261a, type: 3}
   teleportExitFactory: {fileID: 2625197385462713509, guid: 13b48fd13601b064aa9c171ef4fd111d, type: 3}
   constructPosition: {fileID: 8810121259082120383}
   UIConstructSelection: {fileID: 0}
+  ConstPos: {fileID: 0}
+  UITextsentrygunO: {fileID: 0}
+  UITextsentrygunX: {fileID: 0}
+  UITextenterO: {fileID: 0}
+  UITextenterX: {fileID: 0}
+  UITextexitO: {fileID: 0}
+  UITextexitX: {fileID: 0}
+  stateMgr: {fileID: 0}
+  ToolGun: {fileID: 0}
+  ToolWrench: {fileID: 0}
+  publicTeleportExit: {fileID: 0}
 --- !u!114 &8810121258416900074
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3598,11 +3623,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 8810121258416900073}
+  UIwhiteDissolve: {fileID: 0}
   fireSFX: {fileID: 8810121258684983441}
   reloadSFX: {fileID: 8810121258684983440}
+  armModel: {fileID: 0}
+  fullbodyModel: {fileID: 0}
+  countDownNum: {fileID: 0}
+  respawnPoint: {fileID: 0}
   isKnockBack: 0
   chaseCameraON: 0
   mainCameraON: 0
+  isWhoareyouDone: 0
 --- !u!81 &8810121258684983468
 AudioListener:
   m_ObjectHideFlags: 0
@@ -4177,6 +4208,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   FireSFX: {fileID: 8300000, guid: dd99df4e650399e409877b51e6ffca50, type: 3}
   LoadSFX: {fileID: 8300000, guid: c565065df3907944b8b58f0d27066ba8, type: 3}
+  TeleportSFX: {fileID: 0}
+  callMedicSFX: {fileID: 0}
+  killedSFX: {fileID: 0}
 --- !u!1 &8810121259209632907
 GameObject:
   m_ObjectHideFlags: 0
@@ -4547,6 +4581,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8810121259421114244}
     m_Modifications:
+    - target: {fileID: 1461369697439973740, guid: bd2c31d33c3b14b408fd3bd6c2333cd6, type: 3}
+      propertyPath: m_RootOrder
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 8848717567372374195, guid: bd2c31d33c3b14b408fd3bd6c2333cd6, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -4689,6 +4727,10 @@ PrefabInstance:
     - target: {fileID: 8977163270905227671, guid: bd2c31d33c3b14b408fd3bd6c2333cd6, type: 3}
       propertyPath: m_Name
       value: shotGun
+      objectReference: {fileID: 0}
+    - target: {fileID: 8977163270905227671, guid: bd2c31d33c3b14b408fd3bd6c2333cd6, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bd2c31d33c3b14b408fd3bd6c2333cd6, type: 3}
