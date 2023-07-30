@@ -234,7 +234,8 @@ public class PEA_Wagon : MonoBehaviour
                 {
                     for (int i = 0; i < scoutMove.Length; i++)
                     {
-                        scoutMove[i].PassByCheckPoint();                                          
+                        scoutMove[i].PassByCheckPoint();
+                        UIManager.instance.ChangeCheckPointImage();
                     }
                 }
 

@@ -125,6 +125,12 @@ public class EJPlayerFireShotGun : MonoBehaviour
                         //GetComponentInChildren<EJCameraRotate>().PlayFireSFX();
                         EJSFX.instance.PlayFireSFX();
 
+                        //데미지 주기
+                        if(hitInfo.transform.TryGetComponent<PEA_ScoutHp>(out PEA_ScoutHp pea_ScoutHp))
+                        {
+                            pea_ScoutHp.Damage(4);
+                        }
+
                         Destroy(bulletImpact, 3);
                     }
 

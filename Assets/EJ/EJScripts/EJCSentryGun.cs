@@ -79,7 +79,7 @@ public class EJCSentryGun : MonoBehaviour
            
             for (int i = 0; i < enemies.Length; i++)
             {
-                if (fireCount < maxFireCount && EJEnemyHPForTest.instance.ENEMY_HP>0)
+                if (fireCount < maxFireCount)
                 {
                     target = enemies[i].gameObject;
 
