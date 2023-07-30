@@ -1,3 +1,4 @@
+using MedicAI;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,9 +9,17 @@ using UnityEngine.UI;
 //체력이 변경되면 UI로 표현하고싶다
 public class J_MedicHP : MonoBehaviour
 {
+    public static J_MedicHP instance;
+    public Animator anim;
+
+    public GameObject respawnPoint;
+
+    private void Awake()
+    {
+        instance = this;
+    }
     int hp;
-    public int maxHP = 2;
-    public Slider sliderHP;
+    private readonly int maxHp = 150;
 
     public int HP
     {
@@ -19,18 +28,56 @@ public class J_MedicHP : MonoBehaviour
         {
             hp = value;
             //체력이 변경되면 UI로 표현하고싶다
-            sliderHP.value = hp;
+
         }
     }
     // Start is called before the first frame update
     void Start()
     {
-        
+        hp = maxHp;
     }
+
+
 
     // Update is called once per frame
     void Update()
     {
         
     }
+
+    //공격당함
+    public void DamageProcess(int damage = 1)
+    {
+
+        //J_Medic1.instance.DamageProcess(damage);
+
+        //if (state == State.Die)
+        //{
+        //    return;
+        //}
+        //agent.isStopped = true;
+        //medicHP.HP -= 1;
+        //if (medicHP.HP < 0)
+        //{
+
+        //    state = State.Die;
+
+        //    Destroy(gameObject, 5);
+        //    anim.SetTrigger("Die");
+
+        //    Collider col = GetComponentInChildren<Collider>();
+        //    if (col)
+        //    {
+        //        col.enabled = false;
+        //    }
+        //}
+        //else
+        //{
+        //    state = State.Chase;
+        //    agent.isStopped = false;
+        //    anim.SetTrigger("Move");
+        //}
+
+    }
+
 }
