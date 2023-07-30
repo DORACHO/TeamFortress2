@@ -17,7 +17,7 @@ public class PEA_ScoutMove : MonoBehaviour
     private enum State 
     {
         Idle,
-        Move,
+        Patrol,
         Chase,
         Attack,
         Damage,
@@ -43,11 +43,17 @@ public class PEA_ScoutMove : MonoBehaviour
     private float curTime = 0f;
     private float waitTime = 0f;
     private float distanceWithPlayer = 0f;
+    private float distanceWithHiller = 0f;
+    private float distanceWithTarget = 0f;
     //private float distanceWithPlayer = 0f;
    // private bool isJumpKeyDown = false;
     private bool isArrived = false;
     private bool isInSight = true;                                           // 플레이어가 시야 안에 있는지 확인
     private bool isRotate = false;
+    private bool isHillerNear = false;
+    private bool isPlayerNear = false;
+    private RaycastHit hit;
+    private Transform target = null;
 
     private readonly int maxJumpCount = 2;
     private readonly float jumpPower = 5f;
@@ -66,13 +72,15 @@ public class PEA_ScoutMove : MonoBehaviour
     List<Collider> hitTargetList = new List<Collider>();                     // 시야각 안에 들어온 오브젝트들의 콜라이더를 담을 리스트
 
     private Vector3 dir = Vector3.zero;
-    private Vector3 target = Vector3.zero;
+    //private Vector3 target = Vector3.zero;
 
     private Rigidbody rig;
     private NavMeshAgent nav;
     private Transform player;
+    private Transform hiller;
     private PEA_ScatterGun scatterGun;
     private PEA_PistolGun pistolGun;
+    private PEA_ScoutSound scoutSound;
     private Animator anim;
 
     // 에디터에서 연결해줄 변수들
@@ -92,9 +100,11 @@ public class PEA_ScoutMove : MonoBehaviour
         rig = GetComponent<Rigidbody>();
         nav = GetComponent<NavMeshAgent>();
         anim = GetComponentInChildren<Animator>();
-        scatterGun = GetComponentInChildren<PEA_ScatterGun>();
+        scoutSound = GetComponent<PEA_ScoutSound>();
         pistolGun = GetComponentInChildren<PEA_PistolGun>();
+        scatterGun = GetComponentInChildren<PEA_ScatterGun>();
         player = GameObject.FindGameObjectWithTag("Player").transform;
+        hiller = GameObject.FindGameObjectWithTag("Hiller").transform;
     }
 
     // Update is called once per frame
@@ -108,7 +118,7 @@ public class PEA_ScoutMove : MonoBehaviour
                 CheackDistance();
                 break;
 
-            case State.Move:
+            case State.Patrol:
                 Patrol();
                 CheackDistance();
                 break;
@@ -120,7 +130,7 @@ public class PEA_ScoutMove : MonoBehaviour
 
             case State.Attack:
                 Attack();
-                LookAtPlayer();
+                LookAtTarget();
                 CheackDistance();
                 break;
 
@@ -173,6 +183,7 @@ public class PEA_ScoutMove : MonoBehaviour
             print("Patrol, Idle");
             state = State.Idle;
             anim.SetTrigger("Idle");
+            scoutSound.StopFootSound();
             nav.isStopped = true;
         }
         else
@@ -215,24 +226,49 @@ public class PEA_ScoutMove : MonoBehaviour
     private void CheackDistance()
     {
         distanceWithPlayer = Vector3.Distance(transform.position, player.position);
+        distanceWithHiller = Vector3.Distance(transform.position, hiller.position);
 
+        if(target != null)
+        {
+            distanceWithTarget = Vector3.Distance(transform.position, target.position);
+        }
+
+        // 힐러가 감지거리안에 들어왔는지 확인
+        isHillerNear = distanceWithHiller <= sensingDistance ? true : false;
+
+        //플레이어가 감지거리 안에 들어왔는지 확인
+        isPlayerNear = distanceWithPlayer <= sensingDistance ? true : false;
+
+        // 힐러가 가까이 있고 타겟이 아니라면 시야에 있는지 확인
+        if(isHillerNear && target != hiller)
+        {
+            IsInSight();
+        }
 
         switch (state)
         {
             case State.Idle:
-            case State.Move:
-                if(distanceWithPlayer <= sensingDistance)
+            case State.Patrol:
+
+                if(isHillerNear || isPlayerNear)
                 {
-                    IsPlayerInSight();
+                    // 힐러가 감지거리 안에 있으면 힐러를 타겟으로 함.(힐러 우선 처리)
+                    //target = isHillerNear ? hiller : player;
+                    IsInSight();
                 }
                 break;
 
             case State.Chase:
 
-                // 플레이어가 공격범위 안에 들어왔을 때
-                if (distanceWithPlayer <= attackRange)
+                // 힐러가 감지거리 안에 있고 타겟이 힐러가 아니라면 힐러가 시야안에 있는지 확인
+                if(isHillerNear && target != hiller)
                 {
-                    print("CheckDistance, Attack");
+                    IsInSight();
+                }
+
+                // 추적 중인 타겟이 공격 범위 안에 들어왔을 때
+                if(distanceWithTarget <= attackRange)
+                {
                     state = State.Attack;
                     anim.SetTrigger("Idle");
                     nav.speed = 0;
@@ -240,21 +276,30 @@ public class PEA_ScoutMove : MonoBehaviour
                     nav.updateRotation = false;
                 }
 
-                // 플레이어가 감지거리를 벗어났을 때
-                else if( distanceWithPlayer > sensingDistance)
+                // 추적 중인 타갯이 감지거리를 벗어났을 때
+                else if( distanceWithTarget > sensingDistance)
                 {
                     state = State.Idle;
                     anim.SetTrigger("Idle");
+                    scoutSound.StopFootSound();
+                    target = null;
                 }
                 break;
 
             case State.Attack:
 
-                // 플레이어가 공격범위를 벗어낫을 때
-                if(distanceWithPlayer > attackRange)
+                // 힐러가 감지거리 안에 있고 타겟이 힐러가 아니라면 힐러가 시야안에 있는지 확인
+                if (isHillerNear && target != hiller)
+                {
+                    IsInSight();
+                }
+
+                // 타겟이 공격범위를 벗어낫을 때
+                if (distanceWithTarget > attackRange)
                 {
                     state = State.Chase;
-                    anim.SetTrigger("Move");
+                    anim.SetTrigger("Walk");
+                    scoutSound.PlayFootSound();
                     nav.speed = 3.5f;
                     nav.isStopped = false;
                     nav.updateRotation = true;
@@ -263,25 +308,58 @@ public class PEA_ScoutMove : MonoBehaviour
         }
     }
 
-    private void IsPlayerInSight()
+    private void IsInSight()
     {
-        Vector3 targetVector = player.position - transform.position;
-        targetVector.Normalize();
+        Vector3 playerDirVector = player.position - transform.position;
+        Vector3 hillerDirVector = hiller.position - transform.position;
+        playerDirVector.Normalize();
+        hillerDirVector.Normalize();
 
         Vector3 forwardVector = transform.forward;
 
-        float dot = Vector3.Dot(targetVector, forwardVector);
+        float dotPlayer = Vector3.Dot(playerDirVector, forwardVector);
+        float dotHiller = Vector3.Dot(hillerDirVector, forwardVector);
 
-        if (dot >= Math.Cos(sightAngle * Mathf.Deg2Rad))
+        // 힐러가 감지거리 안에 있고, 시야각 안에 있다면 타겟은 힐러
+        if (isHillerNear && dotHiller >= Math.Cos(sightAngle * Mathf.Deg2Rad))
         {
-            Debug.DrawLine(transform.position, player.position);
-            isInSight = true;
-            print("IsPlayerInsight, Chase");
-            state = State.Chase;
-            anim.SetTrigger("Walk");
-            nav.speed = 3.5f;
-            nav.isStopped = false;
-            nav.updateRotation = true;
+            Vector3 rayDir = hiller.position - transform.position;
+            rayDir.Normalize();
+
+            // 시야각 안에 있고, 플레이어와 타겟 사이에 다른 오브젝트가 있지 않을 시에 추적 시작
+            if (Physics.Raycast(transform.position, rayDir, out hit, sensingDistance) && hit.transform == hiller)
+            {
+                target = hiller;
+                Debug.DrawLine(transform.position, target.position);
+                isInSight = true;
+                state = State.Chase;
+                anim.SetTrigger("Walk");
+                scoutSound.PlayFootSound();
+                nav.speed = 3.5f;
+                nav.isStopped = false;
+                nav.updateRotation = true;
+            }
+        }
+
+        // 힐러가 타겟이 되지 않았고, 플레이어가 감지거리 안에 있고, 시야각 안에 있다면 타겟은 플레이어
+        if (target == null && isPlayerNear && dotPlayer >= Math.Cos(sightAngle * Mathf.Deg2Rad))
+        {
+            Vector3 rayDir = player.position - transform.position;
+            rayDir.Normalize();
+
+            // 시야각 안에 있고, 플레이어와 타겟 사이에 다른 오브젝트가 있지 않을 시에 추적 시작
+            if (Physics.Raycast(transform.position, rayDir, out hit, sensingDistance) && hit.transform == player)
+            {
+                target = player;
+                Debug.DrawLine(transform.position, target.position);
+                isInSight = true;
+                state = State.Chase;
+                anim.SetTrigger("Walk");
+                scoutSound.PlayFootSound();
+                nav.speed = 3.5f;
+                nav.isStopped = false;
+                nav.updateRotation = true;
+            }
         }
         /*
         print("check insight");
@@ -314,12 +392,12 @@ public class PEA_ScoutMove : MonoBehaviour
 
     private void Chase()
     {
-        nav.SetDestination(player.position);
+        nav.SetDestination(target.position);
+        print(target.gameObject.name);
     }
 
     private void Attack()
     {
-        //transform.LookAt(player);
         if( weaponState == WeaponState.ScatterGun)
         {
             anim.SetBool("IsScatterGun", true);
@@ -332,7 +410,6 @@ public class PEA_ScoutMove : MonoBehaviour
         curTime += Time.deltaTime;
         if(curTime >= 3f)
         {
-            anim.SetTrigger("Fire");
             Fire();
             curTime = 0f;
             print("scoutMove attack fire");
@@ -348,8 +425,9 @@ public class PEA_ScoutMove : MonoBehaviour
             //SetRandomTarget();
             SetRandomPatrolPoint();
             print("Wait, Move");
-            state = State.Move;
+            state = State.Patrol;
             anim.SetTrigger("Walk");
+            scoutSound.PlayFootSound();
             nav.speed = 3.5f;
             nav.isStopped = false;
             nav.updateRotation = true;
@@ -358,6 +436,7 @@ public class PEA_ScoutMove : MonoBehaviour
 
     private void Fire()
     {
+        anim.SetTrigger("Fire");
         switch (weaponState )
         {
             case WeaponState.ScatterGun:
@@ -370,7 +449,7 @@ public class PEA_ScoutMove : MonoBehaviour
         }
     }
 
-    private void LookAtPlayer()
+    private void LookAtTarget()
     {
         //print("LookatPlayer");
         //Vector3 playerPos = new Vector3(player.position.x, transform.position.y, player.position.z);
@@ -385,7 +464,7 @@ public class PEA_ScoutMove : MonoBehaviour
         //    transform.localEulerAngles = dir;
         //}
 
-        Vector3 dir = player.position - transform.position;
+        Vector3 dir = target.position - transform.position;
         dir = new Vector3(dir.x, 0, dir.z);
         transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(dir), Time.deltaTime * 10);
     }
@@ -407,6 +486,7 @@ public class PEA_ScoutMove : MonoBehaviour
             print("Respawn, Idle");
             state = State.Idle;
             anim.SetTrigger("Idle");
+            scoutSound.StopFootSound();
             nav.speed = 0f;
             nav.isStopped = true;
             transform.position = respawnPoint.position;
@@ -418,6 +498,8 @@ public class PEA_ScoutMove : MonoBehaviour
     {
         state = State.Die;
         anim.SetTrigger("Die");
+        scoutSound.Die();
+        GameManager.instance.RedKillBlue();
     }
 
     private void OnCollisionEnter(Collision collision)
