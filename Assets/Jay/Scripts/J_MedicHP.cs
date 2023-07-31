@@ -4,22 +4,21 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-//태어날 때 체력이 최대체력이 되게하고싶다
-//총에 맞으면 체력을 1감소하고싶다
-//체력이 변경되면 UI로 표현하고싶다
 public class J_MedicHP : MonoBehaviour
 {
+    public J_Medic1 stateMgr;
     public static J_MedicHP instance;
     public Animator anim;
-
     public GameObject respawnPoint;
+    public UnityEngine.AI.NavMeshAgent agent;
 
     private void Awake()
     {
         instance = this;
     }
-    int hp;
-    private readonly int maxHp = 150;
+
+    int hp = 150;
+    private readonly int maxHp = 189;
 
     public int HP
     {
@@ -27,57 +26,59 @@ public class J_MedicHP : MonoBehaviour
         set
         {
             hp = value;
-            //체력이 변경되면 UI로 표현하고싶다
+            // When the physical strength changes, I want to express it in the UI
+            // Insert code here to update UI for HP change
+            if (hp <= 0)
+            {
 
+                Die();
+            }
         }
     }
-    // Start is called before the first frame update
-    void Start()
-    {
-        hp = maxHp;
-    }
 
-
-
-    // Update is called once per frame
     void Update()
     {
-        
+        print(hp);
+    }
+    void Die()
+    {
+        stateMgr.state = J_Medic1.State.Die;
+        anim.SetTrigger("Die");
+        Destroy(gameObject, 5);
+        Collider col = GetComponentInChildren<Collider>();
+        if (col)
+        {
+            col.enabled = false;
+        }
     }
 
-    //공격당함
     public void DamageProcess(int damage = 1)
     {
+        if (stateMgr.state == J_Medic1.State.Die)
+        {
+            return;
+        }
 
-        //J_Medic1.instance.DamageProcess(damage);
+        agent.isStopped = true;
+        HP -= 1;
 
-        //if (state == State.Die)
-        //{
-        //    return;
-        //}
-        //agent.isStopped = true;
-        //medicHP.HP -= 1;
-        //if (medicHP.HP < 0)
-        //{
+        if (HP < 0)
+        {
+            stateMgr.state = J_Medic1.State.Die;
+            Destroy(gameObject, 5);
+            anim.SetTrigger("Die");
 
-        //    state = State.Die;
-
-        //    Destroy(gameObject, 5);
-        //    anim.SetTrigger("Die");
-
-        //    Collider col = GetComponentInChildren<Collider>();
-        //    if (col)
-        //    {
-        //        col.enabled = false;
-        //    }
-        //}
-        //else
-        //{
-        //    state = State.Chase;
-        //    agent.isStopped = false;
-        //    anim.SetTrigger("Move");
-        //}
-
+            Collider col = GetComponentInChildren<Collider>();
+            if (col)
+            {
+                col.enabled = false;
+            }
+        }
+        else
+        {
+            stateMgr.state = J_Medic1.State.Chase;
+            agent.isStopped = false;
+            anim.SetTrigger("Move");
+        }
     }
-
 }
