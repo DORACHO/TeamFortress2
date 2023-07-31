@@ -49,18 +49,22 @@ public class GameManager : MonoBehaviour
             instance = this;
             DontDestroyOnLoad(gameObject);
         }
-        else
+        else if(SceneManager.GetActiveScene().buildIndex == 0)
         {
-            Destroy(instance);
+            Destroy(instance.gameObject);
             instance = this;
             DontDestroyOnLoad(gameObject);
         }
+        else if(SceneManager.GetActiveScene().buildIndex == 1)
+        {
+            Destroy(gameObject);
+        }
 
-        if(SceneManager.GetActiveScene().buildIndex == 0)
+        if (SceneManager.GetActiveScene().buildIndex == 0)
         {
             CursorUnlock();
         }
-        else if(SceneManager.GetActiveScene().buildIndex == 1)
+        else if (SceneManager.GetActiveScene().buildIndex == 1)
         {
             CursorLock();
         }
@@ -100,7 +104,7 @@ public class GameManager : MonoBehaviour
     {
         SceneManager.LoadScene(1);
         UIManager.instance.OnClickFindGame();
-        if(coroutine == null)
+        if (coroutine == null)
         {
             coroutine = StartCoroutine(StartCountDown());
         }

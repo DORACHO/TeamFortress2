@@ -65,17 +65,17 @@ public class J_MedicHP : MonoBehaviour
         agent.isStopped = true;
         HP -= damage;
 
-        if (HP < 0)
+        if (HP <= 0)
         {
+            print("medic die");
             stateMgr.state = J_Medic1.State.Die;
-            Destroy(gameObject, 5);
             anim.SetTrigger("Die");
 
-            Collider col = GetComponentInChildren<Collider>();
-            if (col)
-            {
-                col.enabled = false;
-            }
+            //Collider col = GetComponentInChildren<Collider>();
+            //if (col)
+            //{
+            //    col.enabled = false;
+            //}
         }
         else
         {

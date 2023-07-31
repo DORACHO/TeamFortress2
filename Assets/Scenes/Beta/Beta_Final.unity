@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_LightingSettings: {fileID: 0}
+  m_LightingSettings: {fileID: 4890085278179872738, guid: c5960c113d96df740b997bf9887a7842, type: 2}
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -11870,6 +11870,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   firePos: {fileID: 516687205}
+  bloodEffect: {fileID: 0}
 --- !u!23 &637836315
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -23071,11 +23072,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &1278573717 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5678932364630882939, guid: cc78aa89d6604ac4d858e9eb739b73fc, type: 3}
-  m_PrefabInstance: {fileID: 5678932365524382168}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1281615221
 GameObject:
   m_ObjectHideFlags: 0
@@ -23687,6 +23683,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   firePos: {fileID: 1146331872}
+  bloodEffect: {fileID: 0}
 --- !u!65 &1327018550
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -25613,6 +25610,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   firePos: {fileID: 555651651}
+  bloodEffect: {fileID: 0}
 --- !u!23 &1536152296
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -28371,6 +28369,100 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4007237672116910943, guid: 7212f8289ef5af14d9a93e6aea84437d, type: 3}
   m_PrefabInstance: {fileID: 4007237670380935410}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1761800774
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1761800775}
+  - component: {fileID: 1761800776}
+  m_Layer: 3
+  m_Name: Point Light
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1761800775
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1761800774}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 559288206}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!108 &1761800776
+Light:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1761800774}
+  m_Enabled: 1
+  serializedVersion: 10
+  m_Type: 2
+  m_Shape: 0
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Intensity: 1.46
+  m_Range: 24.62
+  m_SpotAngle: 30
+  m_InnerSpotAngle: 21.80208
+  m_CookieSize: 10
+  m_Shadows:
+    m_Type: 0
+    m_Resolution: -1
+    m_CustomResolution: -1
+    m_Strength: 1
+    m_Bias: 0.05
+    m_NormalBias: 0.4
+    m_NearPlane: 0.2
+    m_CullingMatrixOverride:
+      e00: 1
+      e01: 0
+      e02: 0
+      e03: 0
+      e10: 0
+      e11: 1
+      e12: 0
+      e13: 0
+      e20: 0
+      e21: 0
+      e22: 1
+      e23: 0
+      e30: 0
+      e31: 0
+      e32: 0
+      e33: 1
+    m_UseCullingMatrixOverride: 0
+  m_Cookie: {fileID: 0}
+  m_DrawHalo: 0
+  m_Flare: {fileID: 0}
+  m_RenderMode: 0
+  m_CullingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_RenderingLayerMask: 1
+  m_Lightmapping: 1
+  m_LightShadowCasterMode: 0
+  m_AreaSize: {x: 1, y: 1}
+  m_BounceIntensity: 1
+  m_ColorTemperature: 6570
+  m_UseColorTemperature: 0
+  m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
+  m_UseBoundingSphereOverride: 0
+  m_UseViewFrustumForShadowCasterCull: 1
+  m_ShadowRadius: 0
+  m_ShadowAngle: 0
 --- !u!1 &1763325290
 GameObject:
   m_ObjectHideFlags: 0
@@ -29323,6 +29415,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   firePos: {fileID: 1146331872}
+  bloodEffect: {fileID: 0}
 --- !u!1 &1853189307
 GameObject:
   m_ObjectHideFlags: 0
@@ -33067,7 +33160,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stateMgr: {fileID: 2135753994}
   anim: {fileID: 2135753998}
-  respawnPoint: {fileID: 1278573717}
+  respawnPoint: {fileID: 863707227}
   agent: {fileID: 2135753997}
 --- !u!136 &2135753992
 CapsuleCollider:
@@ -33278,13 +33371,7 @@ Animator:
   m_ApplyRootMotion: 1
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
-  m_WarningMessage: "\nBinding warning: Some generic clip(s) animate transforms that
-    are already bound by a Humanoid avatar. These transforms can only be changed
-    by Humanoid clips.\n\tTransform 'bip_pelvis'\n\tTransform 'bip_collar_R'\n\tTransform
-    'bip_ring_1_L'\n\tTransform 'bip_hip_L'\n\tTransform 'bip_upperArm_R'\n\tTransform
-    'bip_middle_0_L'\n\tTransform 'bip_index_0_L'\n\tTransform 'bip_lowerArm_L'\n\tTransform
-    'bip_foot_R'\n\tTransform 'bip_upperArm_L'\n\tand more ...\n\tFrom animation
-    clip 'Die'"
+  m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
@@ -41121,6 +41208,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   firePos: {fileID: 1376370655517199370}
+  bloodEffect: {fileID: 0}
 --- !u!4 &1376370656347899775
 Transform:
   m_ObjectHideFlags: 0
@@ -41150,6 +41238,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   firePos: {fileID: 1376370655517199370}
+  bloodEffect: {fileID: 0}
 --- !u!4 &1376370656836736874
 Transform:
   m_ObjectHideFlags: 0
@@ -46743,6 +46832,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   firePos: {fileID: 2263951539020041842}
+  bloodEffect: {fileID: 0}
 --- !u!4 &2263951540339643666
 Transform:
   m_ObjectHideFlags: 0
@@ -47143,6 +47233,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   firePos: {fileID: 2263951539020041842}
+  bloodEffect: {fileID: 0}
 --- !u!4 &2263951540836467975
 Transform:
   m_ObjectHideFlags: 0
@@ -47180,6 +47271,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   firePos: {fileID: 2263951540044765669}
+  bloodEffect: {fileID: 0}
 --- !u!4 &2263951541019996537
 Transform:
   m_ObjectHideFlags: 0
