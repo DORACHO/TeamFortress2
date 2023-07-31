@@ -3,7 +3,9 @@ guid: 3533fc34546361e489e6a78475f993fc
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - firePos: {instanceID: 0}
+  - bloodEffect: {fileID: 9173483050681597966, guid: d0d1f55f933385546b5ba9c2708ea7a3, type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 
