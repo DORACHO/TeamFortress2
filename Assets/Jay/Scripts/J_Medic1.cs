@@ -53,7 +53,7 @@ namespace MedicAI
                 case State.Chase: UpdateChase();  break;
                 case State.Attack: UpdateAttack(); break;
                 case State.Patrol: UpdatePatrol(); break;
-                case State.Die: Respawn(); break;
+                case State.Die: Invoke(nameof(Respawn),3); break;
             }
             if (Input.GetKeyDown(KeyCode.M)  )
             {
@@ -79,6 +79,7 @@ namespace MedicAI
                 anim.SetTrigger("Move");
                 agent.isStopped = false;
             }
+            
         }
 
         void UpdateChase()
@@ -154,18 +155,25 @@ namespace MedicAI
             agent.speed = 0;
             anim.SetTrigger("Die");
         }
+
+      
         void Respawn()
         {
-
+            J_MedicHP.instance.OnIK();
             currTime += Time.deltaTime;
-            if (currTime <= respawnTime)
+            if (currTime > respawnTime)
             {
+                this.GetComponent<NavMeshAgent>().enabled = false;
                 transform.position = respawnPoint.position;
-                respawnPoint.eulerAngles = respawnPoint.eulerAngles;
+                //respawnPoint.eulerAngles = respawnPoint.eulerAngles;
                 state = State.Idle;
                 agent.speed = 0f;
-                transform.position = respawnPoint.position;
-                respawnPoint.rotation = respawnPoint.rotation;
+                //transform.position = respawnPoint.position;
+                //respawnPoint.rotation = respawnPoint.rotation;
+                currTime = 0;
+                
+                this.GetComponent<NavMeshAgent>().enabled = true;
+
             }
         }
 
@@ -227,36 +235,36 @@ namespace MedicAI
             }
         }
         //공격당함
-        public void DamageProcess(int damage = 1)
-        {
-            if (state == State.Die)
-            {
-                return;
-            }
-            agent.isStopped = true;
-            medicHP.HP -= 1;
-            if (medicHP.HP < 0)
-            {
+        //public void DamageProcess(int damage = 1)
+        //{
+        //    if (state == State.Die)
+        //    {
+        //        return;
+        //    }
+        //    agent.isStopped = true;
+        //    medicHP.HP -= 1;
+        //    if (medicHP.HP < 0)
+        //    {
 
-                state = State.Die;
+        //        state = State.Die;
 
-                Destroy(gameObject, 5);
-                anim.SetTrigger("Die");
+        //        Destroy(gameObject, 5);
+        //        anim.SetTrigger("Die");
 
-                Collider col = GetComponentInChildren<Collider>();
-                if (col)
-                {
-                    col.enabled = false;
-                }
-            }
-            else
-            {
-                state = State.Chase;
-                agent.isStopped = false;
-                anim.SetTrigger("Move");
-            }
+        //        Collider col = GetComponentInChildren<Collider>();
+        //        if (col)
+        //        {
+        //            col.enabled = false;
+        //        }
+        //    }
+        //    else
+        //    {
+        //        state = State.Chase;
+        //        agent.isStopped = false;
+        //        anim.SetTrigger("Move");
+        //    }
 
-        }
+        //}
 
 
 
