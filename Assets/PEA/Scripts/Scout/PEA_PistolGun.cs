@@ -61,6 +61,7 @@ public class PEA_PistolGun : MonoBehaviour
 
     // 에디터에서 연결해줄 변수
     public Transform firePos;
+    public GameObject bloodEffect;
 
     // Start is called before the first frame update
     void Start()
@@ -155,12 +156,18 @@ public class PEA_PistolGun : MonoBehaviour
             {
                 print("pistolgun player");
                 EJPSHP.instance.SetHP((int)damage, transform.position);
+                GameObject blood = Instantiate(bloodEffect, hit.point, Quaternion.Euler(hit.normal), hit.transform);
+                Destroy(blood, 2f);
             }
             // 힐러가 맞으면 힐러한테 데미지 주기
             else if (hit.transform.CompareTag("Hiller"))
             {
                 hit.transform.GetComponent<J_MedicHP>().DamageProcess((int)damage);
+                GameObject blood = Instantiate(bloodEffect, hit.point, Quaternion.Euler(hit.normal), hit.transform);
+                Destroy(blood, 2f);
             }
+
+
         }
 
         // 반동주기, 측정된 데미지 출력, 장전된 총알 하나씩 빼기, 사용된 변수들 초기화해주기
