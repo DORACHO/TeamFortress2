@@ -84,10 +84,12 @@ public class J_MedicHP : MonoBehaviour
 
         if (HP <= 0)
         {
+
             IKLeftHand.SetActive(false);
             IKRightHand.SetActive(false);
             stateMgr.state = J_Medic1.State.Die;
             //Destroy(gameObject, 5);
+
             anim.SetTrigger("Die");
             this.GetComponent<NavMeshAgent>().enabled = false;
 
@@ -96,7 +98,7 @@ public class J_MedicHP : MonoBehaviour
             //{
             //    col.enabled = false;
             //}
-            
+
         }
         else
         {
