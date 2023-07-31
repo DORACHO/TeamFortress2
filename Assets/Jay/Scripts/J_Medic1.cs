@@ -215,48 +215,48 @@ namespace MedicAI
             agent.isStopped = false;
         }
         #endregion
-        //private void OnCollisionEnter(Collision collision)
-        //{
-        //    if (collision.gameObject.name.Contains("Player"))
-        //    {
-        //        Destroy(collision.gameObject);
-        //    }
-        //    else
-        //    {
+        private void OnCollisionEnter(Collision collision)
+        {
+            if (collision.gameObject.name.Contains("Player"))
+            {
+                Destroy(collision.gameObject);
+            }
+            else
+            {
 
-        //    }
-        //}
-        ////공격당함
-        //public void DamageProcess(int damage = 1)
-        //{
-        //    if (state == State.Die)
-        //    {
-        //        return;
-        //    }
-        //    agent.isStopped = true;
-        //    medicHP.HP -= 1;
-        //    if (medicHP.HP < 0)
-        //    {
+            }
+        }
+        //공격당함
+        public void DamageProcess(int damage = 1)
+        {
+            if (state == State.Die)
+            {
+                return;
+            }
+            agent.isStopped = true;
+            medicHP.HP -= 1;
+            if (medicHP.HP < 0)
+            {
 
-        //        state = State.Die;
+                state = State.Die;
 
-        //        Destroy(gameObject, 5);
-        //        anim.SetTrigger("Die");
+                Destroy(gameObject, 5);
+                anim.SetTrigger("Die");
 
-        //        Collider col = GetComponentInChildren<Collider>();
-        //        if (col)
-        //        {
-        //            col.enabled = false;
-        //        }
-        //    }
-        //    else
-        //    {
-        //        state = State.Chase;
-        //        agent.isStopped = false;
-        //        anim.SetTrigger("Move");
-        //    }
+                Collider col = GetComponentInChildren<Collider>();
+                if (col)
+                {
+                    col.enabled = false;
+                }
+            }
+            else
+            {
+                state = State.Chase;
+                agent.isStopped = false;
+                anim.SetTrigger("Move");
+            }
 
-        //}
+        }
 
 
 

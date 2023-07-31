@@ -11870,6 +11870,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   firePos: {fileID: 516687205}
+  bloodEffect: {fileID: 0}
 --- !u!23 &637836315
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -23071,11 +23072,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &1278573717 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5678932364630882939, guid: cc78aa89d6604ac4d858e9eb739b73fc, type: 3}
-  m_PrefabInstance: {fileID: 5678932365524382168}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1281615221
 GameObject:
   m_ObjectHideFlags: 0
@@ -23687,6 +23683,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   firePos: {fileID: 1146331872}
+  bloodEffect: {fileID: 0}
 --- !u!65 &1327018550
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -25613,6 +25610,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   firePos: {fileID: 555651651}
+  bloodEffect: {fileID: 0}
 --- !u!23 &1536152296
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -29417,6 +29415,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   firePos: {fileID: 1146331872}
+  bloodEffect: {fileID: 0}
 --- !u!1 &1853189307
 GameObject:
   m_ObjectHideFlags: 0
@@ -33161,7 +33160,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stateMgr: {fileID: 2135753994}
   anim: {fileID: 2135753998}
-  respawnPoint: {fileID: 1278573717}
+  respawnPoint: {fileID: 863707227}
   agent: {fileID: 2135753997}
 --- !u!136 &2135753992
 CapsuleCollider:
@@ -33372,13 +33371,7 @@ Animator:
   m_ApplyRootMotion: 1
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
-  m_WarningMessage: "\nBinding warning: Some generic clip(s) animate transforms that
-    are already bound by a Humanoid avatar. These transforms can only be changed
-    by Humanoid clips.\n\tTransform 'bip_pelvis'\n\tTransform 'bip_collar_R'\n\tTransform
-    'bip_ring_1_L'\n\tTransform 'bip_hip_L'\n\tTransform 'bip_upperArm_R'\n\tTransform
-    'bip_middle_0_L'\n\tTransform 'bip_index_0_L'\n\tTransform 'bip_lowerArm_L'\n\tTransform
-    'bip_foot_R'\n\tTransform 'bip_upperArm_L'\n\tand more ...\n\tFrom animation
-    clip 'Die'"
+  m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
@@ -41215,6 +41208,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   firePos: {fileID: 1376370655517199370}
+  bloodEffect: {fileID: 0}
 --- !u!4 &1376370656347899775
 Transform:
   m_ObjectHideFlags: 0
@@ -41244,6 +41238,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   firePos: {fileID: 1376370655517199370}
+  bloodEffect: {fileID: 0}
 --- !u!4 &1376370656836736874
 Transform:
   m_ObjectHideFlags: 0
@@ -46837,6 +46832,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   firePos: {fileID: 2263951539020041842}
+  bloodEffect: {fileID: 0}
 --- !u!4 &2263951540339643666
 Transform:
   m_ObjectHideFlags: 0
@@ -47237,6 +47233,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   firePos: {fileID: 2263951539020041842}
+  bloodEffect: {fileID: 0}
 --- !u!4 &2263951540836467975
 Transform:
   m_ObjectHideFlags: 0
@@ -47274,6 +47271,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   firePos: {fileID: 2263951540044765669}
+  bloodEffect: {fileID: 0}
 --- !u!4 &2263951541019996537
 Transform:
   m_ObjectHideFlags: 0
