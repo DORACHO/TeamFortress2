@@ -156,8 +156,6 @@ public class PEA_PistolGun : MonoBehaviour
             {
                 print("pistolgun player");
                 EJPSHP.instance.SetHP((int)damage, transform.position);
-                GameObject blood = Instantiate(bloodEffect, hit.point, Quaternion.Euler(hit.normal), hit.transform);
-                Destroy(blood, 2f);
             }
             // 힐러가 맞으면 힐러한테 데미지 주기
             else if (hit.transform.CompareTag("Hiller"))

@@ -94,10 +94,12 @@ public class EJCameraRotate : MonoBehaviour
         }
 
         if (EJPSHP.instance.HP <= 0 &&!respawned)
-        {           
+        {
             //StartCoroutine(orderedRespawn());
             //StartCoroutine(RespawnincameraScript());
             //StartCoroutine(CountDownCoroutine(10));
+
+            GameManager.instance.BlueKillRed();
 
             
 
