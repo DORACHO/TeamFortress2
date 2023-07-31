@@ -75,6 +75,7 @@ namespace MedicAI
             {
                 //순찰상태로 전이하고싶다
                 state = State.Patrol;
+                agent.speed = 3.8f;
                 anim.SetTrigger("Move");
                 agent.isStopped = false;
             }
@@ -93,10 +94,12 @@ namespace MedicAI
                 state = State.Attack;
                 anim.SetTrigger("Attack");
                 agent.isStopped = true;
+                agent.speed = 0;
             }
             else if (distance > farDistance)
             {
                 state = State.Patrol;
+                agent.speed = 3.8f;
             }
 
         }
@@ -130,6 +133,7 @@ namespace MedicAI
             {
                 //추적상태로 전이하고싶다
                 state = State.Chase;
+                agent.speed = 3.8f;
             }
         }
         float attackDistance = 10;
@@ -148,6 +152,7 @@ namespace MedicAI
         {
             
             state = State.Die;
+            agent.speed = 0;
             anim.SetTrigger("Die");
         }
         void Respawn()
@@ -158,6 +163,7 @@ namespace MedicAI
                 transform.position = respawnPoint.position;
                 respawnPoint.eulerAngles = respawnPoint.eulerAngles;
                 state = State.Idle;
+                agent.speed = 0f;
                 transform.position = respawnPoint.position;
                 respawnPoint.rotation = respawnPoint.rotation;
             }
@@ -209,48 +215,48 @@ namespace MedicAI
             agent.isStopped = false;
         }
         #endregion
-        private void OnCollisionEnter(Collision collision)
-        {
-            if (collision.gameObject.name.Contains("Player"))
-            {
-                Destroy(collision.gameObject);
-            }
-            else
-            {
+        //private void OnCollisionEnter(Collision collision)
+        //{
+        //    if (collision.gameObject.name.Contains("Player"))
+        //    {
+        //        Destroy(collision.gameObject);
+        //    }
+        //    else
+        //    {
 
-            }
-        }
-        //공격당함
-        public void DamageProcess(int damage = 1)
-        {
-            if (state == State.Die)
-            {
-                return;
-            }
-            agent.isStopped = true;
-            medicHP.HP -= 1;
-            if (medicHP.HP < 0)
-            {
+        //    }
+        //}
+        ////공격당함
+        //public void DamageProcess(int damage = 1)
+        //{
+        //    if (state == State.Die)
+        //    {
+        //        return;
+        //    }
+        //    agent.isStopped = true;
+        //    medicHP.HP -= 1;
+        //    if (medicHP.HP < 0)
+        //    {
 
-                state = State.Die;
+        //        state = State.Die;
 
-                Destroy(gameObject, 5);
-                anim.SetTrigger("Die");
+        //        Destroy(gameObject, 5);
+        //        anim.SetTrigger("Die");
 
-                Collider col = GetComponentInChildren<Collider>();
-                if (col)
-                {
-                    col.enabled = false;
-                }
-            }
-            else
-            {
-                state = State.Chase;
-                agent.isStopped = false;
-                anim.SetTrigger("Move");
-            }
+        //        Collider col = GetComponentInChildren<Collider>();
+        //        if (col)
+        //        {
+        //            col.enabled = false;
+        //        }
+        //    }
+        //    else
+        //    {
+        //        state = State.Chase;
+        //        agent.isStopped = false;
+        //        anim.SetTrigger("Move");
+        //    }
 
-        }
+        //}
 
 
 

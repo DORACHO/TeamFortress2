@@ -54,9 +54,11 @@ public class PEA_ScoutMove : MonoBehaviour
     private bool isPlayerNear = false;
     private RaycastHit hit;
     private Transform target = null;
+    private J_MedicHP medicHp;
 
     private readonly int maxJumpCount = 2;
     private readonly float jumpPower = 5f;
+    private readonly float attackRate = 1.5f;
     private readonly float sightAngle = 60f;                                 // 시야 각도 / 2(앞방향을 기준으로 계산할거라 2로 나눔) 
     private readonly float attackRange = 10f;                                // 공격 반경
     private readonly float respawnTime = 3f; 
@@ -109,6 +111,7 @@ public class PEA_ScoutMove : MonoBehaviour
         scatterGun = GetComponentInChildren<PEA_ScatterGun>();
         player = GameObject.FindGameObjectWithTag("Player").transform;
         hiller = GameObject.FindGameObjectWithTag("Hiller").transform;
+        medicHp = hiller.GetComponent<J_MedicHP>();
     }
 
     // Update is called once per frame
@@ -144,6 +147,11 @@ public class PEA_ScoutMove : MonoBehaviour
             case State.Die:
                 Respawn();
                 break;
+        }
+
+        if (medicHp.IsDead && target == hiller)
+        {
+            target = null;
         }
     }
 
@@ -238,6 +246,11 @@ public class PEA_ScoutMove : MonoBehaviour
 
         // 힐러가 감지거리안에 들어왔는지 확인
         isHillerNear = distanceWithHiller <= sensingDistance ? true : false;
+
+        if (medicHp.IsDead)
+        {
+            isHillerNear = false;
+        }
 
         //플레이어가 감지거리 안에 들어왔는지 확인
         isPlayerNear = distanceWithPlayer <= sensingDistance ? true : false;
@@ -411,7 +424,7 @@ public class PEA_ScoutMove : MonoBehaviour
         }
 
         curTime += Time.deltaTime;
-        if(curTime >= 3f)
+        if(curTime >= attackRate)
         {
             Fire();
             curTime = 0f;

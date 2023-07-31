@@ -36,6 +36,11 @@ public class J_MedicHP : MonoBehaviour
         }
     }
 
+    public bool IsDead
+    {
+        get { return stateMgr.state == J_Medic1.State.Die; }
+    }
+
     void Update()
     {
         print(hp);
@@ -43,12 +48,10 @@ public class J_MedicHP : MonoBehaviour
     void Die()
     {
         stateMgr.state = J_Medic1.State.Die;
-        anim.SetTrigger("Die");
-        Destroy(gameObject, 5);
-        Collider col = GetComponentInChildren<Collider>();
-        if (col)
+
+        if (!IsDead)
         {
-            col.enabled = false;
+            anim.SetTrigger("Die");
         }
     }
 
@@ -60,7 +63,7 @@ public class J_MedicHP : MonoBehaviour
         }
 
         agent.isStopped = true;
-        HP -= 1;
+        HP -= damage;
 
         if (HP < 0)
         {

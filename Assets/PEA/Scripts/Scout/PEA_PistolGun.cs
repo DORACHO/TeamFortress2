@@ -33,9 +33,9 @@ public class PEA_PistolGun : MonoBehaviour
     private readonly int criticalPercent = 2;                       // 치명타 발생률
 
     // 거리별 데미지값
-    private readonly float baseDamage = 15f;                        // 기본 데미지 (중거리 데미지)
-    private readonly float maximunDamage = 22f;                     // 근거리 데미지
-    private readonly float minimumDamage = 8f;                      // 장거리 데미지
+    private readonly float baseDamage = 22f;                        // 기본 데미지 (중거리 데미지)
+    private readonly float maximunDamage = 30f;                     // 근거리 데미지
+    private readonly float minimumDamage = 15f;                      // 장거리 데미지
     private readonly float criticalDamage = 45f;                    // 치명타 데미지
 
     // 총알 장전 
@@ -159,7 +159,7 @@ public class PEA_PistolGun : MonoBehaviour
             // 힐러가 맞으면 힐러한테 데미지 주기
             else if (hit.transform.CompareTag("Hiller"))
             {
-                hit.transform.GetComponent<MedicAI.J_Medic1>().DamageProcess((int)damage);
+                hit.transform.GetComponent<J_MedicHP>().DamageProcess((int)damage);
             }
         }
 

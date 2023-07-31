@@ -34,6 +34,7 @@ public class PEA_ScoutMove_Standby : MonoBehaviour
     private bool isHillerNear = false;
     private bool isPlayerNear = false;
 
+    private readonly float attackRate = 1.5f;
     private readonly float sightAngle = 60f;                                 // 시야 각도 / 2(앞방향을 기준으로 계산할거라 2로 나눔) 
     private readonly float attackRange = 10f;                                // 공격 반경
     private readonly float sensingDistance = 20f;
@@ -47,6 +48,7 @@ public class PEA_ScoutMove_Standby : MonoBehaviour
     private PEA_ScoutSound scoutSound;
     private Animator anim;
     private RaycastHit hit;
+    private J_MedicHP medicHp;
     #endregion
 
     public bool IsDead
@@ -65,6 +67,7 @@ public class PEA_ScoutMove_Standby : MonoBehaviour
         scoutSound = GetComponent<PEA_ScoutSound>();
         player = GameObject.FindGameObjectWithTag("Player").transform;
         hiller = GameObject.FindGameObjectWithTag("Hiller").transform;
+        medicHp = hiller.GetComponent<J_MedicHP>();
     }
 
     // Update is called once per frame
@@ -109,6 +112,11 @@ public class PEA_ScoutMove_Standby : MonoBehaviour
 
         // 힐러가 감지거리안에 들어왔는지 확인
         isHillerNear = distanceWithHiller <= sensingDistance ? true : false;
+
+        if (medicHp.IsDead)
+        {
+            isHillerNear = false;
+        }
 
         //플레이어가 감지거리 안에 들어왔는지 확인
         isPlayerNear = distanceWithPlayer <= sensingDistance ? true : false;
@@ -255,7 +263,7 @@ public class PEA_ScoutMove_Standby : MonoBehaviour
         }
 
         curTime += Time.deltaTime;
-        if(curTime >= 3f)
+        if(curTime >= attackRate)
         {
             Fire();
             curTime = 0f;
