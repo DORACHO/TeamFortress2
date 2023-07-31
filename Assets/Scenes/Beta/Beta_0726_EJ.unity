@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
+  m_IndirectSpecularColor: {r: 0.10014667, g: 0.18747084, b: 0.26273152, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2362,6 +2362,10 @@ PrefabInstance:
     - target: {fileID: 2263951539907082627, guid: 3f821ae286a9d9349ada65223bf37a46, type: 3}
       propertyPath: m_Name
       value: Scout
+      objectReference: {fileID: 0}
+    - target: {fileID: 2263951539907082629, guid: 3f821ae286a9d9349ada65223bf37a46, type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2263951539907082630, guid: 3f821ae286a9d9349ada65223bf37a46, type: 3}
       propertyPath: respawnPoint
