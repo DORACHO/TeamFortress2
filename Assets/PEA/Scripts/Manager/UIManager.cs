@@ -10,6 +10,9 @@ public class UIManager : MonoBehaviour
 
     public GameObject main;
 
+    // 룰 설명 UI
+    public GameObject ruleUI;
+
     // 수레 UI
     public GameObject wagonProgress;
     public Image checkPointImage;
@@ -63,6 +66,13 @@ public class UIManager : MonoBehaviour
         wagonProgress.SetActive(true);
         countUI.SetActive(true);
         gameOverUI.SetActive(false);
+        SetRuleUIActive(true);
+    }
+
+    // 룰 UI 활성화/비활성화
+    public void SetRuleUIActive(bool isActive)
+    {
+        ruleUI.SetActive(isActive);
     }
 
     // 카운트다운 UI(ui로 보여질 카운트다운 텍스트, 남은 시간 퍼센트)
