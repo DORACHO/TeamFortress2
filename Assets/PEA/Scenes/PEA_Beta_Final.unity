@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_LightingSettings: {fileID: 0}
+  m_LightingSettings: {fileID: 4890085278179872738, guid: c5960c113d96df740b997bf9887a7842, type: 2}
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -37069,8 +37069,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d4600c1ad95be641a7e2c763443777e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  stateMgr: {fileID: 0}
   anim: {fileID: 0}
   respawnPoint: {fileID: 0}
+  agent: {fileID: 0}
 --- !u!136 &2135753992
 CapsuleCollider:
   m_ObjectHideFlags: 0

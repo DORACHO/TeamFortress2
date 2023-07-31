@@ -51,7 +51,7 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            Destroy(instance);
+            Destroy(instance.gameObject);
             instance = this;
             DontDestroyOnLoad(gameObject);
         }
@@ -100,7 +100,7 @@ public class GameManager : MonoBehaviour
     {
         SceneManager.LoadScene(1);
         UIManager.instance.OnClickFindGame();
-        if(coroutine == null)
+        if (coroutine == null)
         {
             coroutine = StartCoroutine(StartCountDown());
         }
