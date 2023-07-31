@@ -88,6 +88,10 @@ public class PEA_ScoutMove : MonoBehaviour
     public Transform respawnPoint;
     #endregion
 
+    public bool IsDead
+    {
+        get { return state == State.Die; }
+    }
 
     public int WagonPoint
     {
@@ -180,7 +184,6 @@ public class PEA_ScoutMove : MonoBehaviour
         {
             // 목적지에 도착하면 잠시 멈추기
             SetRandomWaitTime();
-            print("Patrol, Idle");
             state = State.Idle;
             anim.SetTrigger("Idle");
             scoutSound.StopFootSound();
@@ -412,7 +415,6 @@ public class PEA_ScoutMove : MonoBehaviour
         {
             Fire();
             curTime = 0f;
-            print("scoutMove attack fire");
         }
     }
 
@@ -424,7 +426,6 @@ public class PEA_ScoutMove : MonoBehaviour
             curTime = 0f;
             //SetRandomTarget();
             SetRandomPatrolPoint();
-            print("Wait, Move");
             state = State.Patrol;
             anim.SetTrigger("Walk");
             scoutSound.PlayFootSound();
@@ -483,7 +484,6 @@ public class PEA_ScoutMove : MonoBehaviour
         {
             transform.position = respawnPoint.position;
             respawnPoint.eulerAngles = respawnPoint.eulerAngles;
-            print("Respawn, Idle");
             state = State.Idle;
             anim.SetTrigger("Idle");
             scoutSound.StopFootSound();
@@ -497,7 +497,6 @@ public class PEA_ScoutMove : MonoBehaviour
     public void Die()
     {
         state = State.Die;
-        anim.SetTrigger("Die");
         scoutSound.Die();
         GameManager.instance.RedKillBlue();
     }

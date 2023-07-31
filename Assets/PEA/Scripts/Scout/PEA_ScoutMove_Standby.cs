@@ -49,6 +49,11 @@ public class PEA_ScoutMove_Standby : MonoBehaviour
     private RaycastHit hit;
     #endregion
 
+    public bool IsDead
+    {
+        get { return state == State.Die;  }
+    }
+
 
     // Start is called before the first frame update
     void Start()
@@ -104,11 +109,9 @@ public class PEA_ScoutMove_Standby : MonoBehaviour
 
         // 힐러가 감지거리안에 들어왔는지 확인
         isHillerNear = distanceWithHiller <= sensingDistance ? true : false;
-        print("isHillerNear : " + isHillerNear);
 
         //플레이어가 감지거리 안에 들어왔는지 확인
         isPlayerNear = distanceWithPlayer <= sensingDistance ? true : false;
-        print("isPlayerNear : " + isPlayerNear);
 
         // 힐러가 가까이 있고 타겟이 아니라면 시야에 있는지 확인
         if (isHillerNear && target != hiller)
@@ -139,6 +142,7 @@ public class PEA_ScoutMove_Standby : MonoBehaviour
                 // 추적 중인 타겟이 공격 범위 안에 들어왔을 때
                 if (distanceWithTarget <= attackRange)
                 {
+                    print("chase - > attack");
                     state = State.Attack;
                     anim.SetTrigger("Idle");
                     nav.speed = 0;
@@ -167,6 +171,7 @@ public class PEA_ScoutMove_Standby : MonoBehaviour
                 // 타겟이 공격범위를 벗어낫을 때
                 if (distanceWithTarget > attackRange)
                 {
+                    print("attack -> chase");
                     state = State.Chase;
                     anim.SetTrigger("Walk");
                     scoutSound.PlayFootSound();
@@ -193,7 +198,6 @@ public class PEA_ScoutMove_Standby : MonoBehaviour
         // 힐러가 감지거리 안에 있고, 시야각 안에 있다면 타겟은 힐러
         if (isHillerNear && dotHiller >= Math.Cos(sightAngle * Mathf.Deg2Rad))
         {
-            print("hhhhhhhhh");
             Vector3 rayDir = hiller.position - transform.position;
             rayDir.Normalize();
 
@@ -213,9 +217,8 @@ public class PEA_ScoutMove_Standby : MonoBehaviour
         }
 
         // 힐러가 타겟이 되지 않았고, 플레이어가 감지거리 안에 있고, 시야각 안에 있다면 타겟은 플레이어
-        if (target != hiller && isPlayerNear && dotPlayer >= Math.Cos(sightAngle * Mathf.Deg2Rad))
+        if (target == null && isPlayerNear && dotPlayer >= Math.Cos(sightAngle * Mathf.Deg2Rad))
         {
-            print("ppppppppp");
             Vector3 rayDir = player.position - transform.position;
             rayDir.Normalize();
 
@@ -256,7 +259,6 @@ public class PEA_ScoutMove_Standby : MonoBehaviour
         {
             Fire();
             curTime = 0f;
-            print("scoutMove attack fire");
         }
     }
 

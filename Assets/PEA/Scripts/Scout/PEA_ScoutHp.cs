@@ -39,12 +39,13 @@ public class PEA_ScoutHp : MonoBehaviour
         hp -= damage;
         if(hp <= 0)
         {
-            if(scoutMove != null)
+            // 이미 죽은 상태에서는 다시 죽게 하지 않음
+            if(scoutMove != null && !scoutMove.IsDead)
             {
                 scoutMove.Die();
                 print("scout die");
             }
-            else
+            else if(scoutStandby != null && !scoutStandby.IsDead)
             {
                 scoutStandby.Die();
                 print("scoutStandby Die");

@@ -43,6 +43,8 @@ public class PEA_Wagon : MonoBehaviour
     private NavMeshAgent nav;
     private RaycastHit hit;
 
+    private List<Collider> nearReds = new List<Collider>();
+
     public Transform[] wayPoints;
     public PEA_ScoutMove[] scoutMove;
 
@@ -322,10 +324,56 @@ public class PEA_Wagon : MonoBehaviour
         // 레드팀
         else if (other.gameObject.layer.Equals(LayerMask.NameToLayer("Enemy")))
         {
-            redNum++;
-            isNearRed = true;
-            //isMoving = false;
-            state = State.Wait;
+            // 죽은 상태의 스카웃은 무시함.
+            if (other.TryGetComponent<PEA_ScoutMove>(out PEA_ScoutMove scoutMove))
+            {
+                if (scoutMove.IsDead)
+                {
+                    nearReds.Add(other);
+                    redNum++;
+                    isNearRed = true;
+                    nearReds.Add(other);
+                    //isMoving = false;
+                    state = State.Wait;
+                }
+            }
+            else if (other.TryGetComponent<PEA_ScoutMove_Standby>(out PEA_ScoutMove_Standby scoutMove_Standby))
+            {
+                if (scoutMove_Standby.IsDead)
+                {
+                    nearReds.Add(other);
+                    redNum++;
+                    isNearRed = true;
+                    nearReds.Add(other);
+                    //isMoving = false;
+                    state = State.Wait;
+                }
+            }           
+        }
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
+        // 주변에 스카웃이 있다면 스카웃이 죽었는지 계속해서 확인함.
+        if (isNearRed)
+        {
+            foreach(Collider collider in nearReds)
+            {
+                if(collider.TryGetComponent<PEA_ScoutMove>(out PEA_ScoutMove scoutMove))
+                {
+                    if (scoutMove.IsDead)
+                    {
+                        nearReds.Remove(other);
+                    }
+                }
+                else if(collider.TryGetComponent<PEA_ScoutMove_Standby>(out PEA_ScoutMove_Standby scoutMove_Standby))
+                {
+                    if (scoutMove_Standby.IsDead)
+                    {
+                        nearReds.Remove(other);
+                    }
+                }
+            }
         }
     }
 
@@ -349,6 +397,11 @@ public class PEA_Wagon : MonoBehaviour
         else if (other.gameObject.layer.Equals(LayerMask.NameToLayer("Enemy")))
         {
             redNum--;
+            if (nearReds.Contains(other))
+            {
+                nearReds.Remove(other);
+            }
+
             if (redNum <= 0)
             {
                 redNum = 0;

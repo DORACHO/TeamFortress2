@@ -182,6 +182,7 @@ public class GameManager : MonoBehaviour
     {
         yield return new WaitForSeconds(startCountTime);
         isStart = true;
+        UIManager.instance.SetRuleUIActive(false);
         yield return null;
         coroutine = null;
     }
