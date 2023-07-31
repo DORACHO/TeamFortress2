@@ -3364,6 +3364,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   firePos: {fileID: 886483639}
+  bloodEffect: {fileID: 0}
 --- !u!23 &252650572
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -12818,6 +12819,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   firePos: {fileID: 516687205}
+  bloodEffect: {fileID: 0}
 --- !u!23 &637836315
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -25889,6 +25891,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   firePos: {fileID: 1146331872}
+  bloodEffect: {fileID: 0}
 --- !u!65 &1327018550
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -28099,6 +28102,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   firePos: {fileID: 555651651}
+  bloodEffect: {fileID: 0}
 --- !u!23 &1536152296
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -32644,6 +32648,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   firePos: {fileID: 1146331872}
+  bloodEffect: {fileID: 0}
 --- !u!1 &1853189307
 GameObject:
   m_ObjectHideFlags: 0
@@ -44763,6 +44768,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   firePos: {fileID: 1376370655517199370}
+  bloodEffect: {fileID: 0}
 --- !u!4 &1376370656347899775
 Transform:
   m_ObjectHideFlags: 0
@@ -44792,6 +44798,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   firePos: {fileID: 1376370655517199370}
+  bloodEffect: {fileID: 0}
 --- !u!4 &1376370656836736874
 Transform:
   m_ObjectHideFlags: 0
@@ -50385,6 +50392,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   firePos: {fileID: 2263951539020041842}
+  bloodEffect: {fileID: 0}
 --- !u!4 &2263951540339643666
 Transform:
   m_ObjectHideFlags: 0
@@ -50785,6 +50793,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   firePos: {fileID: 2263951539020041842}
+  bloodEffect: {fileID: 0}
 --- !u!4 &2263951540836467975
 Transform:
   m_ObjectHideFlags: 0
@@ -50822,6 +50831,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   firePos: {fileID: 2263951540044765669}
+  bloodEffect: {fileID: 0}
 --- !u!4 &2263951541019996537
 Transform:
   m_ObjectHideFlags: 0
