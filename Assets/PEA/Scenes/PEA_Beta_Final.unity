@@ -3000,6 +3000,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   firePos: {fileID: 1481035805}
+  bloodEffect: {fileID: 0}
 --- !u!1 &240863355
 GameObject:
   m_ObjectHideFlags: 0
@@ -10586,6 +10587,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   firePos: {fileID: 1790174417}
+  bloodEffect: {fileID: 9173483050681597966, guid: d0d1f55f933385546b5ba9c2708ea7a3, type: 3}
 --- !u!23 &437543865
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -13052,6 +13054,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   firePos: {fileID: 516687205}
+  bloodEffect: {fileID: 9173483050681597966, guid: d0d1f55f933385546b5ba9c2708ea7a3, type: 3}
 --- !u!23 &637836315
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -26163,6 +26166,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   firePos: {fileID: 1146331872}
+  bloodEffect: {fileID: 0}
 --- !u!65 &1327018550
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -28297,6 +28301,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   firePos: {fileID: 1481035805}
+  bloodEffect: {fileID: 0}
 --- !u!65 &1508276586
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -28630,6 +28635,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   firePos: {fileID: 555651651}
+  bloodEffect: {fileID: 9173483050681597966, guid: d0d1f55f933385546b5ba9c2708ea7a3, type: 3}
 --- !u!23 &1536152296
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -32886,6 +32892,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   firePos: {fileID: 1146331872}
+  bloodEffect: {fileID: 0}
 --- !u!1 &1853189307
 GameObject:
   m_ObjectHideFlags: 0
@@ -37069,8 +37076,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d4600c1ad95be641a7e2c763443777e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  stateMgr: {fileID: 2135753994}
   anim: {fileID: 0}
   respawnPoint: {fileID: 0}
+  agent: {fileID: 2135753997}
 --- !u!136 &2135753992
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -45123,6 +45132,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   firePos: {fileID: 1376370655517199370}
+  bloodEffect: {fileID: 0}
 --- !u!4 &1376370656347899775
 Transform:
   m_ObjectHideFlags: 0
@@ -45152,6 +45162,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   firePos: {fileID: 1376370655517199370}
+  bloodEffect: {fileID: 0}
 --- !u!4 &1376370656836736874
 Transform:
   m_ObjectHideFlags: 0
@@ -50745,6 +50756,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   firePos: {fileID: 2263951539020041842}
+  bloodEffect: {fileID: 0}
 --- !u!4 &2263951540339643666
 Transform:
   m_ObjectHideFlags: 0
@@ -51145,6 +51157,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   firePos: {fileID: 2263951539020041842}
+  bloodEffect: {fileID: 0}
 --- !u!4 &2263951540836467975
 Transform:
   m_ObjectHideFlags: 0
@@ -51182,6 +51195,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   firePos: {fileID: 2263951540044765669}
+  bloodEffect: {fileID: 9173483050681597966, guid: d0d1f55f933385546b5ba9c2708ea7a3, type: 3}
 --- !u!4 &2263951541019996537
 Transform:
   m_ObjectHideFlags: 0
