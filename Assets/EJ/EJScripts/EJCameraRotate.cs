@@ -42,6 +42,7 @@ public class EJCameraRotate : MonoBehaviour
     public TextMeshProUGUI countDownNum;
     public GameObject respawnPoint;
     bool respawned = false;
+    GameObject playerCamParent;
 
     float countTime;
 
@@ -55,7 +56,7 @@ public class EJCameraRotate : MonoBehaviour
         //targetCX = 6;
         targetCX = transform.localEulerAngles.x;
 
-
+        playerCamParent = transform.parent.gameObject;
     }
 
     // Update is called once per frame
@@ -93,20 +94,19 @@ public class EJCameraRotate : MonoBehaviour
         }
 
         if (EJPSHP.instance.HP <= 0 &&!respawned)
-        {
-            GameManager.instance.BlueKillRed();
+        {           
             //StartCoroutine(orderedRespawn());
             //StartCoroutine(RespawnincameraScript());
             //StartCoroutine(CountDownCoroutine(10));
-            StartCoroutine(RespawnincameraScript22());
+
+            
+
+            //StartCoroutine(RespawnincameraScript22());
+            StartCoroutine(RespawnincameraScript33());
             respawned = true;
-            
-
-            
-
+                       
             //CountDowndeltaTime(10);
             //RespawnInvoke();
-
 
            // StopAllCoroutines();
         }
@@ -258,7 +258,7 @@ public class EJCameraRotate : MonoBehaviour
 
         EJSFX.instance.PlayKilledSFX();
 
-        Vector3 characterCamPos = transform.position + Vector3.back * 5;
+        Vector3 characterCamPos = transform.position - chaseCamera.transform.forward * 5;
 
         while (true)
         {
@@ -295,9 +295,8 @@ public class EJCameraRotate : MonoBehaviour
 
         while (true)
         {
-
-        chaseCamera.transform.position = Vector3.Lerp(chaseCamera.transform.position, murdererCamPos, Time.deltaTime * 5);
-        chaseCamera.transform.forward = Vector3.Lerp(chaseCamera.transform.forward, dir2Enemy2, Time.deltaTime * 5);
+            chaseCamera.transform.position = Vector3.Lerp(chaseCamera.transform.position, murdererCamPos, Time.deltaTime * 5);
+            chaseCamera.transform.forward = Vector3.Lerp(chaseCamera.transform.forward, dir2Enemy2, Time.deltaTime * 5);
 
             if (Vector3.Distance(chaseCamera.transform.position, murdererCamPos)<0.5f)
             {
@@ -306,8 +305,6 @@ public class EJCameraRotate : MonoBehaviour
             yield return new WaitForSeconds(Time.deltaTime);
 
         }
-
-
         //whoareyou2coroutineRunning = false;
         yield return new WaitForSeconds(2f);
     }
@@ -469,26 +466,32 @@ public class EJCameraRotate : MonoBehaviour
 
         AllFalse();
     }
-    
 
-
-    /*void RespawnInvoke()
+    IEnumerator RespawnincameraScript33()
     {
-        if (!whoareyou1Done)
+        // CountDowndeltaTime(10);
+        StartCoroutine(CountDownCoroutine(10));
+
+        //CameraChange2ChaseCam();
+        yield return StartCoroutine(Whoareyou1coroutine());
+        yield return StartCoroutine(Whoareyou2coroutine());
+
+        if (!mainCamON)
         {
-            Whoareyou1();
-            whoareyou1Done = false;
+            CameraChange2MainCam();
+            mainCamON = true;
         }
 
-        Invoke(nameof(Whoareyou2), 2f);
+        if (!rebirthCalled)
+        {
+            RespawnMove22();
+            rebirthCalled = true;
+        }
 
-        CameraChange2MainCam();
+        AllFalse();
+    }
 
-        Invoke(nameof(RespawnincameraScript),3f);
-
-
-    }*/
-
+   
 
     void CountDowndeltaTime(int seconds)
     {
@@ -604,19 +607,47 @@ public class EJCameraRotate : MonoBehaviour
         print("RespawnMove");
         
         GameObject player = transform.parent.gameObject;
-        print(player);
-        player.transform.position = respawnPoint.transform.position + Vector3.up* 5;
+   
 
+        player.GetComponent<CharacterController>().enabled = false;
+        player.transform.position = respawnPoint.transform.position + Vector3.up* 5;
+        
+        //player.GetComponent<CharacterController>().enabled = true;
         if (!teleportzoom)
         {
-        TeleportZoomIn();
-        TeleportDissolve();
+            TeleportZoomIn();
+            TeleportDissolve();
             EJPSHP.instance.HP = EJPSHP.instance.normalMaxHP;
             ONArmBodyModel();
             OFFFullBodyModel();
             teleportzoom = true;
         }
+        
     }
+
+    public void RespawnMove22()
+    {
+        print("RespawnMove");
+
+        print(playerCamParent);
+
+        playerCamParent.GetComponent<CharacterController>().enabled = false;
+        playerCamParent.transform.position = respawnPoint.transform.position + Vector3.up * 5;
+
+
+        if (!teleportzoom)
+        {
+            TeleportZoomIn();
+            TeleportDissolve();
+            EJPSHP.instance.HP = EJPSHP.instance.normalMaxHP;
+            ONArmBodyModel();
+            OFFFullBodyModel();
+            teleportzoom = true;
+        }
+
+        playerCamParent.GetComponent<CharacterController>().enabled = true;
+    }
+
     //03.Rebirth
     public void RebirthinCamScript()
     {
