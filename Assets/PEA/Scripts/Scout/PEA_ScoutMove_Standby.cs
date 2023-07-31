@@ -98,6 +98,12 @@ public class PEA_ScoutMove_Standby : MonoBehaviour
             case State.Die:
                 break;
         }
+
+        if (medicHp.IsDead && target == hiller)
+        {
+            target = null;
+            state = State.Standby;
+        }
     }
 
     private void CheackDistance()

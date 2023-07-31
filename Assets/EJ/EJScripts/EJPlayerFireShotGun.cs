@@ -24,7 +24,7 @@ public class EJPlayerFireShotGun : MonoBehaviour
     //»êÅºÃÑ
     int bulletForonetime = 9;
     public Transform[] firePos;
-    float maxRayDistance = 10f;
+    float maxRayDistance = 20f;
 
     //ÃÑ¾Ë ¼ö
     int fireCount;

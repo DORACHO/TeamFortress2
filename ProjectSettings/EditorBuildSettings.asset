@@ -9,6 +9,12 @@ EditorBuildSettings:
     path: Assets/PEA/Scenes/Start.unity
     guid: 010b9c7efd7f72149ab3083925a895cd
   - enabled: 1
+    path: Assets/PEA/Scenes/PEA_Beta_Final.unity
+    guid: b1e2fd76c9beecc4589173db961ae033
+  - enabled: 1
+    path: Assets/Scenes/Beta/Beta_Final.unity
+    guid: a46594bfbb88c7a4b81d5a627daa2078
+  - enabled: 1
     path: Assets/Scenes/Beta/Beta_RealFinal.unity
     guid: f06aa7d0b1e862a4283000257b10e395
   m_configObjects: {}

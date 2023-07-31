@@ -60,14 +60,14 @@ public class GameManager : MonoBehaviour
             Destroy(gameObject);
         }
 
-        if (SceneManager.GetActiveScene().buildIndex == 0)
-        {
-            CursorUnlock();
-        }
-        else if (SceneManager.GetActiveScene().buildIndex == 1)
-        {
-            CursorLock();
-        }
+        //if (SceneManager.GetActiveScene().buildIndex == 0)
+        //{
+        //    CursorUnlock();
+        //}
+        //else if (SceneManager.GetActiveScene().buildIndex == 1)
+        //{
+        //    CursorLock();
+        //}
 
     }
 

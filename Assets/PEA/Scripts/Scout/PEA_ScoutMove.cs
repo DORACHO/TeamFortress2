@@ -84,6 +84,7 @@ public class PEA_ScoutMove : MonoBehaviour
     private PEA_PistolGun pistolGun;
     private PEA_ScoutSound scoutSound;
     private Animator anim;
+    private PEA_ScoutHp scoutHp;
 
     // 에디터에서 연결해줄 변수들
     public PatrolPointByStep[] patrolStep;                                     // 랜덤으로 순찰할 지점들
@@ -112,6 +113,7 @@ public class PEA_ScoutMove : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player").transform;
         hiller = GameObject.FindGameObjectWithTag("Hiller").transform;
         medicHp = hiller.GetComponent<J_MedicHP>();
+        scoutHp = GetComponent<PEA_ScoutHp>();
     }
 
     // Update is called once per frame
@@ -152,6 +154,7 @@ public class PEA_ScoutMove : MonoBehaviour
         if (medicHp.IsDead && target == hiller)
         {
             target = null;
+            state = State.Idle;
         }
     }
 
@@ -492,26 +495,32 @@ public class PEA_ScoutMove : MonoBehaviour
 
     private void Respawn()
     {
+        print(curTime);
+        print("scout respawn");
         curTime += Time.deltaTime;
-        if(curTime <= respawnTime)
+        if(curTime > respawnTime)
         {
             transform.position = respawnPoint.position;
             respawnPoint.eulerAngles = respawnPoint.eulerAngles;
             state = State.Idle;
             anim.SetTrigger("Idle");
+            scoutHp.Respawn();
             scoutSound.StopFootSound();
             nav.speed = 0f;
             nav.isStopped = true;
             transform.position = respawnPoint.position;
             respawnPoint.rotation = respawnPoint.rotation;
+
         }
     }
 
     public void Die()
     {
+        print("scout die");
         state = State.Die;
         scoutSound.Die();
         GameManager.instance.RedKillBlue();
+        curTime = 0f;
     }
 
     private void OnCollisionEnter(Collision collision)

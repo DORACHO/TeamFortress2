@@ -54,4 +54,9 @@ public class PEA_ScoutHp : MonoBehaviour
 
         //print("damage " + hp);
     }
+
+    public void Respawn()
+    {
+        hp = maxHp;
+    }
 }
