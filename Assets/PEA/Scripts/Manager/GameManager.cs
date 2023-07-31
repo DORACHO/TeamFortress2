@@ -49,21 +49,25 @@ public class GameManager : MonoBehaviour
             instance = this;
             DontDestroyOnLoad(gameObject);
         }
-        else
+        else if(SceneManager.GetActiveScene().buildIndex == 0)
         {
             Destroy(instance.gameObject);
             instance = this;
             DontDestroyOnLoad(gameObject);
         }
-
-        if(SceneManager.GetActiveScene().buildIndex == 0)
-        {
-            CursorUnlock();
-        }
         else if(SceneManager.GetActiveScene().buildIndex == 1)
         {
-            CursorLock();
+            Destroy(gameObject);
         }
+
+        //if(SceneManager.GetActiveScene().buildIndex == 0)
+        //{
+        //    CursorUnlock();
+        //}
+        //else if(SceneManager.GetActiveScene().buildIndex == 1)
+        //{
+        //    CursorLock();
+        //}
 
     }
 
